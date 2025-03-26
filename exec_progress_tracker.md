@@ -1,30 +1,30 @@
 # BUILTINS 
 
-* echo [x]
-* echo -n [x]
-* cd [x]
-* pwd [x]
-* export [ ]
-* unset [ ]
-* env [ ]
-* exit [ ]
+* echo  :x:
+* echo -n  :x:
+* cd  :x:
+* pwd  :x:
+* export  :x:
+* unset  :x:
+* env  :x:
+* exit  :x:
 
 # PIPES AND REDIRECTIONS
 
-* pipe [ ]
-* redirect_in [ ]
-* redirect_out [ ]
-* redirect_out_append [ ]
-* redirect_in_here_doc [ ]
+* pipe  :x:
+* redirect_in  :x:
+* redirect_out  :x:
+* redirect_out_append  :x:
+* redirect_in_here_doc :x:
 
 # ENV AND EXPAND
 
-* env [ ]
-* expand [ ]
-* $? [ ]
+* env  :x:
+* expand  :x:
+* $?  :x:
 
 # SHORTCUTS
 
-* ctrl-C [ ]
-* ctrl-D [ ]
-* ctrl-/ [ ]
+* ctrl-C  :x:
+* ctrl-D  :x:
+* ctrl-/  :x:
