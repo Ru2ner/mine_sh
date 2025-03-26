@@ -1,9 +1,9 @@
 # BUILTINS 
 
-* echo [ ]
-* echo -n [ ]
-* cd [ ]
-* pwd [ ]
+* echo [x]
+* echo -n [x]
+* cd [x]
+* pwd [x]
 * export [ ]
 * unset [ ]
 * env [ ]
