@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/01 17:47:36 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/02 19:02:24 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,32 @@
 # define BLUE "\033[1;34m"
 # define RESET "\033[0m"
 
+typedef struct s_env t_env;
+
+typedef struct s_env
+{
+	char	*var;
+	char	*value;
+	t_env	*next;
+}	t_env;
+
+
+/*****************************Env Convert**************************************/
+
+void	free_list(t_env *env);
+
+size_t	get_list_size(t_env *env);
+
+t_env	*create_new_node(char *var, char *value);
+
+void	build_list(t_env **env, char *var, char *value);
+
+void	convert_env_to_list(char **envp, t_env **env);
+
+
 /*****************************Error Handling***********************************/
 
-
+void	*free_tab(char **tab);
 
 /*******************************Main Exec**************************************/
 
@@ -39,8 +62,10 @@
 
 void	print_env(char **envp);
 
-char	*get_pwd_from_env(char **envp);
+char	*get_pwd_from_env(t_env *env);
 
-void	fetch_cwd(char **envp);
+void	fetch_cwd(t_env *env);
+
+void	execute_cd(char *path);
 
 #endif
