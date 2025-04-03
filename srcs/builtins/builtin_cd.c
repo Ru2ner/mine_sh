@@ -6,29 +6,77 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:12:53 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/02 19:01:12 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/03 18:21:36 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-void	execute_cd(char *path)
+static void	update_old_cwd(t_env *env, char *old_wd)
+{
+	while (env)
+	{
+		if (ft_strcmp(env->key, "OLDPWD") == 0)
+		{
+			free(env->value);
+			env->value = ft_strdup(old_wd);
+			if (!env->value)
+			{
+				strerror(ENOMEM);
+				return ;
+			}
+			break ;
+		}
+		env = env->next;
+	}
+	free(old_wd);
+}
+
+static void	update_cwd(t_env *env)
 {
 	char	*cwd;
 
-	cwd = malloc(sizeof(char) * 1024);
-	
-	if (path == NULL || (ft_strncmp(path, "~", 1) == 0 && ft_strlen(path) == 1))
-		path = getenv("HOME");
-	if (chdir(path) != 0)
-		perror("cd");
-	cwd = getcwd(cwd, 1024);
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		strerror(ENOMEM);
+		return ;
+	}
+	while (env)
+	{
+		if (ft_strcmp(env->key, "PWD") == 0)
+		{
+			free(env->value);
+			env->value = ft_strdup(cwd);
+			if (!env->value)
+			{
+				strerror(ENOMEM);
+				return ;
+			}
+			break ;
+		}
+		env = env->next;
+	}
+	free(cwd);
 }
 
-void	update_cwd()
+void	execute_cd(char *path, t_env *env)
 {
+	char	*old_wd;
 
-
-
+	old_wd = getcwd(NULL, 0);
+	if (!old_wd)
+	{
+		strerror(ENOMEM);
+		return ;
+	}
+	if (path == NULL || ft_strcmp(path, "~") == 0)
+		path = getenv("HOME");
+	else if (ft_strcmp(path, "-") == 0)
+		path = getenv("OLDPWD");
+	if (chdir(path) != 0)
+		perror("cd");
+	update_old_cwd(env, old_wd);
+	update_cwd(env);
 }

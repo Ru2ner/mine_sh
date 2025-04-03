@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/02 19:02:24 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/03 18:21:36 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 char	*get_pwd_from_env(t_env *env)
 {
-	char 	*cwd_env;
+	char	*cwd_env;
 	t_env	*temp;
 
 	cwd_env = NULL;
 	temp = env;
 	while (temp)
 	{
-		if (ft_strncmp(temp->var, "PWD", 3) == 0)
+		if (ft_strncmp(temp->key, "PWD", 3) == 0)
 		{
 			cwd_env = ft_strdup(temp->value);
 			break ;
@@ -35,7 +35,7 @@ char	*get_pwd_from_env(t_env *env)
 void	fetch_cwd(t_env *env)
 {
 	char	*cwd;
-	
+
 	cwd = malloc(sizeof(char) * 1024);
 	if (!cwd)
 	{
@@ -43,7 +43,7 @@ void	fetch_cwd(t_env *env)
 		return ;
 	}
 	if (!env)
-	{	
+	{
 		if (getcwd(cwd, 1024) == NULL)
 		{
 			perror("getwcd failed");

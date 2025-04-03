@@ -1,13 +1,14 @@
 # BUILTINS 
 
-* echo  :x:
-* echo -n  :x:
-* cd  :x:
-* pwd  :x:
-* export  :x:
-* unset  :x:
-* env  :x:
+* echo  :white_check_mark:
+* echo -n  :white_check_mark:
+* cd  :white_check_mark:
+* pwd  :white_check_mark:
+* export  WIP
+* unset  :white_check_mark:
+* env  :white_check_mark:
 * exit  :x:
+* clear :white_check_mark:
 
 # PIPES AND REDIRECTIONS
 
@@ -19,12 +20,12 @@
 
 # ENV AND EXPAND
 
-* env  :x:
+* env  :white_check_mark:
 * expand  :x:
 * $?  :x:
 
 # SHORTCUTS
 
-* ctrl-C  :x:
-* ctrl-D  :x:
+* ctrl-C  :white_check_mark:
+* ctrl-D  :white_check_mark:
 * ctrl-/  :x:

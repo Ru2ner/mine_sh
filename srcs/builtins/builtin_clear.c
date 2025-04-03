@@ -1,38 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*   builtin_clear.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/03 20:01:30 by tlutz            ###   ########.fr       */
+/*   Created: 2025/04/03 14:31:34 by tlutz             #+#    #+#             */
+/*   Updated: 2025/04/03 14:32:18 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "libft.h"
 
-void	exec_export(t_env *env, char *arg)
+void	exec_clear(void)
 {
-	t_env	*temp;
-	char	**args;
-
-	if (!arg)
-		return ;
-	args = ft_split(arg, '=');
-	temp = env;
-	while (temp != NULL)
-	{
-		if (ft_strcmp(temp->key, args[0]) == 0)
-		{
-			free(temp->value);
-			temp->value = ft_strdup(args[1]);
-			free_tab(args);
-			return ;
-		}
-		temp = temp->next;
-	}
-	build_list(&env, args[0], args[1]);
-	free(args);
+	printf("\033[H\033[2J");
 }

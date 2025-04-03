@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:59:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/02 19:03:22 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/03 16:07:04 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	convert_env_to_list(char **envp, t_env **env)
 {
 	char	**converted_array;
 	int		i;
-	
+
 	i = 0;
 	while (envp[i])
 	{

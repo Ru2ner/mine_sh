@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/02 19:07:14 by tlutz            ###   ########.fr        #
+#    Updated: 2025/04/03 19:39:42 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,16 @@ HEADERS = $(HEADERSDIR)exec.h
 SRCSDIR = srcs/
 SRCS = builtins/builtin_pwd.c \
 		builtins/builtin_env.c \
+		builtins/builtin_cd.c \
+		builtins/builtin_echo.c \
+		builtins/builtin_clear.c \
+		builtins/builtin_export.c \
+		builtins/builtin_unset.c \
 		builtins/main_test.c \
 		env_converter.c \
 		list_utils.c \
-		builtins_utils/free_utils.c
+		builtins_utils/free_utils.c \
+		builtins_utils/tab_utils.c
 
 OBJSDIR = build/
 

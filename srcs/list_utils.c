@@ -6,11 +6,12 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:01:40 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/02 19:02:24 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/03 20:00:25 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "libft.h"
 
 void	free_list(t_env *env)
 {
@@ -22,7 +23,7 @@ void	free_list(t_env *env)
 	{
 		temp = env;
 		env = env->next;
-		free(temp->var);
+		free(temp->key);
 		free(temp->value);
 		free(temp);
 	}
@@ -50,11 +51,14 @@ t_env	*create_new_node(char *var, char *value)
 	node = malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
-	node->var = var;
-	node->value = value;
+	node->key = ft_strdup(var);
+	node->value = ft_strdup(value);
 	node->next = NULL;
+	free(var);
+	free(value);
 	return (node);
 }
+//TODO handle_close, exit et free à rajouter au plus vite
 
 void	build_list(t_env **env, char *var, char *value)
 {
@@ -64,7 +68,7 @@ void	build_list(t_env **env, char *var, char *value)
 	new_node = create_new_node(var, value);
 	temp = *env;
 	if (!new_node)
-		return ;//TODO handle_close, exit et free à rajouter au plus vite
+		return ;
 	if (!*env)
 	{
 		*env = new_node;
