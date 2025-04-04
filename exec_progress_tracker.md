@@ -4,7 +4,7 @@
 * echo -n  :white_check_mark:
 * cd  :white_check_mark:
 * pwd  :white_check_mark:
-* export  WIP
+* export  :white_check_mark:
 * unset  :white_check_mark:
 * env  :white_check_mark:
 * exit  :x:
