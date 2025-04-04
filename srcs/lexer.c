@@ -6,21 +6,12 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/04 19:09:19 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/04 19:48:02 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
-
-static char	*extract_word(const char **input)
-{
-	const char *start = *input;
-
-	while (**input && !is_whitespaces(**input) && !is_special_char(**input))
-		(*input)++;
-	return (ft_strndup(start, *input - start));
-}
 
 static t_token_type	identify_quotes(const char c)
 {
@@ -64,22 +55,6 @@ static void	append_to_list(t_token **head, t_token **curr, t_token *new_token)
 	}
 }
 
-static char	*extract_special_char(const char **input)
-{
-	if (**input == REDIR_IN_CHAR && *(*input + 1) == REDIR_IN_CHAR)
-	{
-		(*input) += 2;
-		return (ft_strdup("<<"));
-	}
-	else if (**input == REDIR_OUT_CHAR && *(*input + 1) == REDIR_OUT_CHAR)
-	{
-		(*input) += 2;
-		return (ft_strdup(">>"));
-	}	
-	else
-		return (ft_strndup((*input)++, 1));
-}
-
 t_token	*lexer(const char *input)
 {
 	t_token	*head;
@@ -119,13 +94,13 @@ t_token	*lexer(const char *input)
 int	main(void)
 {
 	char	input[] = "$USER";
-	t_token	*lexic;
+	t_token	*lexicon;
 
-	lexic = lexer(input);
-	while (lexic)
+	lexicon = lexer(input);
+	while (lexicon)
 	{
-		printf("Value : %s\n Type : %d\n\n", lexic->value, lexic->type);
-		lexic = lexic->next;
+		printf("Value : %s\n Type : %d\n\n", lexicon->value, lexicon->type);
+		lexicon = lexicon->next;
 	}
 	return (0);
 }

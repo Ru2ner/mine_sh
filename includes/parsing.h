@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/04 19:08:25 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/04 19:46:01 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ bool	is_whitespaces(char c);
 bool	is_quote(char c);
 
 char	*extract_quoted_string(char **input);
+
+char	*extract_word(const char **input);
+
+char	*extract_special_char(const char **input);
 
 /******************************Args Checks*************************************/
 
