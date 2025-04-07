@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/03 18:21:36 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/07 14:30:02 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,22 @@ void	fetch_cwd(t_env *env)
 {
 	char	*cwd;
 
-	cwd = malloc(sizeof(char) * 1024);
-	if (!cwd)
+	if (env)
+		cwd = get_pwd_from_env(env);
+	if (!env || !cwd)
 	{
-		strerror(ENOMEM);
-		return ;
-	}
-	if (!env)
-	{
+		cwd = malloc(sizeof(char) * 1024);
+		if (!cwd)
+		{
+			strerror(ENOMEM);
+			return ;
+		}
 		if (getcwd(cwd, 1024) == NULL)
 		{
-			perror("getwcd failed");
+			perror("getcwd failed");
 			free(cwd);
 			return ;
 		}
 	}
-	else
-	{
-		free(cwd);
-		cwd = get_pwd_from_env(env);
-	}
 	ft_putendl_fd(cwd, 1);
-	free(cwd);
 }

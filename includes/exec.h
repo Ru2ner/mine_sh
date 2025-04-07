@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/03 19:38:18 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/07 14:40:18 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,45 @@
 # define RESET "\033[0m"
 
 typedef struct s_env	t_env;
+typedef struct s_token	t_token;
+typedef struct s_exec	t_exec;
+//TODO A REMOVE, PRESENCE UNIQUEMENT POUR TESTS EXEC
+typedef enum e_token_type
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	HERE_DOC,
+	REDIR_OUT_APPEND,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE
+}	t_token_type;
 
+typedef struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	t_token			*next;
+}	t_token;
+//TODO A REMOVE, PRESENCE UNIQUEMENT POUR TESTS EXEC
 typedef struct s_env
 {
 	char	*key;
 	char	*value;
 	t_env	*next;
 }	t_env;
+
+typedef struct s_exec
+{
+	int		pipe_fd[2];
+	int		temp_fd;
+	int		*pids;
+	pid_t	pids_count;
+	pid_t	pid;
+	int		status;
+	t_token	*tokens;
+}	t_exec;
 
 /*****************************Tab Utils****************************************/
 

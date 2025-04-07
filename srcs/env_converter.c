@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:59:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/03 16:07:04 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/07 19:34:14 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,31 @@ void	convert_env_to_list(char **envp, t_env **env)
 		free_tab(converted_array);
 		i++;
 	}
+}
+
+char	**convert_env_to_tab(t_env **env)
+{
+	char	**result;
+	char	*tmp;
+	size_t	i;
+	size_t	list_size;
+	t_env	*temp;
+
+	i = 0;
+	temp = *env;
+	list_size = get_list_size(*env);
+	tmp = ft_strdup("");
+	if (!tmp)
+		return (NULL);
+	result = malloc(sizeof(char *) * get_list_size(list_size) + 1);
+	if (!result)
+		return (NULL);
+	while (i < list_size)
+	{
+		result[i] = ft_strjoin(tmp, temp->key);
+		
+		
+		i++;
+	}
+	return (result);
 }

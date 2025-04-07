@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/03 19:37:33 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/07 14:24:14 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 		free_tab(args);
 	}
+	rl_clear_history();
 	free_list(env);
 	return (0);
 }

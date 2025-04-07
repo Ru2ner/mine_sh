@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/03 20:01:30 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/07 14:33:47 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	exec_export(t_env *env, char *arg)
 	char	**args;
 
 	if (!arg)
+		return ;
+	if (ft_strchr(arg, '=') == NULL)
 		return ;
 	args = ft_split(arg, '=');
 	temp = env;
