@@ -5,17 +5,17 @@ Outputs a linked lists with all the tokens, that will be later processed by the 
 
 * fetch_user_input(readline)  :x:
 * trim_whitespaces  :x:
-* create_tokens  :x:
+* create_tokens  :white_check_mark:
 * error_handling  :x:
 
 #### TOKENS
 
-* word  :x:
+* word  :white_check_mark:
 * cmd  :x:
 * cmd_with_args  :x:
-* pipe  :x:
-* redirections(< && >)  :x:
-* redirections_append_and_here_doc(<< && >>)  :x:
+* pipe  :white_check_mark:
+* redirections(< && >)  :white_check_mark:
+* redirections_append_and_here_doc(<< && >>)  :white_check_mark:
 * infiles_and_outfiles  :x:
 
 # PARSER
