@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/07 14:40:18 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/08 20:07:39 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
-# include <stdbool.h>\
+# include <stdbool.h>
 
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
@@ -54,6 +54,8 @@ typedef struct s_env
 {
 	char	*key;
 	char	*value;
+	bool	export;
+	bool	env;
 	t_env	*next;
 }	t_env;
 
@@ -78,9 +80,9 @@ void	free_list(t_env *env);
 
 size_t	get_list_size(t_env *env);
 
-t_env	*create_new_node(char *var, char *value);
+t_env	*create_new_node(char *var, char *value, bool print);
 
-void	build_list(t_env **env, char *var, char *value);
+void	build_list(t_env **env, char *var, char *value, bool print);
 
 void	convert_env_to_list(char **envp, t_env **env);
 
@@ -106,6 +108,6 @@ void	exec_echo(char **args);
 
 t_env	*exec_unset(t_env *env, const char *key);
 
-void	exec_export(t_env *env, char *arg);
+void	*exec_export(t_env *env, char *arg);
 
 #endif

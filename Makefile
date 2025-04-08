@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/03 19:39:42 by tlutz            ###   ########.fr        #
+#    Updated: 2025/04/08 17:53:40 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ $(NAME) : $(OBJS) | $(LIBFT)
 $(OBJSDIR)%.o : $(SRCSDIR)%.c $(HEADERS) | $(OBJSDIR) $(LIBFT)
 	@mkdir -p $(dir $@)
 	@$(eval COMPILED_SRCS=$(shell echo $$(($(COMPILED_SRCS)+1))))
-	@printf "\rCompiling: [%-50s] %d/%d" \
+	@printf "\rCompiling $(NAME): [%-50s] %d/%d" \
 	"$(shell printf '#%.0s' $$(seq 1 $$(($(COMPILED_SRCS)*50/$(TOTAL_SRCS)))))" \
 	$(COMPILED_SRCS) $(TOTAL_SRCS)
 	@$(CC) -o $@ -c $< $(CFLAGS) $(INCFLAG)$(HEADERSDIR) $(INCFLAG)$(LIBFTINCDIR)
@@ -73,7 +73,7 @@ $(OBJSDIR) :
 	@mkdir -p $(OBJSDIR)
 
 $(LIBFT) :
-	@make -sC $(LIBFTDIR)
+	@make -j -sC $(LIBFTDIR)
 
 .PHONY : clean
 clean :

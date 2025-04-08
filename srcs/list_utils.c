@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:01:40 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/03 20:00:25 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/08 17:58:10 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,18 @@ size_t	get_list_size(t_env *env)
 	return (i);
 }
 
-t_env	*create_new_node(char *var, char *value)
+t_env	*create_new_node(char *var, char *value, bool print)
 {
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
+	ft_memset(node, 0, sizeof(t_env));
 	node->key = ft_strdup(var);
 	node->value = ft_strdup(value);
+	if (print == true)
+		node->env = true;
 	node->next = NULL;
 	free(var);
 	free(value);
@@ -60,12 +63,12 @@ t_env	*create_new_node(char *var, char *value)
 }
 //TODO handle_close, exit et free à rajouter au plus vite
 
-void	build_list(t_env **env, char *var, char *value)
+void	build_list(t_env **env, char *var, char *value, bool print)
 {
 	t_env	*new_node;
 	t_env	*temp;
 
-	new_node = create_new_node(var, value);
+	new_node = create_new_node(var, value, print);
 	temp = *env;
 	if (!new_node)
 		return ;
