@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:12:53 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/08 18:44:01 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/09 20:02:17 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,31 @@ static void	update_cwd(t_env *env)
 	free(cwd);
 }
 
+//TODO C'est pas encore au top olivier, t'as niqué la batterie
 void	execute_cd(char *path, t_env *env)
 {
 	char	*old_wd;
+	char	*shortcut_path;
 
 	old_wd = getcwd(NULL, 0);
+	shortcut_path = NULL;
 	if (!old_wd)
 	{
 		strerror(ENOMEM);
 		return ;
 	}
 	if (path == NULL || ft_strcmp(path, "~") == 0)
-	{
-		path = mygetenv(env, "HOME");
-		if (!path)
-			return ;
-	}
+		shortcut_path = mygetenv(env, "HOME");
 	else if (ft_strcmp(path, "-") == 0)
-	{
-		path = mygetenv(env, "OLDPWD");
-		if (!path)
-			return ;
-	}
-	if (chdir(path) != 0)
-		perror("cd");
+		shortcut_path = mygetenv(env, "OLDPWD");
+	if (shortcut_path)
+		if (chdir(shortcut_path) != 0)
+			perror("cd");
+	else if (path)
+		if (chdir(path) != 0)
+			perror("cd");
 	update_old_cwd(env, old_wd);
 	update_cwd(env);
-	free(path);
+	if (shortcut_path)
+		free(shortcut_path);
 }

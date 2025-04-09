@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/08 17:53:40 by tlutz            ###   ########.fr        #
+#    Updated: 2025/04/09 19:18:13 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ COLOR_GREEN = \033[0;32m
 COLOR_RED = \033[0;31m
 COLOR_YELLOW = \033[0;33m
 COLOR_BLUE = \033[0;34m
+COLOR_PURPLE = \033[0;35m
+COLOR_CYAN = \033[0;36m
 COLOR_RESET = \033[0m
-
 
 NAME = minishell
 
@@ -41,8 +42,8 @@ SRCS = builtins/builtin_pwd.c \
 		builtins/builtin_export.c \
 		builtins/builtin_unset.c \
 		builtins/main_test.c \
-		env_converter.c \
-		list_utils.c \
+		env_handling/env_converter.c \
+		env_handling/list_utils.c \
 		builtins_utils/free_utils.c \
 		builtins_utils/tab_utils.c
 
@@ -57,9 +58,9 @@ COMPILED_SRCS := 0
 all : $(NAME)
 
 $(NAME) : $(OBJS) | $(LIBFT)
-	@echo "\n$(COLOR_YELLOW)Linking objects...$(COLOR_RESET)"
+	@echo "\n$(COLOR_GREEN)Linking objects...$(COLOR_RESET)"
 	@$(CC) $(OBJS) $(LIBFT) $(CFLAGS) $(LINKREADLINE) -o $(NAME)
-	@echo "$(COLOR_YELLOW)$(NAME) compiled !$(COLOR_RESET)"
+	@echo "$(COLOR_RED)$(NAME) compiled !$(COLOR_RESET)"
 
 $(OBJSDIR)%.o : $(SRCSDIR)%.c $(HEADERS) | $(OBJSDIR) $(LIBFT)
 	@mkdir -p $(dir $@)
@@ -77,13 +78,13 @@ $(LIBFT) :
 
 .PHONY : clean
 clean :
-	@echo "$(COLOR_GREEN)Cleaning objects...$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE)Cleaning objects...$(COLOR_RESET)"
 	@rm -rf $(OBJSDIR)
 	@make clean -sC $(LIBFTDIR)
 
 .PHONY : fclean
 fclean : clean
-	@echo "$(COLOR_BLUE)Cleaning executable...$(COLOR_RESET)"
+	@echo "$(COLOR_CYAN)Cleaning executable...$(COLOR_RESET)"
 	@rm -f $(NAME)
 	@make fclean -sC $(LIBFTDIR)
 

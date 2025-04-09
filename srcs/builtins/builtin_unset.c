@@ -6,12 +6,24 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:13 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/03 19:05:12 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/09 19:53:12 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
+
+static	void	destroy_node(t_env *temp)
+{
+	if (!temp)
+		return ;
+	if (temp->key)
+    	free(temp->key);
+	if (temp->value)
+    	free(temp->value);
+	if (temp)
+		free(temp);
+}
 
 t_env	*exec_unset(t_env *env, const char *key)
 {
@@ -20,12 +32,12 @@ t_env	*exec_unset(t_env *env, const char *key)
 
 	temp = env;
 	prev = NULL;
+	if (!key)
+		return (env);
 	if (temp != NULL && ft_strcmp(temp->key, key) == 0)
 	{
 		env = temp->next;
-		free(temp->key);
-		free(temp->value);
-		free(temp);
+		destroy_node(temp);
 		return (env);
 	}
 	while (temp != NULL && ft_strcmp(temp->key, key) != 0)
@@ -36,8 +48,6 @@ t_env	*exec_unset(t_env *env, const char *key)
 	if (temp == NULL)
 		return (env);
 	prev->next = temp->next;
-	free(temp->key);
-	free(temp->value);
-	free(temp);
+	destroy_node(temp);
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/08 20:07:39 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/09 19:38:12 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
 # define BLUE "\033[1;34m"
+# define PURPLE "\033[0;35m"
+# define CYAN "\033[0;36m"
 # define RESET "\033[0m"
 
 typedef struct s_env	t_env;
@@ -78,13 +80,17 @@ size_t	get_tab_size(char **tab);
 
 void	free_list(t_env *env);
 
+void	*free_dest(char **dest, int j);
+
 size_t	get_list_size(t_env *env);
 
 t_env	*create_new_node(char *var, char *value, bool print);
 
 void	build_list(t_env **env, char *var, char *value, bool print);
 
-void	convert_env_to_list(char **envp, t_env **env);
+void	*convert_env_to_list(char **envp, t_env **env);
+
+char	**convert_env_to_tab(t_env *env);
 
 /*****************************Error Handling***********************************/
 

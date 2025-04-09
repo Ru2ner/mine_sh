@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/07 14:24:14 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/09 18:32:17 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ static void	catch_sig(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
+static void		print_tab(t_env *env)
+{
+	int	i;
+	char	**tab;
+
+	i = 0;
+	tab = convert_env_to_tab(env);
+	while (tab[i])
+	{
+		printf("%s\n", tab[i]);
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 static t_env	*builtin_launcher(char **args, t_env *env)
 {
 	if (args[0] && ft_strcmp(args[0], "env") == 0)
@@ -50,6 +66,8 @@ static t_env	*builtin_launcher(char **args, t_env *env)
 		env = exec_unset(env, args[1]);
 	else if (args[0] && ft_strcmp(args[0], "export") == 0)
 		exec_export(env, args[1]);
+	else if (args[0] && ft_strcmp(args[0], "ptabenv") == 0)
+		print_tab(env);
 	else if (args[0])
 		ft_putendl_fd("Command not found", 1);
 	return (env);
