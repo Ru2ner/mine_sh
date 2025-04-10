@@ -6,14 +6,14 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:15:35 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:20:43 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-//TODO Les arguments envoyés à export doivent être parsé, lettres et underscore au début seulement
+//TODO Args pour export doivent uniquement être underscore et lettres en début
 //TODO pas de = au début des args
 static void	*append_handler(t_env *temp, char **args)
 {

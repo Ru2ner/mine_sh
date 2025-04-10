@@ -6,19 +6,19 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:59:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:15:35 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:23:24 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-//TODO Maybe passer les fonctions en void * pour avoir un retour en cas de malloc fail.
+//TODO Fonction en void * pour retour si malloc fail.
 void	*convert_env_to_list(char **envp, t_env **env)
 {
-	char	**converted_array;
+	char		**converted_array;
 	t_keyval	key_value;
-	int		i;
+	int			i;
 
 	i = 0;
 	while (envp[i])

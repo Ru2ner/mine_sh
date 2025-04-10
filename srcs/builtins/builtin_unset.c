@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:13 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/09 19:53:12 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:21:18 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static	void	destroy_node(t_env *temp)
 	if (!temp)
 		return ;
 	if (temp->key)
-    	free(temp->key);
+		free(temp->key);
 	if (temp->value)
-    	free(temp->value);
+		free(temp->value);
 	if (temp)
 		free(temp);
 }

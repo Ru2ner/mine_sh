@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 18:45:09 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:22:25 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ static void	sigint_handler(int signum)
 
 static void	catch_sig(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
+
 	sa.sa_handler = sigint_handler;
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 }
 
-static void		print_tab(t_env *env)
+static void	print_tab(t_env *env)
 {
-	int	i;
+	int		i;
 	char	**tab;
 
 	i = 0;
@@ -77,10 +78,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
 	char		**args;
-	t_env		*env = NULL;
-	
+	t_env		*env;
+
 	(void)argv;
 	(void)argc;
+	env = NULL;
 	catch_sig();
 	convert_env_to_list(envp, &env);
 	while (1)

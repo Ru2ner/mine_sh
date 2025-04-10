@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:13:28 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:15:35 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:22:42 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*add_to_export_list(t_env *env, char *arg)
 {
-	t_keyval key_value;
-	
+	t_keyval	key_value;
+
 	key_value.key = arg;
 	key_value.value = "";
 	while (env)
