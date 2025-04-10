@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:20:43 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:54:46 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 
 //TODO Args pour export doivent uniquement être underscore et lettres en début
 //TODO pas de = au début des args
+static void	*key_value_creator(t_keyval *key_val, char **args)
+{
+	if (args[0] && args[1])
+	{
+		key_val->key = args[0];
+		key_val->value = args[1];
+	}
+	if (args[0] && !args[1])
+	{
+		key_val->key = args[0];
+		key_val->value = ft_strdup("");
+		if (key_val->value)
+			return (malloc_error());
+	}
+	return (NULL);
+}
+
 static void	*append_handler(t_env *temp, char **args)
 {
 	char	*tmp;
@@ -44,8 +61,7 @@ static void	*append_to_var(t_env *env, char *arg)
 			return (append_handler(temp, args));
 		temp = temp->next;
 	}
-	key_val.key = args[0];
-	key_val.value = args[1];
+	key_value_creator(&key_val, args);
 	build_list(&env, &key_val, true, true);
 	free(args);
 	return (NULL);
@@ -60,24 +76,9 @@ static void	*edit_var(t_env *temp, char **args)
 		temp->value = ft_strdup(args[1]);
 	if (!temp->value)
 		return (malloc_error());
+	if (temp->env == false)
+		temp->env = true;
 	free_tab(args);
-	return (NULL);
-}
-
-static void	*key_value_creator(t_keyval *key_val, char **args)
-{
-	if (args[0] && args[1])
-	{
-		key_val->key = args[0];
-		key_val->value = args[1];
-	}
-	if (args[0] && !args[1])
-	{
-		key_val->key = args[0];
-		key_val->value = ft_strdup("");
-		if (key_val->value)
-			return (malloc_error());
-	}
 	return (NULL);
 }
 
@@ -91,7 +92,7 @@ void	*exec_export(t_env *env, char *arg)
 		return (print_export(env));
 	temp = env;
 	if (ft_strchr(arg, '=') == NULL)
-		return (add_to_export_list(env, arg));
+		return (add_to_export_list(&env, arg));
 	if (ft_strnstr(arg, "+=", ft_strlen(arg)))
 		return (append_to_var(env, arg));
 	args = ft_split(arg, '=');

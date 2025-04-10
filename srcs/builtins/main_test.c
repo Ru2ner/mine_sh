@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:22:25 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:34:36 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_env	*builtin_launcher(char **args, t_env *env)
 		env = exec_unset(env, args[1]);
 	else if (args[0] && ft_strcmp(args[0], "export") == 0)
 		exec_export(env, args[1]);
-	else if (args[0] && ft_strcmp(args[0], "ptabenv") == 0)
+	else if (args[0] && ft_strcmp(args[0], "ptabenv") == 0)//TODO Useless now
 		print_tab(env);
 	else if (args[0])
 		ft_putendl_fd("Command not found", 1);

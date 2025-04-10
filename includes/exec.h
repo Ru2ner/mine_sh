@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:15:57 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:43:25 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_env	*exec_unset(t_env *env, const char *key);
 
 void	*exec_export(t_env *env, char *arg);
 
-void	*add_to_export_list(t_env *env, char *arg);
+void	*add_to_export_list(t_env **env, char *arg);
 
 void	*print_export(t_env *env);
 

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:01:40 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:16:10 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 20:03:12 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,16 @@ t_env	*create_new_node(char *var, char *value, t_bool print, t_bool export)
 	node->key = ft_strdup(var);
 	if (!node->key)
 		return (malloc_error());
-	node->value = ft_strdup(value);
-	if (!node->value)
-		return (malloc_error());
-	if (print == true)
-		node->env = true;
-	if (export == true)
-		node->export = true;
+	if (value)
+	{
+		node->value = ft_strdup(value);
+		if (!node->value)
+			return (malloc_error());
+	}
+	else
+		node->value = NULL;
+	node->env = print;
+	node->export = export;
 	node->next = NULL;
 	free(var);
 	free(value);
