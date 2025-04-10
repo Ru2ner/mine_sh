@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/09 19:38:12 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:15:57 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
-# include <stdbool.h>
+# include "errors.h"
 
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
@@ -28,49 +28,32 @@
 # define PURPLE "\033[0;35m"
 # define CYAN "\033[0;36m"
 # define RESET "\033[0m"
+# define PROMPT "\033[1;31mminishell> \033[0m"
 
 typedef struct s_env	t_env;
 typedef struct s_token	t_token;
 typedef struct s_exec	t_exec;
-//TODO A REMOVE, PRESENCE UNIQUEMENT POUR TESTS EXEC
-typedef enum e_token_type
-{
-	WORD,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	HERE_DOC,
-	REDIR_OUT_APPEND,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE
-}	t_token_type;
 
-typedef struct s_token
+typedef enum e_bool
 {
-	char			*value;
-	t_token_type	type;
-	t_token			*next;
-}	t_token;
-//TODO A REMOVE, PRESENCE UNIQUEMENT POUR TESTS EXEC
+	false,
+	true	
+}	t_bool;
+
 typedef struct s_env
 {
 	char	*key;
 	char	*value;
-	bool	export;
-	bool	env;
+	t_bool	export;
+	t_bool	env;
 	t_env	*next;
 }	t_env;
 
-typedef struct s_exec
+typedef struct s_keyval
 {
-	int		pipe_fd[2];
-	int		temp_fd;
-	int		*pids;
-	pid_t	pids_count;
-	pid_t	pid;
-	int		status;
-	t_token	*tokens;
-}	t_exec;
+	char	*key;
+	char	*value;
+}	t_keyval;
 
 /*****************************Tab Utils****************************************/
 
@@ -84,9 +67,9 @@ void	*free_dest(char **dest, int j);
 
 size_t	get_list_size(t_env *env);
 
-t_env	*create_new_node(char *var, char *value, bool print);
+t_env	*create_new_node(char *var, char *value, t_bool print, t_bool export);
 
-void	build_list(t_env **env, char *var, char *value, bool print);
+void	build_list(t_env **env, t_keyval *key_val, t_bool print, t_bool export);
 
 void	*convert_env_to_list(char **envp, t_env **env);
 
@@ -104,9 +87,9 @@ void	print_env(t_env *env);
 
 char	*get_pwd_from_env(t_env *env);
 
-void	fetch_cwd(t_env *env);
+void	*fetch_cwd(t_env *env);
 
-void	execute_cd(char *path, t_env *env);
+void	*execute_cd(char *path, t_env *env);
 
 void	exec_clear(void);
 
@@ -115,5 +98,9 @@ void	exec_echo(char **args);
 t_env	*exec_unset(t_env *env, const char *key);
 
 void	*exec_export(t_env *env, char *arg);
+
+void	*add_to_export_list(t_env *env, char *arg);
+
+void	*print_export(t_env *env);
 
 #endif

@@ -6,59 +6,105 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/08 20:30:23 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:15:35 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-//TODO Handling du += WIP, need split avec charset.
 //TODO Les arguments envoyés à export doivent être parsé, lettres et underscore au début seulement
-static void	*add_to_export_list(t_env *env, char *arg)
+//TODO pas de = au début des args
+static void	*append_handler(t_env *temp, char **args)
 {
-	while (env)
-	{
-		build_list(&env, arg, "", false);
-		env = env->next;
-	}
+	char	*tmp;
+
+	tmp = ft_strjoin(temp->value, args[1]);
+	if (!tmp)
+		return (malloc_error());
+	free(temp->value);
+	temp->value = tmp;
+	free_tab(args);
 	return (NULL);
 }
 
-static void	*print_export(t_env *env)
+static void	*append_to_var(t_env *env, char *arg)
 {
-	while (env)
+	char		**args;
+	t_env		*temp;
+	t_keyval	key_val;
+
+	temp = env;
+	args = ft_split_charset(arg, "+=");
+	if (!args)
+		return (malloc_error());
+	while (temp)
 	{
-		if (env->export == false)//TODO le false est là uniquement pour les tests, à modifier
-		printf("export %s=\"%s\"\n", env->key, env->value);
-		env = env->next;
+		if (ft_strcmp(temp->key, args[0]) == 0)
+			return (append_handler(temp, args));
+		temp = temp->next;
+	}
+	key_val.key = args[0];
+	key_val.value = args[1];
+	build_list(&env, &key_val, true, true);
+	free(args);
+	return (NULL);
+}
+
+static void	*edit_var(t_env *temp, char **args)
+{
+	free(temp->value);
+	if (!args[1])
+		temp->value = ft_strdup("");
+	else
+		temp->value = ft_strdup(args[1]);
+	if (!temp->value)
+		return (malloc_error());
+	free_tab(args);
+	return (NULL);
+}
+
+static void	*key_value_creator(t_keyval *key_val, char **args)
+{
+	if (args[0] && args[1])
+	{
+		key_val->key = args[0];
+		key_val->value = args[1];
+	}
+	if (args[0] && !args[1])
+	{
+		key_val->key = args[0];
+		key_val->value = ft_strdup("");
+		if (key_val->value)
+			return (malloc_error());
 	}
 	return (NULL);
 }
 
 void	*exec_export(t_env *env, char *arg)
 {
-	t_env	*temp;
-	char	**args;
+	t_env		*temp;
+	char		**args;
+	t_keyval	key_val;
 
 	if (!arg)
 		return (print_export(env));
+	temp = env;
 	if (ft_strchr(arg, '=') == NULL)
 		return (add_to_export_list(env, arg));
+	if (ft_strnstr(arg, "+=", ft_strlen(arg)))
+		return (append_to_var(env, arg));
 	args = ft_split(arg, '=');
-	temp = env;
-	while (temp != NULL)
+	if (!args)
+		return (malloc_error());
+	while (temp)
 	{
 		if (ft_strcmp(temp->key, args[0]) == 0)
-		{
-			free(temp->value);
-			temp->value = ft_strdup(args[1]);
-			free_tab(args);
-			return (NULL);
-		}
+			return (edit_var(temp, args));
 		temp = temp->next;
 	}
-	build_list(&env, args[0], args[1], true);
+	key_value_creator(&key_val, args);
+	build_list(&env, &key_val, true, true);
 	free(args);
 	return (NULL);
 }

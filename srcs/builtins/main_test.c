@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/09 18:32:17 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 18:45:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static t_env	*builtin_launcher(char **args, t_env *env)
 int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
-	const char	*prompt = RED "minishell> " RESET;
 	char		**args;
 	t_env		*env = NULL;
 	
@@ -86,9 +85,11 @@ int	main(int argc, char **argv, char **envp)
 	convert_env_to_list(envp, &env);
 	while (1)
 	{
-		input = readline(prompt);
+		input = readline(PROMPT);
 		if (!input)
 			break ;
+		if (!*input)
+			continue ;
 		add_history(input);
 		args = ft_split(input, ' ');
 		env = builtin_launcher(args, env);

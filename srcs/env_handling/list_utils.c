@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:01:40 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/09 19:26:12 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/10 19:16:10 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,24 @@ size_t	get_list_size(t_env *env)
 	return (i);
 }
 
-t_env	*create_new_node(char *var, char *value, bool print)
+t_env	*create_new_node(char *var, char *value, t_bool print, t_bool export)
 {
 	t_env	*node;
 
 	node = malloc(sizeof(t_env));
 	if (!node)
-		return (NULL);
+		return (malloc_error());
 	ft_memset(node, 0, sizeof(t_env));
 	node->key = ft_strdup(var);
+	if (!node->key)
+		return (malloc_error());
 	node->value = ft_strdup(value);
+	if (!node->value)
+		return (malloc_error());
 	if (print == true)
 		node->env = true;
+	if (export == true)
+		node->export = true;
 	node->next = NULL;
 	free(var);
 	free(value);
@@ -63,12 +69,12 @@ t_env	*create_new_node(char *var, char *value, bool print)
 }
 //TODO handle_close, exit et free à rajouter au plus vite
 
-void	build_list(t_env **env, char *var, char *value, bool print)
+void	build_list(t_env **env, t_keyval *key_val, t_bool print, t_bool export)
 {
 	t_env	*new_node;
 	t_env	*temp;
 
-	new_node = create_new_node(var, value, print);
+	new_node = create_new_node(key_val->key, key_val->value, print, export);
 	temp = *env;
 	if (!new_node)
 		return ;

@@ -28,4 +28,4 @@
 
 * ctrl-C  :white_check_mark:
 * ctrl-D  :white_check_mark:
-* ctrl-/  :x:
+* ctrl-/  :white_check_mark:

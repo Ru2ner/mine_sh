@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 19:57:58 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 16:04:04 by tlutz            ###   ########.fr       */
+/*   Created: 2025/04/10 15:13:28 by tlutz             #+#    #+#             */
+/*   Updated: 2025/04/10 19:15:35 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
+#include "exec.h"
 
-# include "exec.h"
+void	*add_to_export_list(t_env *env, char *arg)
+{
+	t_keyval key_value;
+	
+	key_value.key = arg;
+	key_value.value = "";
+	while (env)
+	{
+		build_list(&env, &key_value, false, true);
+		env = env->next;
+	}
+	return (NULL);
+}
 
-# define NOSUCHFILEORDIR 0
-# define NOPERMS 1
-# define NOTADIR 2
-
-void	*cd_error(int errnum);
-
-void	*malloc_error(void);
-
-#endif
+void	*print_export(t_env *env)
+{
+	while (env)
+	{
+		if (env->export == true)
+			printf("export %s=\"%s\"\n", env->key, env->value);
+		env = env->next;
+	}
+	return (NULL);
+}

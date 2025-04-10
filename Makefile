@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/09 19:18:13 by tlutz            ###   ########.fr        #
+#    Updated: 2025/04/10 16:13:18 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,9 @@ SRCS = builtins/builtin_pwd.c \
 		env_handling/env_converter.c \
 		env_handling/list_utils.c \
 		builtins_utils/free_utils.c \
-		builtins_utils/tab_utils.c
+		builtins_utils/tab_utils.c \
+		builtins_utils/export_utils.c \
+		errors_handling/errors_msgs.c
 
 OBJSDIR = build/
 
