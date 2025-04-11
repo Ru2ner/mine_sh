@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:43:25 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/11 18:59:11 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define CYAN "\033[0;36m"
 # define RESET "\033[0m"
 # define PROMPT "\033[1;31mminishell> \033[0m"
+# define DEFPATH "/usr/bin"
 
 typedef struct s_env	t_env;
 typedef struct s_token	t_token;
@@ -55,6 +56,12 @@ typedef struct s_keyval
 	char	*value;
 }	t_keyval;
 
+typedef struct t_mshell
+{
+	t_env	*env;
+	char	**args;
+}	t_mshell;
+
 /*****************************Tab Utils****************************************/
 
 size_t	get_tab_size(char **tab);
@@ -74,6 +81,8 @@ void	build_list(t_env **env, t_keyval *key_val, t_bool print, t_bool export);
 void	*convert_env_to_list(char **envp, t_env **env);
 
 char	**convert_env_to_tab(t_env *env);
+
+void	env_creator(char **envp, t_mshell *mshell);
 
 /*****************************Error Handling***********************************/
 
@@ -102,5 +111,7 @@ void	*exec_export(t_env *env, char *arg);
 void	*add_to_export_list(t_env **env, char *arg);
 
 void	*print_export(t_env *env);
+
+t_env	*builtin_launcher(char **args, t_env *env);
 
 #endif

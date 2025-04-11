@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:13:28 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 20:04:04 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/11 19:36:00 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,90 @@ void	*add_to_export_list(t_env **env, char *arg)
 	return (NULL);
 }
 
+static t_env	*copy_env_list(t_env *og)
+{
+	t_env		*copy;
+	t_env		*temp;
+	t_keyval	keyval;
+
+	copy = NULL;
+	temp = og;
+	while (temp)
+	{
+		keyval.key = ft_strdup(temp->key);
+		if (!keyval.key)
+			return (malloc_error());
+		keyval.value = ft_strdup(temp->value);
+		if (!keyval.key)
+			return (malloc_error());
+		build_list(&copy, &keyval, temp->env, temp->export);
+		temp = temp->next;
+	}
+	return (copy);
+}
+
+static void	swap_nodes(t_env *node1, t_env *node2)
+{
+	char	*temp_key;
+	char	*temp_value;
+	t_bool	temp_env;
+	t_bool	temp_export;
+
+	temp_key = node1->key;
+	node1->key = node2->key;
+	node2->key = temp_key;
+	temp_value = node1->value;
+	node1->value = node2->value;
+	node2->value = temp_value;
+	temp_env = node1->env;
+	node1->env = node2->env;
+	node2->env = temp_env;
+	temp_export = node1->export;
+	node1->export = node2->export;
+	node2->export = temp_export;
+}
+
+static void	sort_env_list(t_env **head)
+{
+	t_env	*temp;
+	int		swapped;
+
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = 0;
+		temp = *head;
+		while (temp && temp->next)
+		{
+			if (ft_strcmp(temp->key, temp->next->key) > 0)
+			{
+				swap_nodes(temp, temp->next);
+				swapped = 1;
+			}
+			temp = temp->next;
+		}
+	}
+}
+
 void	*print_export(t_env *env)
 {
-	while (env)
+	t_env	*temp;
+	t_env	*copy;
+
+	copy = copy_env_list(env);
+	sort_env_list(&copy);
+	temp = copy;
+	while (temp)
 	{
-		if (env->export == true)
+		if (temp->export == true)
 		{
-			if (env->key && env->value)
-				printf("export %s=\"%s\"\n", env->key, env->value);
-			else if (env->key && !env->value)
-				printf("export %s\n", env->key);
+			if (temp->key && temp->value)
+				printf("export %s=\"%s\"\n", temp->key, temp->value);
+			else if (temp->key && !temp->value)
+				printf("export %s\n", temp->key);
 		}
-		env = env->next;
+		temp = temp->next;
 	}
+	free_list(copy);
 	return (NULL);
 }

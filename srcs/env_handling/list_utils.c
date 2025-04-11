@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:01:40 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 20:03:12 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/11 19:36:08 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ t_env	*create_new_node(char *var, char *value, t_bool print, t_bool export)
 	node->env = print;
 	node->export = export;
 	node->next = NULL;
-	free(var);
-	free(value);
+	if (var)
+		free(var);
+	if (value)
+		free(value);
 	return (node);
 }
 //TODO handle_close, exit et free à rajouter au plus vite
@@ -78,7 +80,6 @@ void	build_list(t_env **env, t_keyval *key_val, t_bool print, t_bool export)
 	t_env	*temp;
 
 	new_node = create_new_node(key_val->key, key_val->value, print, export);
-	temp = *env;
 	if (!new_node)
 		return ;
 	if (!*env)
@@ -86,6 +87,7 @@ void	build_list(t_env **env, t_keyval *key_val, t_bool print, t_bool export)
 		*env = new_node;
 		return ;
 	}
+	temp = *env;
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new_node;

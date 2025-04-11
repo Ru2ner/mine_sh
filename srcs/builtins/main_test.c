@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:34:36 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/11 17:17:27 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,56 +35,17 @@ static void	catch_sig(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-static void	print_tab(t_env *env)
+static	t_bool	init_minishell(t_mshell *mshell)
 {
-	int		i;
-	char	**tab;
-
-	i = 0;
-	tab = convert_env_to_tab(env);
-	while (tab[i])
-	{
-		printf("%s\n", tab[i]);
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	mshell->env = NULL;
+	mshell->args = NULL;
+	return (true);
 }
 
-static t_env	*builtin_launcher(char **args, t_env *env)
+static	void	readline_loop(t_mshell *mshell)
 {
-	if (args[0] && ft_strcmp(args[0], "env") == 0)
-		print_env(env);
-	else if (args[0] && ft_strcmp(args[0], "pwd") == 0)
-		fetch_cwd(env);
-	else if (args[0] && ft_strcmp(args[0], "cd") == 0)
-		execute_cd(args[1], env);
-	else if (args[0] && ft_strcmp(args[0], "echo") == 0)
-		exec_echo(args);
-	else if (args[0] && ft_strcmp(args[0], "clear") == 0)
-		exec_clear();
-	else if (args[0] && ft_strcmp(args[0], "unset") == 0)
-		env = exec_unset(env, args[1]);
-	else if (args[0] && ft_strcmp(args[0], "export") == 0)
-		exec_export(env, args[1]);
-	else if (args[0] && ft_strcmp(args[0], "ptabenv") == 0)//TODO Useless now
-		print_tab(env);
-	else if (args[0])
-		ft_putendl_fd("Command not found", 1);
-	return (env);
-}
+	char	*input;
 
-int	main(int argc, char **argv, char **envp)
-{
-	char		*input;
-	char		**args;
-	t_env		*env;
-
-	(void)argv;
-	(void)argc;
-	env = NULL;
-	catch_sig();
-	convert_env_to_list(envp, &env);
 	while (1)
 	{
 		input = readline(PROMPT);
@@ -93,12 +54,24 @@ int	main(int argc, char **argv, char **envp)
 		if (!*input)
 			continue ;
 		add_history(input);
-		args = ft_split(input, ' ');
-		env = builtin_launcher(args, env);
+		mshell->args = ft_split(input, ' ');
+		mshell->env = builtin_launcher(mshell->args, mshell->env);
 		free(input);
-		free_tab(args);
+		free_tab(mshell->args);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_mshell	mshell;
+
+	(void)argv;
+	(void)argc;
+	catch_sig();
+	init_minishell(&mshell);
+	env_creator(envp, &mshell);
+	readline_loop(&mshell);
 	rl_clear_history();
-	free_list(env);
+	free_list(mshell.env);
 	return (0);
 }

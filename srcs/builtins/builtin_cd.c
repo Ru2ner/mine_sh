@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:12:53 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 16:11:53 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/11 19:35:44 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,25 @@ static char	*mygetenv(t_env *env, char *var)
 	return (result);
 }
 
-static void	*update_old_cwd(t_env *env, char *old_wd)
+static void	*update_old_cwd(t_env **env, char *old_wd)
 {
-	while (env)
+	t_env		*curr;
+
+	curr = *env;
+	while (curr)
 	{
-		if (ft_strcmp(env->key, "OLDPWD") == 0)
+		if (ft_strcmp(curr->key, "OLDPWD") == 0)
 		{
-			free(env->value);
-			env->value = ft_strdup(old_wd);
-			if (!env->value)
+			free(curr->value);
+			curr->value = old_wd;
+			if (!curr->value)
 				return (malloc_error());
-			break ;
+			if (curr->env == false)
+				curr->env = true;
+			return (NULL);
 		}
-		env = env->next;
+		curr = curr->next;
 	}
-	free(old_wd);
 	return (NULL);
 }
 
@@ -58,10 +62,7 @@ static void	*update_cwd(t_env *env)
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-	{
-		strerror(ENOMEM);
-		return (NULL);
-	}
+		return (malloc_error());
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PWD") == 0)
@@ -99,7 +100,7 @@ void	*execute_cd(char *path, t_env *env)
 	else if (path)
 		if (chdir(path) != 0)
 			perror("cd");
-	update_old_cwd(env, old_wd);
+	update_old_cwd(&env, old_wd);
 	update_cwd(env);
 	if (shortcut_path)
 		free(shortcut_path);

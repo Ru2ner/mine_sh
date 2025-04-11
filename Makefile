@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/10 16:13:18 by tlutz            ###   ########.fr        #
+#    Updated: 2025/04/11 17:09:40 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ LIBFTHEADER = $(LIBFTINCDIR)libft.h
 LIBFT = $(LIBFTDIR)libft.a
 
 HEADERSDIR = includes/
-HEADERS = $(HEADERSDIR)exec.h
+HEADERS = $(HEADERSDIR)exec.h \
+			$(HEADERSDIR)errors.h
 
 SRCSDIR = srcs/
 SRCS = builtins/builtin_pwd.c \
@@ -41,9 +42,11 @@ SRCS = builtins/builtin_pwd.c \
 		builtins/builtin_clear.c \
 		builtins/builtin_export.c \
 		builtins/builtin_unset.c \
+		builtins/builtin_launcher.c \
 		builtins/main_test.c \
 		env_handling/env_converter.c \
 		env_handling/list_utils.c \
+		env_handling/env_creator.c \
 		builtins_utils/free_utils.c \
 		builtins_utils/tab_utils.c \
 		builtins_utils/export_utils.c \
