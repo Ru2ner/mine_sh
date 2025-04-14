@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:13:28 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/11 19:36:00 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/14 14:48:48 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,14 @@ static t_env	*copy_env_list(t_env *og)
 		keyval.key = ft_strdup(temp->key);
 		if (!keyval.key)
 			return (malloc_error());
-		keyval.value = ft_strdup(temp->value);
-		if (!keyval.key)
-			return (malloc_error());
+		if (temp->value)
+		{
+			keyval.value = ft_strdup(temp->value);
+			if (!keyval.key)
+				return (malloc_error());
+		}
+		else
+			keyval.value = NULL;
 		build_list(&copy, &keyval, temp->env, temp->export);
 		temp = temp->next;
 	}
