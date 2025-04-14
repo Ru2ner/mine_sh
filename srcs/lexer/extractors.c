@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:45:00 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/04 19:45:57 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/14 16:28:41 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*extract_quoted_string(char **input)
 	while (**input && **input != quote)
 		(*input)++;
 	result = ft_strndup(start, *input - start);
+	if (!result)
+		return (NULL);
 	if (**input == quote)
 		(*input)++;
 	return (result);

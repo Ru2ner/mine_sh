@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_checker_utils.c                              :+:      :+:    :+:   */
+/*   quote_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 14:24:27 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/04 19:08:54 by tlutz            ###   ########.fr       */
+/*   Created: 2025/04/14 15:33:25 by tlutz             #+#    #+#             */
+/*   Updated: 2025/04/14 15:37:20 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-bool	is_special_char(char c)
+t_bool	quote_counter(char *input)
 {
-	if (c == PIPE_CHAR || c == REDIR_IN_CHAR \
-		|| c == REDIR_OUT_CHAR)
-		return (true);
-	return (false);
-}
+	size_t	i;
+	int		dquote_count;
+	int		squote_count;
 
-bool	is_whitespaces(char c)
-{
-	if (c == SPACE || c == H_TAB || c == V_TAB || c == CARR_RETURN \
-		|| c == LINE_FEED || c == FORM_FEED)
-		return (true);
-	return (false);
-}
-
-bool	is_quote(char c)
-{
-	if (c == SINGLE_QUOTE_CHAR || c == DOUBLE_QUOTE_CHAR)
+	i = 0;
+	dquote_count = 0;
+	squote_count = 0;
+	while (input[i])
+	{
+		if (input[i] == '\"')
+			dquote_count++;
+		if (input[i] == '\'')
+			squote_count++;
+		i++;
+	}
+	if (dquote_count % 2 == 0 && squote_count % 2 == 0)
 		return (true);
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/04 19:48:02 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/14 16:26:18 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,13 @@ static t_token_type	identify_special_char(const char *token)
 	return (WORD);
 }
 
-static void	append_to_list(t_token **head, t_token **curr, t_token *new_token)
-{
-	if (!*head)
-	{
-		*head = new_token;
-		*curr = new_token;
-	}
-	else
-	{
-		(*curr)->next = new_token;
-		*curr = new_token;
-	}
-}
-
 t_token	*lexer(const char *input)
 {
-	t_token	*head;
-	t_token	*curr;
-	t_token	*new_token;
+	t_token			*lexicon;
+	char			*value;
+	t_token_type	type;
 
-	head = NULL;
-	curr = NULL;
+	lexicon = NULL;
 	while (*input)
 	{
 		if (is_whitespaces(*input))
@@ -70,37 +55,22 @@ t_token	*lexer(const char *input)
 			input++;
 			continue ;
 		}
-		new_token = malloc(sizeof(t_token));
 		if (is_special_char(*input))
 		{
-			new_token->value = extract_special_char(&input);
-			new_token->type = identify_special_char(new_token->value);
+			value = extract_special_char(&input);
+			type = identify_special_char(value);
 		}
 		else if (is_quote(*input))
 		{
-			new_token->type = identify_quotes(*input);
-			new_token->value = extract_quoted_string((char **)&input);
+			type = identify_quotes(*input);
+			value = extract_quoted_string((char **)&input);
 		}
 		else
 		{
-			new_token->value = extract_word(&input);
-			new_token->type = WORD;
+			value = extract_word(&input);
+			type = WORD;
 		}
-		append_to_list(&head, &curr, new_token);
+		build_lexicon(&lexicon, value, type);
 	}
-	return (head);
-}
-
-int	main(void)
-{
-	char	input[] = "$USER";
-	t_token	*lexicon;
-
-	lexicon = lexer(input);
-	while (lexicon)
-	{
-		printf("Value : %s\n Type : %d\n\n", lexicon->value, lexicon->type);
-		lexicon = lexicon->next;
-	}
-	return (0);
+	return (lexicon);
 }
