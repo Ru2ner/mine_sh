@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:54:46 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/15 15:00:59 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,16 @@ static void	*append_handler(t_env *temp, char **args)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin(temp->value, args[1]);
+	if (temp->value)
+		tmp = ft_strjoin(temp->value, args[1]);
+	else
+		tmp = ft_strdup(args[1]);
 	if (!tmp)
 		return (malloc_error());
 	free(temp->value);
 	temp->value = tmp;
 	free_tab(args);
+	temp->env = true;
 	return (NULL);
 }
 
