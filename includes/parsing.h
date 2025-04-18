@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/14 16:16:49 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/18 13:45:30 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,19 @@ typedef struct s_token	t_token;
 
 typedef enum e_token_type
 {
-	WORD,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	HERE_DOC,
-	REDIR_OUT_APPEND,
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE
+	WORD,//0
+	PIPE,//1
+	REDIR_IN,//2
+	REDIR_OUT,//3
+	HERE_DOC,//4
+	REDIR_OUT_APPEND,//5
+	SINGLE_QUOTE,//6
+	DOUBLE_QUOTE,//7
+	FILE_DESCRIPTOR,////8
+	FOLDER,//9
+	CMD,//10
+	CMD_ARGS,//11
+	SEMICOLON//12
 }	t_token_type;
 
 typedef struct s_token
@@ -70,6 +75,12 @@ typedef enum s_bool
 	false,
 	true
 }	t_bool;
+
+typedef struct s_parse
+{
+	char	**split_input;
+	char	**envp;
+}	t_parse;
 
 /****************************Error Handling************************************/
 
@@ -92,15 +103,19 @@ char	*extract_special_char(const char **input);
 
 t_bool	quote_counter(char *input);
 
-t_token	*lexer(const char *input);
-
-void	free_list(t_token *lexicon);
+t_token	*lexer(const char *input, t_parse *pasring);
 
 t_token	*create_new_token(char *value, t_token_type type);
 
 void	build_lexicon(t_token **lexicon, char *value, t_token_type type);
 
 /******************************Args Checks*************************************/
+
+/******************************free_stuff*************************************/
+
+void	free_tab(char **tab);
+
+void	free_list(t_token *lexicon);
 
 
 

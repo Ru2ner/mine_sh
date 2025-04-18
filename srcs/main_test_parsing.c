@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main_test_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/14 16:36:35 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/18 13:59:59 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -33,7 +34,7 @@ static void	catch_sig(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-t_token	*create_lexicon(char *input)
+t_token	*create_lexicon(char *input, t_parse *parsing)
 {
 	t_token	*lexicon;
 	t_token	*temp;
@@ -43,7 +44,7 @@ t_token	*create_lexicon(char *input)
 		printf("There is an odd number of quotes\n");
 		return (NULL);
 	}
-	lexicon = lexer(input);
+	lexicon = lexer(input, parsing);
 	temp = lexicon;
 	while (temp)
 	{
@@ -56,18 +57,32 @@ t_token	*create_lexicon(char *input)
 static void	readline_loop()
 {
 	char	*input;
+	char	**split_input;
 	t_token	*lexicon;
+	t_parse	*parsing;
 
+	
+	split_input = NULL;
+	parsing = NULL;
+	// ft_memset(&parsing, 0, sizeof(t_parse));
 	while (1)
 	{
 		input = readline(PROMPT);
+		// split_input = ft_split_charset(input, " ");
+		// if (!split_input)
+		// 	break ;
+		// parsing->split_input = split_input;
+		// parsing->envp = envp;
+		// if (!split_input)
+		// 	break;
 		if (!input)
 			break ;
 		if (!*input)
 			continue ;
 		add_history(input);
-		lexicon = create_lexicon(input);
+		lexicon = create_lexicon(input, parsing);
 		free(input);
+		free_tab(split_input);
 		free_list(lexicon);
 	}
 }
