@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/18 13:45:30 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/19 13:08:18 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,14 @@ t_token	*create_new_token(char *value, t_token_type type);
 void	build_lexicon(t_token **lexicon, char *value, t_token_type type);
 
 /******************************Args Checks*************************************/
+
+char	**get_paths(char **env);
+
+char	**cmd_arg(char *cmd);
+
+char	*cmd_path(char *cmd, char **path);
+
+void	identify_cmd_args(t_token *lexicon);
 
 /******************************free_stuff*************************************/
 

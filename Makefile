@@ -6,7 +6,7 @@
 #    By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/26 16:56:56 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/18 13:23:52 by tmarion          ###   ########.fr        #
+#    Updated: 2025/04/19 03:34:39 by tmarion          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCSDIR = srcs/
 SRCS = lexer/lexer_utils/quote_checker.c \
 		lexer/lexer_utils/token_checker_utils.c \
 		lexer/lexer_utils/free.c \
+		lexer/lexer_utils/path_access.c \
 		lexer/lexer_utils/list_utils.c \
 		lexer/extractors.c \
 		lexer/lexer.c \

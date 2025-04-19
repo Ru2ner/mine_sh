@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/18 14:01:40 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/19 13:08:47 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,43 +42,34 @@ static t_token_type	identify_special_char(const char *token)
 		return (SINGLE_QUOTE);
 	else if (ft_strcmp(token, "\"") == 0)
 		return (DOUBLE_QUOTE);
+	else if (ft_strcmp(token, ";") == 0)
+		return (SEMICOLON);
 	return (WORD);
 }
 
 
-static t_token_type what_is_this(t_parse *parsing)
+static t_token_type	specify_each_words(char *value, t_parse *parsing)
 {
-		(void)parsing;
-	// struct stat type;
-	// int			i;
+	struct	stat	type;
+	char			**paths;
 
-	// i = 0;
-
-	// while (parsing->split_input[i])
-	// {
-	// 	printf("split: %s\n", parsing->split_input[i]);
-	// 	i++;
-	// }
-	// i = 0;
-	// while (parsing->envp[i])
-	// {
-	// 	printf("env: %s\n", parsing->envp[i]);
-	// 	i++;
-	// }
-	// while (token[i])
-	// {
-	// 	if (lstat(token[i], &type) == -1)
-	// 		return (WORD);
-	// 	if (S_ISDIR(type.st_mode))
-	// 		return (FOLDER);
-	// 	else if (S_ISREG(type.st_mode))
-	// 		return (FILE_DESCRIPTOR);
-	// 	else if (access(token[i], W_OK))//absolute path -> pipex FIX
-	// 		return (CMD);
-	// 	else
-	// 		return (WORD);
-	// 	i++;
-	// }
+	paths = get_paths(parsing->envp);
+	lstat(value, &type);
+	if (S_ISDIR(type.st_mode))
+	{
+		free_tab(paths);
+		return (FOLDER);
+	}
+	else if (S_ISREG(type.st_mode))
+	{
+		free_tab(paths);
+		return (FILE_DESCRIPTOR);
+	}
+	else if (cmd_path(value, paths))
+	{
+		free_tab(paths);
+		return (CMD);
+	}
 	return (WORD);
 }
 
@@ -111,10 +102,10 @@ t_token	*lexer(const char *input, t_parse *parsing)
 		else
 		{
 			value = extract_word(&input);
-			type = what_is_this(parsing);
-			type = WORD;
+			type = specify_each_words(value, parsing);
 		}
 		build_lexicon(&lexicon, value, type);
 	}
+	identify_cmd_args(lexicon);
 	return (lexicon);
 }

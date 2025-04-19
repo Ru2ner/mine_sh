@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/18 13:59:59 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/19 12:54:01 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token	*create_lexicon(char *input, t_parse *parsing)
 	return (lexicon);
 }
 
-static void	readline_loop()
+static void	readline_loop(char **envp)
 {
 	char	*input;
 	char	**split_input;
@@ -63,18 +63,17 @@ static void	readline_loop()
 
 	
 	split_input = NULL;
-	parsing = NULL;
-	// ft_memset(&parsing, 0, sizeof(t_parse));
+	parsing = malloc(sizeof(t_parse));
 	while (1)
 	{
 		input = readline(PROMPT);
-		// split_input = ft_split_charset(input, " ");
-		// if (!split_input)
-		// 	break ;
-		// parsing->split_input = split_input;
-		// parsing->envp = envp;
-		// if (!split_input)
-		// 	break;
+		split_input = ft_split_charset(input, " ");
+		if (!split_input)
+			break ;
+		parsing->split_input = split_input;
+		parsing->envp = envp;
+		if (!split_input)
+			break;
 		if (!input)
 			break ;
 		if (!*input)
@@ -91,10 +90,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argv;
 	(void)argc;
-	(void)envp;
 
 	catch_sig();
-	readline_loop();
+	readline_loop(envp);
 	rl_clear_history();
 	return (0);
 }
