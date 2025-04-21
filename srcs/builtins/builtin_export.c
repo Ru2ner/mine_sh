@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/15 15:00:59 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/18 18:52:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	*edit_var(t_env *temp, char **args)
 	return (NULL);
 }
 
-void	*exec_export(t_env *env, char *arg)
+void	*export(t_env *env, char *arg)
 {
 	t_env		*temp;
 	char		**args;

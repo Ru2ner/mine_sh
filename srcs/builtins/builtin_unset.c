@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:13 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:21:18 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/18 18:52:15 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static	void	destroy_node(t_env *temp)
 		free(temp);
 }
 
-t_env	*exec_unset(t_env *env, const char *key)
+t_env	*unset(t_env *env, const char *key)
 {
 	t_env	*temp;
 	t_env	*prev;

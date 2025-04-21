@@ -6,12 +6,40 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:49:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/11 17:09:59 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/18 19:04:29 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
+
+static t_env	*exec_unset(t_env *env, char **args)
+{
+	size_t	i;
+	t_env	*temp;
+	i = 1;
+	while (args[i])
+	{
+		temp = unset(env, args[i]);
+		i++;
+	}
+	return (temp);
+}
+
+static void	*exec_export(t_env *env, char **args)
+{
+	size_t	i;
+	
+	i = 1;
+	if (args[1] == NULL)
+		export(env, NULL);
+	while (args[i])
+	{
+		export(env, args[i]);
+		i++;
+	}
+	return (NULL);
+}
 
 t_env	*builtin_launcher(char **args, t_env *env)
 {
@@ -26,9 +54,9 @@ t_env	*builtin_launcher(char **args, t_env *env)
 	else if (args[0] && ft_strcmp(args[0], "clear") == 0)
 		exec_clear();
 	else if (args[0] && ft_strcmp(args[0], "unset") == 0)
-		env = exec_unset(env, args[1]);
+		env = exec_unset(env, args);
 	else if (args[0] && ft_strcmp(args[0], "export") == 0)
-		exec_export(env, args[1]);
+		exec_export(env, args);
 	else if (args[0])
 		ft_putendl_fd("Command not found", 1);
 	return (env);

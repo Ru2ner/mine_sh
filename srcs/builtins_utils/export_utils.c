@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:13:28 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/14 14:48:48 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/21 18:50:21 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 void	*add_to_export_list(t_env **env, char *arg)
 {
 	t_keyval	key_value;
+	t_env		*temp;
 
+	temp = *env;
+	while (temp)
+	{
+		if (ft_strcmp(arg, temp->key) == 0)
+			return (NULL);
+		temp = temp->next;
+	}
 	key_value.key = ft_strdup(arg);
 	key_value.value = NULL;
 	build_list(env, &key_value, false, true);
