@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:24:27 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/23 13:24:19 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/23 14:02:01 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_bool is_builtin(char *str)
 	else if (ft_strncmp(str, "env", 4) == 0)
 		return (true);
 	else if (ft_strncmp(str, "exit", 4) == 0)
+		return (true);
+	else if (ft_strncmp(str, "clear", 5) == 0)
 		return (true);
 	return (false);
 }
