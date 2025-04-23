@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/19 12:54:01 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:15:11 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_token	*create_lexicon(char *input, t_parse *parsing)
 		return (NULL);
 	}
 	lexicon = lexer(input, parsing);
+	
 	temp = lexicon;
 	while (temp)
 	{
@@ -56,31 +57,26 @@ t_token	*create_lexicon(char *input, t_parse *parsing)
 
 static void	readline_loop(char **envp)
 {
-	char	*input;
 	char	**split_input;
 	t_token	*lexicon;
-	t_parse	*parsing;
+	t_parse	parsing;
 
 	
 	split_input = NULL;
-	parsing = malloc(sizeof(t_parse));
 	while (1)
 	{
-		input = readline(PROMPT);
-		split_input = ft_split_charset(input, " ");
-		if (!split_input)
+		parsing.input = readline(PROMPT);
+		parsing.split_input = ft_split_charset(parsing.input, " ");
+		if (!parsing.split_input)
 			break ;
-		parsing->split_input = split_input;
-		parsing->envp = envp;
-		if (!split_input)
-			break;
-		if (!input)
+		parsing.envp = envp;
+		if (!parsing.input)
 			break ;
-		if (!*input)
+		if (!parsing.input[0])
 			continue ;
-		add_history(input);
-		lexicon = create_lexicon(input, parsing);
-		free(input);
+		add_history(parsing.input);
+		lexicon = create_lexicon(parsing.input, &parsing);
+		free(parsing.input);
 		free_tab(split_input);
 		free_list(lexicon);
 	}

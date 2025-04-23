@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:34:45 by tmarion           #+#    #+#             */
-/*   Updated: 2025/04/19 13:03:56 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:16:54 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,4 @@ char	*cmd_path(char *cmd, char **path)
 		free(tempo);
 	}
 	return (NULL);
-}
-
-void	identify_cmd_args(t_token *lexicon)
-{
-	while(lexicon)
-	{
-		if (lexicon->type == CMD && lexicon->next)
-		{
-			if (ft_strchr(lexicon->next->value, '-'))
-				lexicon->next->type = CMD_ARGS;
-		}
-		lexicon = lexicon->next;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/19 13:08:18 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:13:52 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,13 @@ typedef enum e_token_type
 	REDIR_OUT_APPEND,//5
 	SINGLE_QUOTE,//6
 	DOUBLE_QUOTE,//7
-	FILE_DESCRIPTOR,////8
+	FD,////8
 	FOLDER,//9
 	CMD,//10
 	CMD_ARGS,//11
-	SEMICOLON//12
+	SEMICOLON,//12
+	INFILE,//13
+	OUTFILE//14
 }	t_token_type;
 
 typedef struct s_token
@@ -78,6 +80,7 @@ typedef enum s_bool
 
 typedef struct s_parse
 {
+	char	*input;
 	char	**split_input;
 	char	**envp;
 }	t_parse;
@@ -94,6 +97,12 @@ t_bool	is_special_char(char c);
 t_bool	is_whitespaces(char c);
 
 t_bool	is_quote(char c);
+
+t_bool	is_builtin(char *str);
+
+t_bool	is_pipe(t_token *lexicon);
+
+t_bool	is_redir(t_token *lexicon);
 
 char	*extract_quoted_string(char **input);
 
@@ -116,8 +125,6 @@ char	**get_paths(char **env);
 char	**cmd_arg(char *cmd);
 
 char	*cmd_path(char *cmd, char **path);
-
-void	identify_cmd_args(t_token *lexicon);
 
 /******************************free_stuff*************************************/
 

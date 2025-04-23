@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/19 13:08:47 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/23 13:25:15 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_token_type	specify_each_words(char *value, t_parse *parsing)
 	else if (S_ISREG(type.st_mode))
 	{
 		free_tab(paths);
-		return (FILE_DESCRIPTOR);
+		return (FD);
 	}
 	else if (cmd_path(value, paths))
 	{
@@ -71,6 +71,24 @@ static t_token_type	specify_each_words(char *value, t_parse *parsing)
 		return (CMD);
 	}
 	return (WORD);
+}
+
+void	identify_redir_file(t_token *lexicon)
+{
+	int	i;
+
+	i = 0;
+	while (lexicon->next)
+	{
+		if (lexicon->type == FD && i == 0)
+		{
+			lexicon->type = INFILE;
+			i++;
+		}
+		if (lexicon->type == REDIR_OUT && lexicon->next->type == FD)
+			lexicon->next->type = OUTFILE;
+		lexicon = lexicon->next;
+	}
 }
 
 
@@ -103,9 +121,12 @@ t_token	*lexer(const char *input, t_parse *parsing)
 		{
 			value = extract_word(&input);
 			type = specify_each_words(value, parsing);
+			if (is_builtin(value))
+				type = CMD;
 		}
 		build_lexicon(&lexicon, value, type);
 	}
-	identify_cmd_args(lexicon);
+	if (is_pipe(lexicon) || is_redir(lexicon))
+		identify_redir_file(lexicon);
 	return (lexicon);
 }
