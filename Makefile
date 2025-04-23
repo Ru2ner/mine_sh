@@ -6,7 +6,7 @@
 #    By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/26 16:56:56 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/23 11:24:27 by tmarion          ###   ########.fr        #
+#    Updated: 2025/04/23 16:44:21 by tmarion          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		lexer/lexer_utils/list_utils.c \
 		lexer/extractors.c \
 		lexer/lexer.c \
+		parser/parse_utils.c\
 		main_test_parsing.c \
 
 OBJSDIR = build/
