@@ -6,11 +6,12 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:48 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 16:13:10 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/24 12:54:28 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
+#include "libft.h"
 
 void	*malloc_error(void)
 {
@@ -26,5 +27,7 @@ void	*cd_error(int errnum)
 		strerror(EACCES);
 	if (errnum == NOTADIR)
 		strerror(ENOTDIR);
+	if (errnum == HOMENOTSET)
+		ft_putendl_fd(HOME_ERR_STR, 2);
 	return (NULL);
 }

@@ -6,15 +6,13 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/18 18:52:09 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/24 12:40:47 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-//TODO Args pour export doivent uniquement être underscore et lettres en début
-//TODO pas de = au début des args
 static void	*key_value_creator(t_keyval *key_val, char **args)
 {
 	if (args[0] && args[1])

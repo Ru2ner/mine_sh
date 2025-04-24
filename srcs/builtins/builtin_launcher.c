@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:49:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/18 19:04:29 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/24 12:43:58 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 static t_env	*exec_unset(t_env *env, char **args)
 {
 	size_t	i;
-	t_env	*temp;
+	
 	i = 1;
 	while (args[i])
 	{
-		temp = unset(env, args[i]);
+		env = unset(env, args[i]);
 		i++;
 	}
-	return (temp);
+	return (env);
 }
 
 static void	*exec_export(t_env *env, char **args)

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/18 18:52:01 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/24 19:02:39 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
-# include "errors.h"
 
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
@@ -40,6 +39,8 @@ typedef enum e_bool
 	false,
 	true	
 }	t_bool;
+
+# include "errors.h"
 
 typedef struct s_env
 {
