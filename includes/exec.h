@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/24 19:02:39 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/24 20:24:06 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@ typedef enum e_bool
 }	t_bool;
 
 # include "errors.h"
+
+typedef struct s_cmd
+{
+	char	**args; // Cmd dans le slot 0 et arguments ensuite
+	char	*infile; // Ou fd si on peut open plus tôt dans le programme
+	char	*outfile; // idem
+	t_bool	append; // true pour >> false pour >
+	char	*heredoc; // Delimiter pour le here_doc, si besoin
+	t_cmd	*next;
+}	t_cmd;
 
 typedef struct s_env
 {
