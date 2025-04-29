@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/23 16:39:30 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/29 13:07:23 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ t_token	*lexer(const char *input, t_parse *pasring);
 t_token	*create_new_token(char *value, t_token_type type);
 
 void	build_lexicon(t_token **lexicon, char *value, t_token_type type);
+
+t_bool	parsing_input(t_token *lexicon);
 
 /******************************Args Checks*************************************/
 
