@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/23 13:15:11 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/29 11:55:31 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ static void	readline_loop(char **envp)
 			continue ;
 		add_history(parsing.input);
 		lexicon = create_lexicon(parsing.input, &parsing);
+		if (parsing(lexicon) == false)//
+			break ;
 		free(parsing.input);
 		free_tab(split_input);
 		free_list(lexicon);
