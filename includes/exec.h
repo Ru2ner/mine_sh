@@ -42,6 +42,8 @@ typedef enum e_bool
 
 # include "errors.h"
 
+typedef struct s_cmd  t_cmd;
+
 typedef struct s_cmd
 {
 	char	**args; // Cmd dans le slot 0 et arguments ensuite
