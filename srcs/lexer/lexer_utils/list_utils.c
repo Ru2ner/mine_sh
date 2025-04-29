@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:04:35 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/14 16:16:15 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/29 17:30:09 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,16 @@ void	free_list(t_token *lexicon)
 	{
 		temp = lexicon;
 		lexicon = lexicon->next;
-		free(temp->value);
-		free(temp);
+		if (temp->value)
+		{
+			free(temp->value);
+			temp->value = NULL;
+		}
+		if (temp)
+		{
+			free(temp);
+			temp = NULL;
+		}
 	}
 }
 
@@ -55,8 +63,6 @@ t_token	*create_new_token(char *value, t_token_type type)
 		return (NULL);
 	token->type = type;
 	token->next = NULL;
-	if (value)
-		free(value);
 	return (token);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/29 13:31:41 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/29 17:09:21 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,16 @@ static t_token_type	specify_each_words(char *value, t_parse *parsing)
 	struct	stat	type;
 	char			**paths;
 
+	if (!value || !parsing)
+		return (ERROR);
 	paths = get_paths(parsing->envp);
 	lstat(value, &type);
-	if (S_ISDIR(type.st_mode))
+	if (cmd_path(value, paths))
+	{
+		free_tab(paths);
+		return (CMD);
+	}
+	else if (S_ISDIR(type.st_mode))
 	{
 		free_tab(paths);
 		return (FOLDER);
@@ -64,11 +71,6 @@ static t_token_type	specify_each_words(char *value, t_parse *parsing)
 	{
 		free_tab(paths);
 		return (FD);
-	}
-	else if (cmd_path(value, paths))
-	{
-		free_tab(paths);
-		return (CMD);
 	}
 	return (WORD);
 }
@@ -92,14 +94,11 @@ void	identify_redir_file(t_token *lexicon)
 }
 
 
-t_token	*lexer(const char *input, t_parse *parsing)
+t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon)
 {
-	t_token			*lexicon;
 	t_token_type	type;
 	char			*value;
 
-	lexicon = malloc(sizeof(t_token));
-	ft_memset(lexicon, 0, sizeof(t_token));
 	while (*input)
 	{
 		if (is_whitespaces(*input))
@@ -115,7 +114,7 @@ t_token	*lexer(const char *input, t_parse *parsing)
 		else if (is_quote(*input))
 		{
 			type = identify_quotes(*input);
-			value = extract_quoted_string((char **)&input);
+			value = extract_quoted_string((char **)input);
 		}
 		else
 		{
@@ -124,9 +123,9 @@ t_token	*lexer(const char *input, t_parse *parsing)
 			if (is_builtin(value))
 				type = CMD;
 		}
-		build_lexicon(&lexicon, value, type);
+		build_lexicon(lexicon, value, type);
 	}
-	if (is_pipe(lexicon) || is_redir(lexicon))
-		identify_redir_file(lexicon);
-	return (lexicon);
+	if (is_pipe(*lexicon) || is_redir(*lexicon))
+		identify_redir_file(*lexicon);
+	return (*lexicon);
 }

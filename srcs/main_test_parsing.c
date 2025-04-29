@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/29 13:16:23 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/29 17:30:11 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,31 @@ static void	catch_sig(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-t_token	*create_lexicon(char *input, t_parse *parsing)
+void	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 {
-	t_token	*lexicon;
 	t_token	*temp;
 
 	if (quote_counter(input) == false)
 	{
 		printf("There is an odd number of quotes\n");
-		return (NULL);
+		return ;
 	}
-	lexicon = lexer(input, parsing);
-	
-	temp = lexicon;
+	lexer(input, parsing, lexicon);
+	temp = *lexicon;
 	while (temp)
 	{
 		printf("Value : %s\n Type : %d\n\n", temp->value, temp->type);
 		temp = temp->next;
 	}
-	return (lexicon);
 }
 
 static void	readline_loop(char **envp)
 {
 	char	**split_input;
-	t_token	*lexicon;
+	t_token *lexicon;
 	t_parse	parsing;
 
-	
+	lexicon = NULL;
 	split_input = NULL;
 	while (1)
 	{
@@ -75,12 +72,13 @@ static void	readline_loop(char **envp)
 		if (!parsing.input[0])
 			continue ;
 		add_history(parsing.input);
-		lexicon = create_lexicon(parsing.input, &parsing);
+		create_lexicon(parsing.input, &parsing, &lexicon);///
 		if (parsing_input(lexicon) == false)//
 			ft_putstr_fd("failed to parse\n", 2);
 		free(parsing.input);
 		free_tab(split_input);
 		free_list(lexicon);
+		lexicon = NULL;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/29 13:07:23 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/29 17:00:33 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ typedef enum e_token_type
 	CMD_ARGS,//11
 	SEMICOLON,//12
 	INFILE,//13
-	OUTFILE//14
+	OUTFILE,//14
+	ERROR//15
 }	t_token_type;
 
 typedef struct s_token
@@ -105,6 +106,7 @@ t_bool	is_pipe(t_token *lexicon);
 t_bool	is_redir(t_token *lexicon);
 
 char	*extract_quoted_string(char **input);
+// char *extract_quoted_string(char *input);
 
 char	*extract_word(const char **input);
 
@@ -112,7 +114,7 @@ char	*extract_special_char(const char **input);
 
 t_bool	quote_counter(char *input);
 
-t_token	*lexer(const char *input, t_parse *pasring);
+t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon);
 
 t_token	*create_new_token(char *value, t_token_type type);
 

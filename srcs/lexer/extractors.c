@@ -3,15 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   extractors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:45:00 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/14 16:28:41 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/29 17:34:05 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
+
+// char which_quote(char quote)
+// {
+// 	if (quote == 22)
+// 		return (27);
+// 	else
+// 		return (22);
+// }
+
+// // char *exctract_full_string(char *input)
+// // {
+	
+// // }
+
+// char *extract_quoted_string(char *input)
+// {
+// 	char 	*result;
+// 	char 	quote;
+// 	char	other_quote;
+// 	int		start;
+// 	int		i;
+
+// 	i = 0;
+// 	quote = input[i];
+// 	other_quote = which_quote(quote);
+// 	while (input[i] == quote)
+// 	{
+// 		(* input)++;
+// 		i++;
+// 	}
+// 	start = i;
+// 	while (input[i] != quote && input[i])
+// 	{
+// 		(* input)++;
+// 		i++;
+// 	}
+// 	result = ft_strndup(input + start, i - start - 1);
+// 	(* input) + i;
+	// printf("%s\n", result);
+	// if (input[i] == quote && input[i + 1] == other_quote)
+	// 	result = extract_full_string(input + i);
+	// return (input);
+// }
+///////////////////////////////////////////////////////////////////////////////////
 
 char	*extract_quoted_string(char **input)
 {
