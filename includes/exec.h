@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/24 20:24:06 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/30 15:10:50 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_cmd
 	char	*infile; // Ou fd si on peut open plus tôt dans le programme
 	char	*outfile; // idem
 	t_bool	append; // true pour >> false pour >
+	t_bool	pipe; // si pipe ensuite
 	char	*heredoc; // Delimiter pour le here_doc, si besoin
 	t_cmd	*next;
 }	t_cmd;
@@ -73,6 +74,7 @@ typedef struct t_mshell
 {
 	t_env	*env;
 	char	**args;
+	// t_token	*lexicon; --> t_cmd
 }	t_mshell;
 
 /*****************************Tab Utils****************************************/
