@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:04:35 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/29 17:30:09 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/30 15:40:00 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
 
-void	free_list(t_token *lexicon)
+void	free_lexicon(t_token *lexicon)
 {
 	t_token	*temp;
 
@@ -36,7 +36,7 @@ void	free_list(t_token *lexicon)
 	}
 }
 
-size_t	get_list_size(t_token *lexicon)
+size_t	get_lexicon_size(t_token *lexicon)
 {
 	size_t	i;
 

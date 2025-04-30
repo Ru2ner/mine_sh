@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/30 12:41:38 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/30 15:39:39 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	readline_loop(char **envp)
 			ft_putstr_fd("failed to parse\n", 2);
 		free(parsing.input);
 		free_tab(split_input);
-		free_list(lexicon);
+		free_lexicon(lexicon);
 		lexicon = NULL;
 	}
 }

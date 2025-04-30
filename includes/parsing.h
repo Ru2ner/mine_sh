@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/30 15:28:57 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/04/30 15:39:39 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ char	*cmd_path(char *cmd, char **path);
 
 void	free_tab(char **tab);
 
-void	free_list(t_token *lexicon);
+void	free_lexicon(t_token *lexicon);
 
 
 
