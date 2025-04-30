@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/29 17:09:21 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/30 12:16:32 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon)
 		else if (is_quote(*input))
 		{
 			type = identify_quotes(*input);
-			value = extract_quoted_string((char **)input);
+			value = extract_quoted_string((char *)input);
+			input += ft_strlen(value) + 2;
 		}
 		else
 		{

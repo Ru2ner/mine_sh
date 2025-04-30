@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/29 17:00:33 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/30 12:41:23 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ t_bool	is_pipe(t_token *lexicon);
 
 t_bool	is_redir(t_token *lexicon);
 
-char	*extract_quoted_string(char **input);
-// char *extract_quoted_string(char *input);
+char	*extract_quoted_string(char *input);
 
 char	*extract_word(const char **input);
 

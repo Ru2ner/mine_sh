@@ -6,73 +6,52 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:45:00 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/29 17:34:05 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/30 12:35:51 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
 
-// char which_quote(char quote)
-// {
-// 	if (quote == 22)
-// 		return (27);
-// 	else
-// 		return (22);
-// }
+static int	is_linked_quote_string(char *input)
+{
+	int	i;
+	int	count;
 
-// // char *exctract_full_string(char *input)
-// // {
-	
-// // }
+	printf("input: %s\n", input);
+	count = -2;
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '\'' || input[i] == '\"')
+			count++;
+		if (input[i] == ' ')
+			return (0);
+		i++;
+	}
+	return (count);
+}
 
-// char *extract_quoted_string(char *input)
-// {
-// 	char 	*result;
-// 	char 	quote;
-// 	char	other_quote;
-// 	int		start;
-// 	int		i;
-
-// 	i = 0;
-// 	quote = input[i];
-// 	other_quote = which_quote(quote);
-// 	while (input[i] == quote)
-// 	{
-// 		(* input)++;
-// 		i++;
-// 	}
-// 	start = i;
-// 	while (input[i] != quote && input[i])
-// 	{
-// 		(* input)++;
-// 		i++;
-// 	}
-// 	result = ft_strndup(input + start, i - start - 1);
-// 	(* input) + i;
-	// printf("%s\n", result);
-	// if (input[i] == quote && input[i + 1] == other_quote)
-	// 	result = extract_full_string(input + i);
-	// return (input);
-// }
-///////////////////////////////////////////////////////////////////////////////////
-
-char	*extract_quoted_string(char **input)
+char	*extract_quoted_string(char *input)
 {
 	char	*result;
 	char	quote;
-	char	*start;
+	int		start;
+	int		i;
+	int		link = is_linked_quote_string(input) / 2;
 
-	quote = **input;
-	(*input)++;
-	start = *input;
-	while (**input && **input != quote)
-		(*input)++;
-	result = ft_strndup(start, *input - start);
+	printf("link: %d\n", link);
+	i = 0;
+	if (!input)
+		return (NULL);
+	quote = input[i];
+	i++;
+	start = i;
+	while (input[i] && input[i] != quote)
+		i++;
+	result = ft_strndup(input + start, i - start);
 	if (!result)
 		return (NULL);
-	if (**input == quote)
-		(*input)++;
 	return (result);
 }
 
