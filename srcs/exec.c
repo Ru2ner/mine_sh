@@ -1,26 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 13:42:01 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/25 14:29:22 by tlutz            ###   ########.fr       */
+/*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
+/*   Updated: 2025/04/30 15:16:10 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "libft.h"
-
-void	print_env(t_env *env)
-{
-	if (!env)
-		return ;
-	while (env)
-	{
-		if (env->env == true)
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-}

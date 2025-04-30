@@ -1,26 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 13:42:01 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/25 14:29:22 by tlutz            ###   ########.fr       */
+/*   Created: 2025/04/24 19:37:40 by tlutz             #+#    #+#             */
+/*   Updated: 2025/04/24 20:12:53 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "libft.h"
 
-void	print_env(t_env *env)
-{
-	if (!env)
-		return ;
-	while (env)
-	{
-		if (env->env == true)
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-}
+int	duplicate_io()

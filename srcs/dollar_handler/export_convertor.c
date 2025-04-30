@@ -1,26 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   export_convertor.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 13:42:01 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/25 14:29:22 by tlutz            ###   ########.fr       */
+/*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
+/*   Updated: 2025/04/30 13:41:29 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-void	print_env(t_env *env)
-{
-	if (!env)
-		return ;
-	while (env)
-	{
-		if (env->env == true)
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
-}

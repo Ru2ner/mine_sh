@@ -8,6 +8,7 @@
 * unset  :white_check_mark:
 * env  :white_check_mark:
 * exit  :x:
+* clear :white_check_mark:
 
 # PIPES AND REDIRECTIONS
 
@@ -27,4 +28,4 @@
 
 * ctrl-C  :white_check_mark:
 * ctrl-D  :white_check_mark:
-* ctrl-/  :x:
+* ctrl-/  :white_check_mark:

@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/26 16:56:56 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/30 15:24:25 by tlutz            ###   ########.fr        #
+#    Updated: 2025/04/30 15:35:59 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,10 @@ LIBFTHEADER = $(LIBFTINCDIR)libft.h
 LIBFT = $(LIBFTDIR)libft.a
 
 HEADERSDIR = includes/
-HEADERS = $(HEADERSDIR)parsing.h
+
+HEADERS = $(HEADERSDIR)parsing.h \
+			$(HEADERSDIR)exec.h \
+			$(HEADERSDIR)errors.h
 
 SRCSDIR = srcs/
 SRCS = lexer/lexer_utils/quote_checker.c \
@@ -44,6 +47,22 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		lexer/lexer.c \
 		parser/parse_utils.c\
 		main_test_parsing.c \
+		builtins/builtin_pwd.c \
+		builtins/builtin_env.c \
+		builtins/builtin_cd.c \
+		builtins/builtin_echo.c \
+		builtins/builtin_clear.c \
+		builtins/builtin_export.c \
+		builtins/builtin_unset.c \
+		builtins/builtin_launcher.c \
+		builtins/main_test.c \
+		env_handling/env_converter.c \
+		env_handling/list_utils.c \
+		env_handling/env_creator.c \
+		builtins_utils/free_utils.c \
+		builtins_utils/tab_utils.c \
+		builtins_utils/export_utils.c \
+		errors_handling/errors_msgs.c
 
 OBJSDIR = build/
 

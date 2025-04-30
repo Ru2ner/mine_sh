@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   tab_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 13:42:01 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/25 14:29:22 by tlutz            ###   ########.fr       */
+/*   Created: 2025/04/03 15:02:25 by tlutz             #+#    #+#             */
+/*   Updated: 2025/04/09 19:33:30 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "libft.h"
 
-void	print_env(t_env *env)
+size_t	get_tab_size(char **tab)
 {
-	if (!env)
-		return ;
-	while (env)
-	{
-		if (env->env == true)
-			printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
+	size_t	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }
