@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/11 17:17:27 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/03 10:48:57 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,6 @@ static void	catch_sig(void)
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
-}
-
-static	t_bool	init_minishell(t_mshell *mshell)
-{
-	mshell->env = NULL;
-	mshell->args = NULL;
-	return (true);
 }
 
 static	void	readline_loop(t_mshell *mshell)

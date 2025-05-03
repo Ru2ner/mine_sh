@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/30 15:10:50 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/03 10:46:37 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <string.h>
 # include <errno.h>
 
+# include "parsing.h"
+# include "share_header.h"
+
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
 # define BLUE "\033[1;34m"
@@ -34,11 +37,6 @@ typedef struct s_env	t_env;
 typedef struct s_token	t_token;
 typedef struct s_exec	t_exec;
 
-typedef enum e_bool
-{
-	false,
-	true	
-}	t_bool;
 
 # include "errors.h"
 
@@ -55,14 +53,14 @@ typedef struct s_cmd
 	t_cmd	*next;
 }	t_cmd;
 
-typedef struct s_env
-{
-	char	*key;
-	char	*value;
-	t_bool	export;
-	t_bool	env;
-	t_env	*next;
-}	t_env;
+// typedef struct s_env
+// {
+// 	char	*key;
+// 	char	*value;
+// 	t_bool	export;
+// 	t_bool	env;
+// 	t_env	*next;
+// }	t_env;
 
 typedef struct s_keyval
 {
@@ -70,12 +68,12 @@ typedef struct s_keyval
 	char	*value;
 }	t_keyval;
 
-typedef struct t_mshell
-{
-	t_env	*env;
-	char	**args;
-	// t_token	*lexicon; --> t_cmd
-}	t_mshell;
+// typedef struct t_mshell
+// {
+// 	t_env	*env;
+// 	char	**args;
+// 	// t_token	*lexicon; --> t_cmd
+// }	t_mshell;
 
 /*****************************Tab Utils****************************************/
 
@@ -100,8 +98,6 @@ char	**convert_env_to_tab(t_env *env);
 void	env_creator(char **envp, t_mshell *mshell);
 
 /*****************************Error Handling***********************************/
-
-void	*free_tab(char **tab);
 
 /*******************************Main Exec**************************************/
 

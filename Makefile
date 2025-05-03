@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
+#    By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/26 16:56:56 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/30 15:43:25 by tlutz            ###   ########.fr        #
+#    Updated: 2025/05/03 10:20:32 by tmarion          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,16 @@ CC = cc
 
 LIBFTDIR = 42Libft/
 LIBFTINCDIR = $(LIBFTDIR)includes/
-LIBFTHEADER = $(LIBFTINCDIR)libft.h
+LIBFTHEADER = $(LIBFTINCDIR)libft.h \
+				$(LIBFTINCDIR)get_next_line.h
 LIBFT = $(LIBFTDIR)libft.a
 
 HEADERSDIR = includes/
 
 HEADERS = $(HEADERSDIR)parsing.h \
 			$(HEADERSDIR)exec.h \
+			$(HEADERSDIR)pipex_bonus.h \
+			$(HEADERSDIR)share_header.h \
 			$(HEADERSDIR)errors.h
 
 SRCSDIR = srcs/
@@ -60,7 +63,14 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		builtins_utils/tab_utils.c \
 		builtins_utils/export_utils.c \
 		errors_handling/errors_msgs.c \
+		pipex_exec/pipex_bonus.c \
+		pipex_exec/pipex_utils_bonus_1.c \
+		pipex_exec/pipex_utils_bonus_2.c \
+		pipex_exec/pipex_utils_bonus.c \
+		exec/exec.c \
 		main_test_parsing.c \
+		# expand_handler.c \
+		# exec/exec_utils.c \
 		# builtins/main_test.c 
 
 OBJSDIR = build/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/30 15:39:39 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/03 10:44:05 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <fcntl.h>
 # include <string.h>
 # include <signal.h>
+
+# include "exec.h"
+# include "share_header.h"
 
 # define DOLLAR_CHAR '$'
 # define PIPE_CHAR '|'
@@ -46,38 +49,33 @@
 
 typedef struct s_token	t_token;
 
-typedef enum e_token_type
-{
-	WORD,//0
-	PIPE,//1
-	REDIR_IN,//2
-	REDIR_OUT,//3
-	HERE_DOC,//4
-	REDIR_OUT_APPEND,//5
-	SINGLE_QUOTE,//6
-	DOUBLE_QUOTE,//7
-	FD,////8
-	FOLDER,//9
-	CMD,//10
-	CMD_ARGS,//11
-	SEMICOLON,//12
-	INFILE,//13
-	OUTFILE,//14
-	ERROR//15
-}	t_token_type;
+// typedef enum e_token_type
+// {
+// 	WORD,//0
+// 	PIPE,//1
+// 	REDIR_IN,//2
+// 	REDIR_OUT,//3
+// 	HERE_DOC,//4
+// 	REDIR_OUT_APPEND,//5
+// 	SINGLE_QUOTE,//6
+// 	DOUBLE_QUOTE,//7
+// 	FD,////8
+// 	FOLDER,//9
+// 	CMD,//10
+// 	CMD_ARGS,//11
+// 	SEMICOLON,//12
+// 	INFILE,//13
+// 	OUTFILE,//14
+// 	ERROR//15
+// }	t_token_type;
 
-typedef struct s_token
-{
-	char			*value;
-	t_token_type	type;
-	t_token			*next;
-}	t_token;
+// typedef struct s_token
+// {
+// 	char			*value;
+// 	t_token_type	type;
+// 	t_token			*next;
+// }	t_token;
 
-typedef enum s_bool
-{
-	false,
-	true
-}	t_bool;
 
 typedef struct s_parse
 {
@@ -92,6 +90,8 @@ typedef struct s_parse
 
 
 /******************************Tokenizer***************************************/
+
+void	readline_loop(char **envp, t_mshell *mshell);
 
 t_bool	is_special_char(char c);
 
@@ -129,12 +129,11 @@ char	**cmd_arg(char *cmd);
 
 char	*cmd_path(char *cmd, char **path);
 
-/******************************free_stuff*************************************/
-
-void	free_tab(char **tab);
+/******************************utils_stuff*************************************/
 
 void	free_lexicon(t_token *lexicon);
 
+void	env_creator(char **envp, t_mshell *mshell);
 
 
 #endif

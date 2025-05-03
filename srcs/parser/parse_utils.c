@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:40:48 by tmarion           #+#    #+#             */
-/*   Updated: 2025/04/29 13:43:45 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/03 11:02:58 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,22 @@ static t_bool valid_redir(t_token *lexicon)
 	return (true);
 }
 
+void find_redir(t_token *lexicon)
+{
+	while (lexicon->next)
+	{
+		if (lexicon->type == REDIR_OUT)
+			lexicon->next->type = OUTFILE;
+		lexicon = lexicon->next;
+	}
+}
 
 t_bool parsing_input(t_token *lexicon)
 {
 	if (valid_redir(lexicon))
+	{
+		find_redir(lexicon);
 		return (true);
+	}
 	return (false);
 }

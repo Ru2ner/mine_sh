@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:30:59 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/30 15:41:44 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/03 10:19:36 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	*free_tab(char **tab)
+void	free_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
 	if (!tab || !*tab)
-		return (NULL);
+		return ;
 	while (tab[i])
 	{
 		if (tab[i])
@@ -26,7 +26,7 @@ void	*free_tab(char **tab)
 		i++;
 	}
 	free(tab);
-	return (NULL);
+	return ;
 }
 
 void	*free_dest(char **dest, int j)
