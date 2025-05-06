@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/06 16:16:02 by tlutz            ###   ########.fr        #
+#    Updated: 2025/05/06 20:22:38 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,14 @@ CC = cc
 
 LIBFTDIR = 42Libft/
 LIBFTINCDIR = $(LIBFTDIR)includes/
-LIBFTHEADER = $(LIBFTINCDIR)libft.h
+LIBFTHEADER = $(LIBFTINCDIR)libft.h \
+				$(LIBFTINCDIR)get_next_line.h
 LIBFT = $(LIBFTDIR)libft.a
 
 HEADERSDIR = includes/
 HEADERS = $(HEADERSDIR)exec.h \
-			$(HEADERSDIR)errors.h
+			$(HEADERSDIR)errors.h \
+			$(HEADERSDIR)pipex_bonus.h
 
 SRCSDIR = srcs/
 SRCS = builtins/builtin_pwd.c \
@@ -50,7 +52,12 @@ SRCS = builtins/builtin_pwd.c \
 		builtins_utils/free_utils.c \
 		builtins_utils/tab_utils.c \
 		builtins_utils/export_utils.c \
-		errors_handling/errors_msgs.c
+		errors_handling/errors_msgs.c \
+		pipex/pipex_bonus.c \
+		pipex/pipex_utils.c \
+		pipex/pipex_utils_bonus.c \
+		pipex/pipex_utils_bonus_1.c \
+		pipex/pipex_utils_bonus_2.c
 
 OBJSDIR = .build/
 
