@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/30 15:10:50 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/06 18:02:38 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
-
+//TODO VIRER LES INCLUDES INUTILES, NORM ERROR POSSIBLE
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
 # define BLUE "\033[1;34m"

@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/04/11 17:09:40 by tlutz            ###   ########.fr        #
+#    Updated: 2025/05/06 16:16:02 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ SRCS = builtins/builtin_pwd.c \
 		builtins_utils/export_utils.c \
 		errors_handling/errors_msgs.c
 
-OBJSDIR = build/
+OBJSDIR = .build/
 
 OBJS = $(patsubst %.c, $(OBJSDIR)%.o,$(SRCS))
 
