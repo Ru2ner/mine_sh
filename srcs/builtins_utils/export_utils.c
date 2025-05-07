@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:13:28 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/02 14:50:58 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/07 13:35:35 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*add_to_export_list(t_env **env, char *arg)
 	}
 	key_value.key = ft_strdup(arg);
 	key_value.value = NULL;
-	build_list(env, &key_value, false, true);
+	build_list(env, &key_value, FALSE, TRUE);
 	return (NULL);
 }
 
@@ -111,7 +111,7 @@ void	*print_export(t_env *env)
 	temp = copy;
 	while (temp)
 	{
-		if (temp->export == true)
+		if (temp->export == TRUE)
 		{
 			if (temp->key && temp->value)
 				printf("export %s=\"%s\"\n", temp->key, temp->value);

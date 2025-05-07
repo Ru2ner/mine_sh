@@ -6,12 +6,13 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:48 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/24 12:54:28 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:36:18 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
 #include "libft.h"
+#include "string.h"
 
 void	*malloc_error(void)
 {

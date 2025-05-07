@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:41:49 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:14:23 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:29:32 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	arg_checker(char **args, t_bool *n_option, size_t *i)
 			j++;
 		if (args[1][j] == '\0')
 		{
-			*n_option = true;
+			*n_option = TRUE;
 			*i = 2;
 		}
 	}
@@ -37,7 +37,7 @@ void	exec_echo(char **args)
 	t_bool	n_option;
 
 	i = 1;
-	n_option = false;
+	n_option = FALSE;
 	arg_checker(args, &n_option, &i);
 	tab_size = get_tab_size(args);
 	while (args[i])
@@ -47,6 +47,6 @@ void	exec_echo(char **args)
 			printf(" ");
 		i++;
 	}
-	if (n_option == false)
+	if (n_option == FALSE)
 		printf("\n");
 }
