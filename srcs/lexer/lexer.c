@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/03 11:00:38 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/08 12:51:11 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon)
 {
 	t_token_type	type;
 	char			*value;
+	int				i;
 
+	i = 1;
 	while (*input)
 	{
 		if (is_whitespaces(*input))
@@ -124,7 +126,8 @@ t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon)
 			if (is_builtin(value))
 				type = CMD;
 		}
-		build_lexicon(lexicon, value, type);
+		build_lexicon(lexicon, value, type, i);
+		i++;
 	}
 	if (is_pipe(*lexicon) || is_redir(*lexicon))
 		identify_redir_file(*lexicon);

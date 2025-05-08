@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:08:24 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/03 11:07:13 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/08 12:43:39 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_env
 typedef struct s_token
 {
 	char			*value;
+	int				index;
 	t_token_type	type;
 	t_token			*next;
 }	t_token;
