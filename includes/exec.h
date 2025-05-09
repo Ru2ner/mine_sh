@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/07 18:13:46 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/09 14:22:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,11 @@ void	*free_tab(char **tab);
 void	sigint_handler(int signum);
 
 void	catch_sig(void);
+
+void	perror_exit(const char *msg);
+
+void	close_unused_fds(int prev_fd, int pipe_read_fd, int pipe_write_fd);
+
+int		here_doc_handler(t_cmd *cmd);
 
 #endif

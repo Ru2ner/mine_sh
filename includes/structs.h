@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:20:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/07 13:42:48 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/09 14:04:17 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_cmd
 	char	*outfile; // idem
 	t_bool	append; // true pour >> false pour >
 	t_bool	pipe; // si pipe ensuite
-	char	*heredoc; // Delimiter pour le here_doc, si besoin
+	char	*heredoc_delim; // Delimiter pour le here_doc, si besoin
 	t_cmd	*next;
 }	t_cmd;
 
