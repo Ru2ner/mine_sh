@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/07 18:14:40 by tlutz            ###   ########.fr        #
+#    Updated: 2025/05/09 16:30:15 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,6 @@ HEADERS = $(HEADERSDIR)exec.h \
 			$(HEADERSDIR)errors.h \
 			$(HEADERSDIR)env_handling.h \
 			$(HEADERSDIR)structs.h \
-			
 
 SRCSDIR = srcs/
 SRCS = builtins/builtin_pwd.c \
@@ -47,7 +46,7 @@ SRCS = builtins/builtin_pwd.c \
 		builtins/builtin_export.c \
 		builtins/builtin_unset.c \
 		builtins/builtin_launcher.c \
-		builtins/main_test.c \
+		expand_handler/expand_handler.c \
 		env_handling/env_converter.c \
 		env_handling/list_utils.c \
 		env_handling/env_creator.c \
@@ -55,7 +54,8 @@ SRCS = builtins/builtin_pwd.c \
 		builtins_utils/tab_utils.c \
 		builtins_utils/export_utils.c \
 		errors_handling/errors_msgs.c \
-		signals/sigs_handlers.c
+		signals/sigs_handlers.c \
+		main_test.c
 
 OBJSDIR = .build/
 

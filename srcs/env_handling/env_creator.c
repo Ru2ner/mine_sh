@@ -6,18 +6,20 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:41:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/07 13:35:18 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/09 16:38:12 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
+//TODO EDIT LE SHLVL
 static void	create_default_env(t_env **env)
 {
 	t_keyval	keyval_pwd;
 	t_keyval	keyval_path;
 	t_keyval	keyval_oldpwd;
+	t_keyval	keyval_shlvl;
 	char		*cwd;
 
 	cwd = getcwd(NULL, 0);
@@ -30,6 +32,9 @@ static void	create_default_env(t_env **env)
 	keyval_oldpwd.key = ft_strdup("OLDPWD");
 	keyval_oldpwd.value = NULL;
 	build_list(env, &keyval_oldpwd, FALSE, TRUE);
+	keyval_shlvl.key = ft_strdup("SHLVL");
+	keyval_shlvl.value = ft_strdup("1");
+	build_list(env, &keyval_shlvl, TRUE, TRUE);
 }
 
 void	env_creator(char **envp, t_mshell *mshell)

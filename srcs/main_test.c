@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/07 18:12:56 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/09 16:30:44 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static	t_bool	init_minishell(t_mshell *mshell)
 static	void	readline_loop(t_mshell *mshell)
 {
 	char	*input;
+	// char	*test_expand;
 
 	while (1)
 	{
@@ -36,6 +37,8 @@ static	void	readline_loop(t_mshell *mshell)
 		add_history(input);
 		mshell->args = ft_split(input, ' ');
 		mshell->env = builtin_launcher(mshell->args, mshell->env);
+		// test_expand = expand_handler(mshell->env, input + 1); 
+		// printf("%s\n", test_expand);
 		free(input);
 		free_tab(mshell->args);
 	}
