@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:08:24 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/08 12:43:39 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/09 12:27:37 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ typedef struct t_mshell
 
 void	free_tab(char **tab);
 
-int 	exec(t_token *lexicon, t_mshell *mshell);
+int 	exec(t_token *lexicon);
 
 #endif

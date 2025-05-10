@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/03 11:08:34 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/09 12:28:25 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	readline_loop(char **envp, t_mshell *mshell)
 		create_lexicon(parsing.input, &parsing, &lexicon);
 		if (parsing_input(lexicon) == false)
 			ft_putstr_fd("failed to parse\n", 2);
-		exec(lexicon, mshell);
+		exec(lexicon);
 		free(parsing.input);
 		free_tab(split_input);
 		free_tab(mshell->args);

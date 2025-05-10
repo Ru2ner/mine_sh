@@ -2,6 +2,8 @@
 
 A simple shell written in C, with some builtins and redirections, pipes, and commands handling
 
+*** stack smashing detected ***: terminated
+
 
 ### Functions to use
 

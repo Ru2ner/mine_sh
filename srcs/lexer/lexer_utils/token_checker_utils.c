@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:24:27 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/08 13:26:43 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/09 12:00:24 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 #include "libft.h"
 // #include <cstring>
 
-t_bool	is_special_char(t_token *lexicon, int nb)
-{
-	while (lexicon->index != nb)
-		lexicon = lexicon->next;
-	while (lexicon->next)
-	{
-		if (lexicon->type == PIPE)
-			lexicon = lexicon->next;
-	}
-	return (false);
-}
+// t_bool	is_special_char(t_token *lexicon, int nb)
+// {
+// 	while (lexicon->index != nb)
+// 		lexicon = lexicon->next;
+// 	while (lexicon->next)
+// 	{
+// 		if (lexicon->type == PIPE)
+// 			return (true);
+// 		lexicon = lexicon->next;
+// 	}
+// 	return (false);
+// }
 t_bool	is_special_char(char c)
 {
 	if (c == PIPE_CHAR || c == REDIR_IN_CHAR \
