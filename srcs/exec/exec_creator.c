@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 15:28:58 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/12 20:35:12 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,18 @@ static t_cmd *ft_create_node(t_token *lexicon)
 			new_node->infile = lexicon->value;
 		else if (lexicon->type == OUTFILE)
 			new_node->outfile = lexicon->value;
-		else if (lexicon->type == REDIR_OUT_APPEND)
+		else if (lexicon->type == OUTFILE_APPEND)
 		{
 			new_node->outfile = lexicon->value;
-			new_node->append = true;
-			lexicon = lexicon->next;
+			new_node->append = TRUE;
 		}
-		else if (lexicon->type == HERE_DOC)
+		else if (lexicon->type == HERE_DOC_DELIM)
 		{
-			new_node->heredoc = lexicon->value;
-			lexicon = lexicon->next;
+			new_node->heredoc_delim = lexicon->value;
 		}
 		else if (lexicon->type == PIPE)
 		{
-			new_node->pipe = true;
-			lexicon = lexicon->next;
+			new_node->pipe = TRUE;
 			break ;
 		}
 		lexicon = lexicon->next;
@@ -89,26 +86,23 @@ int exec(t_token *lexicon)
 {
 	t_cmd	*cmd_list = NULL;
 	t_cmd	*temp;
-	// int		i;
+	int		i;
 	
 	create_exec_list(&cmd_list, lexicon);
 	temp = cmd_list;
 	while (temp)
 	{
-		// i = 0;
-		// while (temp->args[i])
-		// {
-		// 	printf("n'%d args %s \n", i, temp->args[i]);
-		// 	i++;
-		// }
-		printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc);
+		i = 0;
+		if (temp->args != NULL)
+		{
+			while (temp->args[i])
+			{
+				printf("index :%d args: %s \n", i, temp->args[i]);
+				i++;
+			}
+		}
+		printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
 		temp = temp->next;
 	}
 	return (1);
 }
-
-	// while (lexicon)
-	// {
-	// 	printf("LEXICON//	value: %s \n token: %d \n index: %d \n\n", lexicon->value, lexicon->type, lexicon->index);
-	// 	lexicon = lexicon->next;
-	// }

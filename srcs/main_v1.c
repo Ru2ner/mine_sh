@@ -1,19 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_test_parsing.c                                :+:      :+:    :+:   */
+/*   main_v1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:16:55 by tlutz            ###   ########.fr       */
+/*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
+/*   Updated: 2025/05/12 16:26:25 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "libft.h"
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "exec.h"
+#include "parsing.h"
+#include "libft.h"
+
+static	t_bool	init_minishell(t_mshell *mshell)
+{
+	mshell->env = NULL;
+	mshell->args = NULL;
+	return (TRUE);
+}
+
+void	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
+{
+	if (quote_counter(input) == FALSE)
+	{
+		printf("There is an odd number of quotes\n");
+		return ;
+	}
+	lexer(input, parsing, lexicon);
+}
 
 void	readline_loop(char **envp, t_mshell *mshell)
 {
@@ -49,19 +67,16 @@ void	readline_loop(char **envp, t_mshell *mshell)
 	}
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_mshell	mshell;
-	
+
 	(void)argv;
 	(void)argc;
-	mshell.env = NULL;
-	mshell.args = NULL;
 	catch_sig();
+	init_minishell(&mshell);
 	env_creator(envp, &mshell);
 	readline_loop(envp, &mshell);
 	rl_clear_history();
 	free_list(mshell.env);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/09 14:52:05 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/12 16:33:35 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,63 +128,63 @@ void	pipeline(t_cmd *cmd_list, char **envp)
 		;
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	t_cmd	*cmd_list = NULL;
-	t_cmd	*second_cmd = NULL;
-	// t_cmd	*third_cmd = NULL;
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_cmd	*cmd_list = NULL;
+// 	t_cmd	*second_cmd = NULL;
+// 	// t_cmd	*third_cmd = NULL;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	cmd_list = malloc(sizeof(t_cmd));
-	cmd_list->infile = NULL;
-	cmd_list->outfile = NULL;
-	cmd_list->append = FALSE;
-	cmd_list->pipe = TRUE;
-	cmd_list->heredoc_delim = "EOF";
-	cmd_list->args = malloc(sizeof(char *) * 2);
-	cmd_list->args[0] = ft_strdup("/usr/bin/cat");
-	cmd_list->args[1] = NULL;
+// 	(void)argc;
+// 	(void)argv;
+// 	(void)envp;
+// 	cmd_list = malloc(sizeof(t_cmd));
+// 	cmd_list->infile = NULL;
+// 	cmd_list->outfile = NULL;
+// 	cmd_list->append = FALSE;
+// 	cmd_list->pipe = TRUE;
+// 	cmd_list->heredoc = "EOF";
+// 	cmd_list->args = malloc(sizeof(char *) * 2);
+// 	cmd_list->args[0] = ft_strdup("/usr/bin/cat");
+// 	cmd_list->args[1] = NULL;
 	
-	second_cmd = malloc(sizeof(t_cmd));
-	second_cmd->infile = NULL;
-	second_cmd->outfile = "output.txt";
-	second_cmd->append = FALSE;
-	second_cmd->pipe = FALSE;
-	second_cmd->heredoc_delim = NULL;
-	second_cmd->args = malloc(sizeof(char *) * 3);
-	second_cmd->args[0] = ft_strdup("/usr/bin/wc");
-	second_cmd->args[1] = "-l";
-	second_cmd->args[2] = NULL;
+// 	second_cmd = malloc(sizeof(t_cmd));
+// 	second_cmd->infile = NULL;
+// 	second_cmd->outfile = "output.txt";
+// 	second_cmd->append = FALSE;
+// 	second_cmd->pipe = FALSE;
+// 	second_cmd->heredoc = NULL;
+// 	second_cmd->args = malloc(sizeof(char *) * 3);
+// 	second_cmd->args[0] = ft_strdup("/usr/bin/wc");
+// 	second_cmd->args[1] = "-l";
+// 	second_cmd->args[2] = NULL;
 
-	// third_cmd = malloc(sizeof(t_cmd));
-	// third_cmd->infile = NULL;
-	// third_cmd->outfile = NULL;
-	// third_cmd->append = FALSE;
-	// third_cmd->pipe = FALSE;
-	// third_cmd->next = NULL;
-	// third_cmd->heredoc_delim = NULL;
-	// third_cmd->args = malloc(sizeof(char *) * 3);
-	// third_cmd->args[0] = ft_strdup("/usr/bin/cat");
-	// third_cmd->args[1] = ft_strdup("-e");
-	// third_cmd->args[2] = NULL;
+// 	// third_cmd = malloc(sizeof(t_cmd));
+// 	// third_cmd->infile = NULL;
+// 	// third_cmd->outfile = NULL;
+// 	// third_cmd->append = FALSE;
+// 	// third_cmd->pipe = FALSE;
+// 	// third_cmd->next = NULL;
+// 	// third_cmd->heredoc = NULL;
+// 	// third_cmd->args = malloc(sizeof(char *) * 3);
+// 	// third_cmd->args[0] = ft_strdup("/usr/bin/cat");
+// 	// third_cmd->args[1] = ft_strdup("-e");
+// 	// third_cmd->args[2] = NULL;
 	
-	cmd_list->next = second_cmd;
-	// second_cmd->next = third_cmd;
+// 	cmd_list->next = second_cmd;
+// 	// second_cmd->next = third_cmd;
 	
-	pipeline(cmd_list, envp);
-	free(cmd_list->args[0]);
-	free(cmd_list->args);
-	free(cmd_list);
+// 	pipeline(cmd_list, envp);
+// 	free(cmd_list->args[0]);
+// 	free(cmd_list->args);
+// 	free(cmd_list);
 	
-	// free(second_cmd->args[0]);
-	// free(second_cmd->args);
-	// free(second_cmd);
+// 	// free(second_cmd->args[0]);
+// 	// free(second_cmd->args);
+// 	// free(second_cmd);
 
-	// free(third_cmd->args[0]);
-	// free(third_cmd->args[1]);
-	// free(third_cmd->args);
-	// free(third_cmd);
-	return (0);
-}
+// 	// free(third_cmd->args[0]);
+// 	// free(third_cmd->args[1]);
+// 	// free(third_cmd->args);
+// 	// free(third_cmd);
+// 	return (0);
+// }

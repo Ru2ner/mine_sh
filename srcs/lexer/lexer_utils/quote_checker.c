@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:33:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/14 15:37:20 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/12 16:18:22 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ t_bool	quote_counter(char *input)
 		i++;
 	}
 	if (dquote_count % 2 == 0 && squote_count % 2 == 0)
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }

@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/08 12:51:11 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/12 20:30:31 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
-//////////////////////////////
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -80,15 +79,16 @@ void	identify_redir_file(t_token *lexicon)
 	int	i;
 
 	i = 0;
-	while (lexicon->next)
+	while (lexicon && lexicon->next)
 	{
-		if (lexicon->type == FD && i == 0)
-		{
-			lexicon->type = INFILE;
-			i++;
-		}
-		if (lexicon->type == REDIR_OUT && lexicon->next->type == FD)
+		if (lexicon->type == REDIR_IN && lexicon->next->type == FD)
+			lexicon->next->type = INFILE;
+		else if (lexicon->type == REDIR_OUT && lexicon->next->type == FD)
 			lexicon->next->type = OUTFILE;
+		else if (lexicon->type == HERE_DOC && lexicon->next->type == FD)
+			lexicon->next->type = HERE_DOC_DELIM;
+		else if (lexicon->type == REDIR_OUT_APPEND && lexicon->next->type == FD)
+			lexicon->next->type = OUTFILE_APPEND;
 		lexicon = lexicon->next;
 	}
 }

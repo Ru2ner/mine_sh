@@ -6,13 +6,12 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/09 16:15:39 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/12 16:44:13 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
-#include <stdio.h>
 
 char	*expand_handler(t_env *env, char *key)
 {

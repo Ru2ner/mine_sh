@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:40:48 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/03 11:02:58 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/12 16:20:07 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ static t_bool valid_redir(t_token *lexicon)
 	if (!lexicon->value)
 		lexicon = lexicon->next;
 	if (lexicon->type == PIPE || lexicon->type == REDIR_IN || lexicon->type == REDIR_OUT)
-		return (false);
+		return (FALSE);
 	
 	while (lexicon->next)
 	{
 		if (lexicon->type == PIPE && lexicon->next->type != CMD)
-			return (false);
+			return (FALSE);
 		lexicon = lexicon->next;
 	}
 	
 	if (lexicon->type == PIPE || lexicon->type == REDIR_IN || lexicon->type == REDIR_OUT)
-		return (false);
-	return (true);
+		return (FALSE);
+	return (TRUE);
 }
 
 void find_redir(t_token *lexicon)
@@ -47,7 +47,7 @@ t_bool parsing_input(t_token *lexicon)
 	if (valid_redir(lexicon))
 	{
 		find_redir(lexicon);
-		return (true);
+		return (TRUE);
 	}
-	return (false);
+	return (FALSE);
 }

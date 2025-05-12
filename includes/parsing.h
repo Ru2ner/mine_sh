@@ -3,26 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/08 12:50:20 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/12 16:27:21 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <errno.h>
-# include <fcntl.h>
-# include <string.h>
-# include <signal.h>
-
+# include "structs.h"
 # include "exec.h"
-# include "share_header.h"
 
 # define DOLLAR_CHAR '$'
 # define PIPE_CHAR '|'
@@ -32,7 +24,7 @@
 # define REDIR_OUT_APPEND_CHAR ">>"
 # define SINGLE_QUOTE_CHAR '\''
 # define DOUBLE_QUOTE_CHAR '\"'
-# define SPACE 32
+# define SPACE_CHAR 32
 # define H_TAB 9
 # define CARR_RETURN 13
 # define LINE_FEED 10
@@ -46,48 +38,6 @@
 # define CYAN "\033[0;36m"
 # define RESET "\033[0m"
 # define PROMPT "\033[1;31mminishell> \033[0m"
-
-typedef struct s_token	t_token;
-
-// typedef enum e_token_type
-// {
-// 	WORD,//0
-// 	PIPE,//1
-// 	REDIR_IN,//2
-// 	REDIR_OUT,//3
-// 	HERE_DOC,//4
-// 	REDIR_OUT_APPEND,//5
-// 	SINGLE_QUOTE,//6
-// 	DOUBLE_QUOTE,//7
-// 	FD,////8
-// 	FOLDER,//9
-// 	CMD,//10
-// 	CMD_ARGS,//11
-// 	SEMICOLON,//12
-// 	INFILE,//13
-// 	OUTFILE,//14
-// 	ERROR//15
-// }	t_token_type;
-
-// typedef struct s_token
-// {
-// 	char			*value;
-// 	t_token_type	type;
-// 	t_token			*next;
-// }	t_token;
-
-
-typedef struct s_parse
-{
-	char	*input;
-	char	**split_input;
-	char	**envp;
-}	t_parse;
-
-/****************************Error Handling************************************/
-
-
-
 
 /******************************Tokenizer***************************************/
 
@@ -135,5 +85,6 @@ void	free_lexicon(t_token *lexicon);
 
 void	env_creator(char **envp, t_mshell *mshell);
 
+t_bool	quote_counter(char *input);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:49:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/24 12:43:58 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/12 16:46:28 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,5 @@ t_env	*builtin_launcher(char **args, t_env *env)
 		env = exec_unset(env, args);
 	else if (args[0] && ft_strcmp(args[0], "export") == 0)
 		exec_export(env, args);
-	else if (args[0])
-		ft_putendl_fd("Command not found", 1);
 	return (env);
 }

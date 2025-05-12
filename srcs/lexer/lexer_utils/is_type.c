@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_type.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:23:58 by tmarion           #+#    #+#             */
-/*   Updated: 2025/04/29 16:33:08 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/12 16:19:06 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ t_bool	is_pipe(t_token *lexicon)
 	while (lexicon->next)
 	{
 		if (lexicon->type == PIPE)
-			return (true);
+			return (TRUE);
 		lexicon = lexicon->next;
 	}
-	return (false);
+	return (FALSE);
 }
 
 t_bool	is_redir(t_token *lexicon)
@@ -30,8 +30,8 @@ t_bool	is_redir(t_token *lexicon)
 	{
 		if (lexicon->type == REDIR_IN || lexicon->type == REDIR_OUT
 				|| lexicon->type == REDIR_OUT_APPEND)
-			return (true);
+			return (TRUE);
 		lexicon = lexicon->next;
 	}
-	return (false);
+	return (FALSE);
 }
