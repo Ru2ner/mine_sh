@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test_parsing.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:57:36 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/09 12:28:25 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:29:55 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	readline_loop(char **envp, t_mshell *mshell)
 		if (!parsing.input[0])
 			continue ;
 		add_history(parsing.input);
-		//mshell->args = init_exec_args(lexicon);//args dans struct puis exec
+		// mshell->args = init_exec_args(lexicon);//args dans struct puis exec
 		mshell->args = ft_split(parsing.input, ' ');
 		mshell->env = builtin_launcher(mshell->args, mshell->env);//
 		create_lexicon(parsing.input, &parsing, &lexicon);

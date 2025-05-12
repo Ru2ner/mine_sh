@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/26 16:56:56 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/03 10:20:32 by tmarion          ###   ########.fr        #
+#    Updated: 2025/05/12 12:57:08 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		pipex_exec/pipex_utils_bonus_1.c \
 		pipex_exec/pipex_utils_bonus_2.c \
 		pipex_exec/pipex_utils_bonus.c \
-		exec/exec.c \
+		exec/exec_creator.c \
 		main_test_parsing.c \
 		# expand_handler.c \
 		# exec/exec_utils.c \

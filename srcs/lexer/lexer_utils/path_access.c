@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_access.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:34:45 by tmarion           #+#    #+#             */
-/*   Updated: 2025/04/23 13:16:54 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/12 15:38:08 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	**get_paths(char **env)
 	}
 	return (NULL);
 }
-
 
 char	**cmd_arg(char *cmd)
 {
