@@ -3,26 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/03 10:46:37 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/12 15:45:32 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef EXEC_H
 # define EXEC_H
 
 # include <unistd.h>
-# include <sys/wait.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include <fcntl.h>
-# include <string.h>
 # include <errno.h>
 
 # include "parsing.h"
 # include "share_header.h"
+# include <structs.h>
+# include <errors.h>
+# include "env_handling.h"
+# include "builtins.h"
 
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
@@ -79,50 +81,20 @@ typedef struct s_keyval
 
 size_t	get_tab_size(char **tab);
 
-/*****************************Env Convert**************************************/
-
-void	free_list(t_env *env);
-
-void	*free_dest(char **dest, int j);
-
-size_t	get_list_size(t_env *env);
-
-t_env	*create_new_node(char *var, char *value, t_bool print, t_bool export);
-
-void	build_list(t_env **env, t_keyval *key_val, t_bool print, t_bool export);
-
-void	*convert_env_to_list(char **envp, t_env **env);
-
-char	**convert_env_to_tab(t_env *env);
-
-void	env_creator(char **envp, t_mshell *mshell);
-
 /*****************************Error Handling***********************************/
 
 /*******************************Main Exec**************************************/
 
-/********************************Builtins**************************************/
+void	sigint_handler(int signum);
 
-void	print_env(t_env *env);
+void	catch_sig(void);
 
-char	*get_pwd_from_env(t_env *env);
+void	perror_exit(const char *msg);
 
-void	*fetch_cwd(t_env *env);
+void	close_unused_fds(int prev_fd, int pipe_read_fd, int pipe_write_fd);
 
-void	*execute_cd(char *path, t_env *env);
+int		here_doc_handler(t_cmd *cmd);
 
-void	exec_clear(void);
-
-void	exec_echo(char **args);
-
-t_env	*unset(t_env *env, const char *key);
-
-void	*export(t_env *env, char *arg);
-
-void	*add_to_export_list(t_env **env, char *arg);
-
-void	*print_export(t_env *env);
-
-t_env	*builtin_launcher(char **args, t_env *env);
+char	*expand_handler(t_env *env, char *key);
 
 #endif

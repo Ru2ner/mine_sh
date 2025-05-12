@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:59:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/10 19:23:24 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:34:50 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*convert_env_to_list(char **envp, t_env **env)
 			key_value.value = ft_strdup(converted_array[1]);
 			if (!key_value.value)
 				return (NULL);
-			build_list(env, &key_value, true, true);
+			build_list(env, &key_value, TRUE, TRUE);
 		}
 		free_tab(converted_array);
 		i++;

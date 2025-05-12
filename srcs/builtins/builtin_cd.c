@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:12:53 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/11 19:35:44 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:29:04 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	*update_old_cwd(t_env **env, char *old_wd)
 			curr->value = old_wd;
 			if (!curr->value)
 				return (malloc_error());
-			if (curr->env == false)
-				curr->env = true;
+			if (curr->env == FALSE)
+				curr->env = TRUE;
 			return (NULL);
 		}
 		curr = curr->next;

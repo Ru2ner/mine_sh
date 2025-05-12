@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:00:57 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/24 18:52:51 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/07 17:34:19 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	cleanup_garbage(t_garbage *garbage)
 	{
 		temp = garbage;
 		garbage = garbage->next;
-		if (temp->double_p == false && temp->ptr)
+		if (temp->double_p == FALSE && temp->ptr)
 			free(temp->ptr);
-		else if (temp->double_p == true && temp->dptr)
+		else if (temp->double_p == TRUE && temp->dptr)
 			free_tab((char **)temp->dptr);
 		free(temp);
 	}
@@ -39,15 +39,15 @@ t_garbage	*create_new_garbage_node(void **dptr, void *ptr,t_bool double_p)
 	ft_memset(node, 0, sizeof(t_garbage));
 	if (!node)
 		return (malloc_error());
-	if (double_p == true)
+	if (double_p == TRUE)
 	{
 		node->dptr = dptr;
-		node->double_p = true;
+		node->double_p = TRUE;
 	}
 	else
 	{
 		node->ptr = ptr;
-		node->double_p = false;
+		node->double_p = FALSE;
 	}
 	return (node);
 }
@@ -79,9 +79,9 @@ int	main(void)
 	char **dstr = ft_split("CURSE YOU BAYLE", ' ');
 	garbage = NULL;
 	
-	add_to_garbage(&garbage, NULL, str, false);
-	add_to_garbage(&garbage, NULL, str2, false);
-	add_to_garbage(&garbage, (void **)dstr, NULL, true);
+	add_to_garbage(&garbage, NULL, str, FALSE);
+	add_to_garbage(&garbage, NULL, str2, FALSE);
+	add_to_garbage(&garbage, (void **)dstr, NULL, TRUE);
 	cleanup_garbage(garbage);
 	return (0);
 }

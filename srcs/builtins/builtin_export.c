@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/24 12:40:47 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/07 13:30:03 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	*append_handler(t_env *temp, char **args)
 	free(temp->value);
 	temp->value = tmp;
 	free_tab(args);
-	temp->env = true;
+	temp->env = TRUE;
 	return (NULL);
 }
 
@@ -64,7 +64,7 @@ static void	*append_to_var(t_env *env, char *arg)
 		temp = temp->next;
 	}
 	key_value_creator(&key_val, args);
-	build_list(&env, &key_val, true, true);
+	build_list(&env, &key_val, TRUE, TRUE);
 	free(args);
 	return (NULL);
 }
@@ -78,8 +78,8 @@ static void	*edit_var(t_env *temp, char **args)
 		temp->value = ft_strdup(args[1]);
 	if (!temp->value)
 		return (malloc_error());
-	if (temp->env == false)
-		temp->env = true;
+	if (temp->env == FALSE)
+		temp->env = TRUE;
 	free_tab(args);
 	return (NULL);
 }
@@ -107,7 +107,7 @@ void	*export(t_env *env, char *arg)
 		temp = temp->next;
 	}
 	key_value_creator(&key_val, args);
-	build_list(&env, &key_val, true, true);
+	build_list(&env, &key_val, TRUE, TRUE);
 	free(args);
 	return (NULL);
 }

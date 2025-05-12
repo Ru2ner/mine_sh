@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/03/26 16:56:56 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/12 12:57:08 by tlutz            ###   ########.fr        #
+#    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
+#    Updated: 2025/05/12 15:44:49 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,8 @@ LIBFTDIR = 42Libft/
 LIBFTINCDIR = $(LIBFTDIR)includes/
 LIBFTHEADER = $(LIBFTINCDIR)libft.h \
 				$(LIBFTINCDIR)get_next_line.h
+LIBFTHEADER = $(LIBFTINCDIR)libft.h \
+				$(LIBFTINCDIR)get_next_line.h
 LIBFT = $(LIBFTDIR)libft.a
 
 HEADERSDIR = includes/
@@ -38,6 +40,10 @@ HEADERS = $(HEADERSDIR)parsing.h \
 			$(HEADERSDIR)pipex_bonus.h \
 			$(HEADERSDIR)share_header.h \
 			$(HEADERSDIR)errors.h
+HEADERS = $(HEADERSDIR)exec.h \
+			$(HEADERSDIR)errors.h \
+			$(HEADERSDIR)env_handling.h \
+			$(HEADERSDIR)structs.h \
 
 SRCSDIR = srcs/
 SRCS = lexer/lexer_utils/quote_checker.c \
@@ -56,6 +62,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		builtins/builtin_export.c \
 		builtins/builtin_unset.c \
 		builtins/builtin_launcher.c \
+		expand_handler/expand_handler.c \
 		env_handling/env_converter.c \
 		env_handling/list_utils.c \
 		env_handling/env_creator.c \
@@ -72,8 +79,11 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		# expand_handler.c \
 		# exec/exec_utils.c \
 		# builtins/main_test.c 
+		errors_handling/errors_msgs.c \
+		signals/sigs_handlers.c \
+		main_test.c
 
-OBJSDIR = build/
+OBJSDIR = .build/
 
 OBJS = $(patsubst %.c, $(OBJSDIR)%.o,$(SRCS))
 
