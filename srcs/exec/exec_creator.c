@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 16:40:26 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 18:46:07 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,29 @@ static t_cmd *ft_create_node(t_token *lexicon)
 	if (!new_node)
 		return (NULL);
 	ft_memset(new_node, 0, sizeof(t_cmd));
-	if (lexicon && lexicon->type == CMD)
+	while (lexicon && (lexicon->type == REDIR_IN || lexicon->type == REDIR_OUT \
+		|| lexicon->type == REDIR_OUT_APPEND || lexicon->type == HERE_DOC))
+		lexicon = lexicon->next;
+	while (lexicon && (lexicon->type == INFILE || lexicon->type == OUTFILE \
+		|| lexicon->type == OUTFILE_APPEND || lexicon->type == HERE_DOC_DELIM))
+	{
+		if (lexicon->type == INFILE)
+			new_node->infile = ft_strdup(lexicon->value);
+		else if (lexicon->type == OUTFILE)
+			new_node->outfile = ft_strdup(lexicon->value);
+		else if (lexicon->type == OUTFILE_APPEND)
+		{
+			new_node->outfile = ft_strdup(lexicon->value);
+			new_node->append = TRUE;
+		}
+		else if (lexicon->type == HERE_DOC_DELIM)
+			new_node->heredoc_delim = ft_strdup(lexicon->value);
+		lexicon = lexicon->next;
+	}
+	if (lexicon && (lexicon->type == CMD || lexicon->type == WORD))
 	{
 		new_node->args = malloc(sizeof(char *) * 100);
-		new_node->args[i++] = ft_strdup(lexicon->value);
-		lexicon = lexicon->next;
-		while (lexicon && lexicon->type == WORD)
+		while (lexicon && (lexicon->type == CMD || lexicon->type == WORD))
 		{
 			new_node->args[i++] = ft_strdup(lexicon->value);
 			lexicon = lexicon->next;
@@ -102,14 +119,13 @@ static void	create_exec_list(t_cmd **cmd_list, t_token *lexicon)
 int exec(t_token *lexicon, char **envp, t_mshell *mshell)
 {
 	t_cmd	*cmd_list = NULL;
-	// t_cmd	*temp;
-	// t_token	*temp_lexicon;
-	// int		i;
 	(void)envp;
+	(void)mshell;
 	
-	// temp_lexicon = lexicon;
 	create_exec_list(&cmd_list, lexicon);
 	pipeline(cmd_list, envp, mshell);
+	// t_cmd	*temp;
+	// int		i;
 	// temp = cmd_list;
 	// while (temp)
 	// {

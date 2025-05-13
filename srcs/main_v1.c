@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 15:45:23 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 18:45:12 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static	t_bool	init_minishell(t_mshell *mshell)
 
 void	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 {
-	// t_token	*temp;
 	
 	if (quote_counter(input) == FALSE)
 	{
@@ -33,10 +32,12 @@ void	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 		return ;
 	}
 	lexer(input, parsing, lexicon);
+	// t_token	*temp;
 	// temp = *lexicon;
 	// while (temp)
 	// {
 	// 	printf("%s\n", temp->value);
+	// 	printf("%d\n", temp->type);
 	// 	temp = temp->next;
 	// }
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:54:16 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 13:08:01 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 16:57:52 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	**get_path_var(char **envp)
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
-			paths = ft_split(envp[i], ':');
+			paths = ft_split(envp[i] + 5, ':');
 			if (!paths)
 				return (malloc_error());
 			return (paths);
