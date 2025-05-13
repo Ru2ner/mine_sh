@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:45:00 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 17:02:38 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 20:11:22 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ char	*extract_quoted_string(char *input)
 	char	quote;
 	int		start;
 	int		i;
-	// int		link = is_linked_quote_string(input) / 2;
 
-	// printf("link: %d\n", link);
 	i = 0;
 	if (!input)
 		return (NULL);
