@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/12 16:44:21 by tlutz            ###   ########.fr        #
+#    Updated: 2025/05/13 13:07:28 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,9 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		pipex_exec/pipex_utils_bonus_2.c \
 		pipex_exec/pipex_utils_bonus.c \
 		exec/exec_creator.c \
+		exec_part/exec.c \
+		exec_part/exec_utils.c \
+		exec_part/cmd_finder.c \
 		signals/sigs_handlers.c \
 		main_v1.c
 

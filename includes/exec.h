@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:44:16 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 14:08:51 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int		here_doc_handler(t_cmd *cmd);
 
 char	*expand_handler(t_env *env, char *key);
 
-int 	exec(t_token *lexicon);
+int 	exec(t_token *lexicon, char **envp, t_mshell *mshell);
+
+char	*parse_path(char **envp, char *cmd);
+
+void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell);
+
 
 #endif

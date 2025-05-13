@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:01:40 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:44:06 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 15:49:11 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	free_list(t_env *env)
 	{
 		temp = env;
 		env = env->next;
-		free(temp->key);
-		free(temp->value);
+		if (temp->key)
+			free(temp->key);
+		if (temp->value)
+			free(temp->value);
 		free(temp);
 	}
 }

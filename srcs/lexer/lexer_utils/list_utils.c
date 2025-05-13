@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:04:35 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/08 12:46:43 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/13 15:43:08 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,17 @@ void	free_lexicon(t_token *lexicon)
 
 	if (!lexicon)
 		return ;
-	while (lexicon)
+	while (lexicon->next)
 	{
 		temp = lexicon;
-		lexicon = lexicon->next;
 		if (temp->value)
 		{
 			free(temp->value);
 			temp->value = NULL;
 		}
 		if (temp)
-		{
 			free(temp);
-			temp = NULL;
-		}
+		lexicon = lexicon->next;
 	}
 }
 

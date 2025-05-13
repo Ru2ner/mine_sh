@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:23:58 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/12 16:19:06 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 12:11:49 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_bool	is_redir(t_token *lexicon)
 	while (lexicon->next)
 	{
 		if (lexicon->type == REDIR_IN || lexicon->type == REDIR_OUT
-				|| lexicon->type == REDIR_OUT_APPEND)
+				|| lexicon->type == REDIR_OUT_APPEND 
+				|| lexicon->type == HERE_DOC)
 			return (TRUE);
 		lexicon = lexicon->next;
 	}

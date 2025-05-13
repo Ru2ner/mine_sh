@@ -12,11 +12,11 @@
 
 # PIPES AND REDIRECTIONS
 
-* pipe  :x:
-* redirect_in  :x:
-* redirect_out  :x:
-* redirect_out_append  :x:
-* redirect_in_here_doc :x:
+* pipe  :white_check_mark:
+* redirect_in  :white_check_mark:
+* redirect_out  :white_check_mark:
+* redirect_out_append  :white_check_mark:
+* redirect_in_here_doc :white_check_mark:
 
 # ENV AND EXPAND
 

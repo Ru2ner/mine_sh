@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:26:25 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 15:45:23 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,20 @@ static	t_bool	init_minishell(t_mshell *mshell)
 
 void	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 {
+	// t_token	*temp;
+	
 	if (quote_counter(input) == FALSE)
 	{
 		printf("There is an odd number of quotes\n");
 		return ;
 	}
 	lexer(input, parsing, lexicon);
+	// temp = *lexicon;
+	// while (temp)
+	// {
+	// 	printf("%s\n", temp->value);
+	// 	temp = temp->next;
+	// }
 }
 
 void	readline_loop(char **envp, t_mshell *mshell)
@@ -54,11 +62,10 @@ void	readline_loop(char **envp, t_mshell *mshell)
 			continue ;
 		add_history(parsing.input);
 		mshell->args = ft_split(parsing.input, ' ');
-		mshell->env = builtin_launcher(mshell->args, mshell->env);//
 		create_lexicon(parsing.input, &parsing, &lexicon);
 		if (parsing_input(lexicon) == FALSE)
 			ft_putstr_fd("failed to parse\n", 2);
-		exec(lexicon);
+		exec(lexicon, envp, mshell);
 		free(parsing.input);
 		free_tab(split_input);
 		free_tab(mshell->args);

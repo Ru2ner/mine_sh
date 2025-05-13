@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:20:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 20:30:20 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/13 13:37:31 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ typedef struct s_mshell
 {
 	t_env	*env;
 	char	**args;
-	t_token	*lexicon;// --> t_cmd
+	t_token	*lexicon;
 }	t_mshell;
 
 typedef struct s_cmd
 {
-	char	**args; // Cmd dans le slot 0 et arguments ensuite
-	char	*infile; // Ou fd si on peut open plus tôt dans le programme
-	char	*outfile; // idem
-	t_bool	append; // true pour >> false pour >
-	t_bool	pipe; // si pipe ensuite
-	char	*heredoc_delim; // Delimiter pour le here_doc, si besoin
+	char	**args;
+	char	*infile;
+	char	*outfile;
+	t_bool	append;
+	t_bool	pipe;
+	char	*heredoc_delim;
 	t_cmd	*next;
 }	t_cmd;
 
