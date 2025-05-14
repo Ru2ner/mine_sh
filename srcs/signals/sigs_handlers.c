@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 18:13:11 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 20:05:59 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/14 14:51:07 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,21 @@ void	catch_sig(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	here_doc_sigint_handler(int signum)
+{
+	(void)signum;
+	printf("\n");
+	exit(130);
+}
+
+void	catch_sig_heredoc(void)
+{
+	struct sigaction	sa_heredoc;
+	
+	sa_heredoc.sa_handler = here_doc_sigint_handler;
+	sa_heredoc.sa_flags = 0;
+	sigemptyset(&sa_heredoc.sa_mask);
+	sigaction(SIGINT, &sa_heredoc, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:48 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:40:41 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/14 16:47:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,11 @@ void	*cd_error(int errnum)
 		strerror(ENOTDIR);
 	if (errnum == HOMENOTSET)
 		ft_putendl_fd(HOME_ERR_STR, 2);
+	return (NULL);
+}
+
+void	*cmd_not_found_error(void)
+{
+	ft_putendl_fd("Command not found", 2);
 	return (NULL);
 }

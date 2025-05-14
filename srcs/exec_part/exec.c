@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 14:49:21 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/14 20:10:21 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	child_process(t_cmd *cmd, int prev_fd, int *pipe_fd, char **envp)
 {
 	char	*complete_path;
 	
+	signal(SIGINT, SIG_DFL);
 	setup_input_fd(cmd, prev_fd);
 	setup_output_fd(cmd, pipe_fd[1]);
 	if (pipe_fd[0] != -1)
@@ -80,6 +81,9 @@ void	child_process(t_cmd *cmd, int prev_fd, int *pipe_fd, char **envp)
 	if (prev_fd != -1)
 		close(prev_fd);
 	complete_path = parse_path(envp, cmd->args[0]);
+	printf("%s\n", complete_path);
+	// if (!complete_path)
+	// 	exit(127);
 	execve(complete_path, cmd->args, envp);
 	perror_exit("execve");
 }
@@ -116,10 +120,11 @@ void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell)
 	int		pipe_fd[2];
 	t_cmd	*cmd;
 	int		status;
-	(void)mshell;
+	t_bool	sigint_killed;
 
 	prev_fd = -1;
 	cmd = cmd_list;
+	sigint_killed = FALSE;
 	while (cmd)
 	{
 		if (cmd->args && is_builtin(cmd->args[0]))
@@ -134,6 +139,13 @@ void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell)
 			prev_fd = -1;
 		cmd = cmd->next;
 	}
+	signal(SIGINT, SIG_IGN);
 	while (wait(&status) > 0)
-		;
+	{
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			sigint_killed = TRUE;
+	}
+	catch_sig();
+	if (sigint_killed)
+		write(1, "\n", 1);
 }

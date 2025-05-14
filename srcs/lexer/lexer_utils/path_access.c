@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 13:34:45 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/12 15:38:08 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/14 14:19:06 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	**cmd_arg(char *cmd)
 char	*cmd_path(char *cmd, char **path)
 {
 	char	*temp;
-	char	*tempo;
 	int		i;
 
 	i = 0;
@@ -61,15 +60,13 @@ char	*cmd_path(char *cmd, char **path)
 	}
 	while (path[i])
 	{
-		temp = ft_strdup(path[i]);
-		temp = ft_strjoin(temp, "/");
-		tempo = ft_strjoin(temp, cmd);
-		if (!tempo)
+		temp = ft_strcjoin(path[i], cmd, '/');
+		if (!temp)
 			return (NULL);
-		if (access(tempo, X_OK) == 0)
-			return (tempo);
+		if (access(temp, X_OK) == 0)
+			return (temp);
 		i++;
-		free(tempo);
+		free(temp);
 	}
 	return (NULL);
 }

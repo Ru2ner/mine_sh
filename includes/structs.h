@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:20:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 13:37:31 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/14 19:39:24 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,18 @@ typedef enum e_token_type
 	OUTFILE_APPEND
 }	t_token_type;
 
+typedef enum e_quote_type
+{
+	NONE,
+	SINGLE,
+	DOUBLE
+}	t_quote_type;
 typedef struct s_token
 {
 	char			*value;
 	int				index;
 	t_token_type	type;
+	t_quote_type	quote_type;
 	t_token			*next;
 }	t_token;
 

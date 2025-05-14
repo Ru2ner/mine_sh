@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 18:45:12 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/14 20:14:50 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,24 @@ static	t_bool	init_minishell(t_mshell *mshell)
 	return (TRUE);
 }
 
-void	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
+t_bool	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 {
 	
 	if (quote_counter(input) == FALSE)
 	{
 		printf("There is an odd number of quotes\n");
-		return ;
+		return (FALSE);
 	}
 	lexer(input, parsing, lexicon);
-	// t_token	*temp;
-	// temp = *lexicon;
-	// while (temp)
-	// {
-	// 	printf("%s\n", temp->value);
-	// 	printf("%d\n", temp->type);
-	// 	temp = temp->next;
-	// }
+	t_token	*temp;
+	temp = *lexicon;
+	while (temp)
+	{
+		printf("%s\n", temp->value);
+		printf("%d\n", temp->type);
+		temp = temp->next;
+	}
+	return (TRUE);
 }
 
 void	readline_loop(char **envp, t_mshell *mshell)
@@ -55,20 +56,24 @@ void	readline_loop(char **envp, t_mshell *mshell)
 		parsing.input = readline(PROMPT);
 		parsing.split_input = ft_split_charset(parsing.input, " ");
 		if (!parsing.split_input)
-			break ;
+		break ;
 		parsing.envp = envp;
 		if (!parsing.input)
-			break ;
+		break ;
 		if (!parsing.input[0])
-			continue ;
+		continue ;
 		add_history(parsing.input);
 		mshell->args = ft_split(parsing.input, ' ');
-		create_lexicon(parsing.input, &parsing, &lexicon);
+		if (create_lexicon(parsing.input, &parsing, &lexicon) == FALSE)
+		continue ;
 		if (parsing_input(lexicon) == FALSE)
+		{
 			ft_putstr_fd("failed to parse\n", 2);
-		exec(lexicon, envp, mshell);
+			continue ;
+		}
+		exec(lexicon, envp, mshell); //TODO envoyer la conversion de la liste env en tableau
 		free(parsing.input);
-		free_tab(split_input);
+		free_tab(parsing.split_input);
 		free_tab(mshell->args);
 		free_lexicon(lexicon);
 		lexicon = NULL;
@@ -78,13 +83,14 @@ void	readline_loop(char **envp, t_mshell *mshell)
 int	main(int argc, char **argv, char **envp)
 {
 	t_mshell	mshell;
-
+	
 	(void)argv;
 	(void)argc;
-	catch_sig();
 	init_minishell(&mshell);
 	env_creator(envp, &mshell);
+	catch_sig();
 	readline_loop(envp, &mshell);
-	rl_clear_history();
 	free_list(mshell.env);
+	rl_clear_history();
+	return (0);
 }

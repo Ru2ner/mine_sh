@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 14:40:06 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/14 19:39:54 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,17 @@ static t_token_type	specify_each_words(char *value, t_parse *parsing)
 {
 	struct	stat	type;
 	char			**paths;
+	char			*path;
 
 	if (!value || !parsing)
 		return (ERROR);
 	paths = get_paths(parsing->envp);
+	ft_memset(&type, 0, sizeof(struct stat));
 	lstat(value, &type);
-	if (cmd_path(value, paths))
+	path = cmd_path(value, paths);
+	if (path)
 	{
+		free(path);
 		free_tab(paths);
 		return (CMD);
 	}
@@ -90,7 +94,6 @@ void	identify_redir_file(t_token *lexicon)
 	}
 }
 
-
 t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon)
 {
 	t_token_type	type;
@@ -105,16 +108,16 @@ t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon)
 			input++;
 			continue ;
 		}
-		if (is_special_char(*input))
-		{
-			value = extract_special_char(&input);
-			type = identify_special_char(value);
-		}
 		else if (is_quote(*input))
 		{
 			type = identify_quotes(*input);
 			value = extract_quoted_string((char *)input);
 			input += ft_strlen(value) + 2;
+		}
+		else if (is_special_char(*input))
+		{
+			value = extract_special_char(&input);
+			type = identify_special_char(value);
 		}
 		else
 		{

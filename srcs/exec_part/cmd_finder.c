@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:54:16 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 16:57:52 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/14 20:58:14 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,14 @@ static char	**get_path_var(char **envp)
 
 char	*parse_path(char **envp, char *cmd)
 {
-	int		i;
 	char	*complete_path;
 	char	**paths;
+	int		i;
 
 	i = 0;
+	if (ft_strchr(cmd, '/'))
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
 	paths = get_path_var(envp);
 	while (paths && paths[i])
 	{
