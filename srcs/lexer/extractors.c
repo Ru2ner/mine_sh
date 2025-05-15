@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:45:00 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 14:00:24 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/15 15:44:26 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 // 	return (count);
 // }
 
-char	*extract_quoted_string(char *input)
+char	*extract_quoted_string(char **input)
 {
 	char	*result;
 	char	quote;
@@ -42,18 +42,21 @@ char	*extract_quoted_string(char *input)
 	i = 0;
 	if (!input)
 		return (NULL);
-	quote = input[i];
+	quote = (*input)[i];
 	i++;
 	start = i;
-	while (input[i] && input[i] != quote)
+	while ((*input)[i] && (*input)[i] != quote)
 		i++;
-	result = ft_strndup(input + start, i - start);
+	result = ft_strndup(*input + start, i - start);
 	if (!result)
 		return (NULL);
+	if ((*input)[i] == quote)
+		i++;
+	*input += i;
 	return (result);
 }
 
-char	*extract_word(const char **input)
+char	*extract_word(char **input)
 {
 	const char *start = *input;
 
@@ -62,7 +65,7 @@ char	*extract_word(const char **input)
 	return (ft_strndup(start, *input - start));
 }
 
-char	*extract_special_char(const char **input)
+char	*extract_special_char(char **input)
 {
 	if (**input == REDIR_IN_CHAR && *(*input + 1) == REDIR_IN_CHAR)
 	{

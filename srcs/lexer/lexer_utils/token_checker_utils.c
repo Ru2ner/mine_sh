@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:24:27 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:53:54 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/15 15:11:02 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ t_bool is_builtin(char *str)
 {
 	if (!str)
 		return (FALSE);
-	else if (ft_strncmp(str, "echo", 4) == 0)
+	else if (ft_strcmp(str, "echo") == 0)
 		return (TRUE);
-	else if (ft_strncmp(str, "cd", 2) == 0)
+	else if (ft_strcmp(str, "cd") == 0)
 		return (TRUE);
-	else if (ft_strncmp(str, "pwd", 3) == 0)
+	else if (ft_strcmp(str, "pwd") == 0)
 		return (TRUE);
-	else if (ft_strncmp(str, "export", 6) == 0)
+	else if (ft_strcmp(str, "export") == 0)
 		return (TRUE);
-	else if (ft_strncmp(str, "unset", 5) == 0)
+	else if (ft_strcmp(str, "unset") == 0)
 		return (TRUE);
-	else if (ft_strncmp(str, "env", 4) == 0)
+	else if (ft_strcmp(str, "env") == 0)
 		return (TRUE);
-	else if (ft_strncmp(str, "exit", 4) == 0)
+	else if (ft_strcmp(str, "exit") == 0)
 		return (TRUE);
-	else if (ft_strncmp(str, "clear", 5) == 0)
+	else if (ft_strcmp(str, "clear") == 0)
 		return (TRUE);
 	return (FALSE);
 }

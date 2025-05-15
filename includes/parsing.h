@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:27:21 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/15 17:59:45 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 /******************************Tokenizer***************************************/
 
-void	readline_loop(char **envp, t_mshell *mshell);
+void	readline_loop(t_mshell *mshell);
 
 t_bool	is_special_char(char c);
 
@@ -55,21 +55,23 @@ t_bool	is_pipe(t_token *lexicon);
 
 t_bool	is_redir(t_token *lexicon);
 
-char	*extract_quoted_string(char *input);
+char	*extract_quoted_string(char **input);
 
-char	*extract_word(const char **input);
+char	*extract_word(char **input);
 
-char	*extract_special_char(const char **input);
+char	*extract_special_char(char **input);
 
 t_bool	quote_counter(char *input);
 
-t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon);
+void	lexer(char *input, t_token **lexicon);
 
-t_token	*create_new_token(char *value, t_token_type type, int index);
+t_token	*create_new_token(char *value, t_token_type type, t_quote_type quote_type);
 
-void	build_lexicon(t_token **lexicon, char *value, t_token_type type, int index);
+void	build_lexicon(t_token **lexicon, char *value, t_token_type type, t_quote_type quote_type);
 
 t_bool	parsing_input(t_token *lexicon);
+
+char	*expand_handler(t_env *env, char *key);
 
 /******************************Args Checks*************************************/
 

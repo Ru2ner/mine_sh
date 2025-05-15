@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 20:10:21 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/15 20:43:15 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,12 @@ void	child_process(t_cmd *cmd, int prev_fd, int *pipe_fd, char **envp)
 	if (prev_fd != -1)
 		close(prev_fd);
 	complete_path = parse_path(envp, cmd->args[0]);
-	printf("%s\n", complete_path);
-	// if (!complete_path)
-	// 	exit(127);
+	// printf("%s\n", complete_path);
+	if (!complete_path)
+	{
+		cmd_not_found_error();
+		exit(127);
+	}
 	execve(complete_path, cmd->args, envp);
 	perror_exit("execve");
 }
@@ -128,7 +131,7 @@ void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell)
 	while (cmd)
 	{
 		if (cmd->args && is_builtin(cmd->args[0]))
-			mshell->env = builtin_launcher(mshell->args, mshell->env);
+			mshell->env = builtin_launcher(cmd->args, mshell->env);
 		else
 			execute_command(cmd, prev_fd, pipe_fd, envp);
 		if (prev_fd != -1)

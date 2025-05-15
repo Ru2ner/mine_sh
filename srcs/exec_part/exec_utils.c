@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:37:40 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 13:53:11 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/15 15:53:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,16 @@ int	here_doc_handler(t_cmd *cmd)
 
 	if (pipe(here_doc_pipe) == -1)
 		perror_exit("pipe");
+	catch_sig_heredoc();
 	while (1)
 	{
-		catch_sig_heredoc();
 		write(1, "heredoc> ", 9);
 		line = get_next_line(STDIN_FILENO);
 		if (!line)
+		{
+			write(1, "\n", 1);
 			break;
+		}
 		len = ft_strlen(line);
 		if (len > 0 && line[len -1] == '\n')
 			line[len - 1] = '\0';

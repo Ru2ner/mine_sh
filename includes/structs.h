@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:20:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 19:39:24 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/15 18:24:36 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,27 @@ typedef struct s_cmd
 	t_cmd	*next;
 }	t_cmd;
 
+typedef enum e_special_types
+{
+	FD,
+	FOLDER,
+	CMD,
+	CMD_ARGS,
+	SEMICOLON,
+}	t_special_types;
+
 typedef enum e_token_type
 {
-	WORD,//0
-	PIPE,//1
-	REDIR_IN,//2
-	REDIR_OUT,//3
-	HERE_DOC,//4
-	REDIR_OUT_APPEND,//5
-	SINGLE_QUOTE,//6
-	DOUBLE_QUOTE,//7
-	FD,////8
-	FOLDER,//9
-	CMD,//10
-	CMD_ARGS,//11
-	SEMICOLON,//12
-	INFILE,//13
-	OUTFILE,//14
-	ERROR,//15
-	HERE_DOC_DELIM,
-	OUTFILE_APPEND
+	WORD,
+	PIPE,
+	REDIR_IN,
+	INFILE,
+	REDIR_OUT,
+	OUTFILE,
+	REDIR_OUT_APPEND,
+	OUTFILE_APPEND,
+	HERE_DOC,
+	HERE_DOC_DELIM
 }	t_token_type;
 
 typedef enum e_quote_type
@@ -89,10 +90,10 @@ typedef enum e_quote_type
 	SINGLE,
 	DOUBLE
 }	t_quote_type;
+
 typedef struct s_token
 {
 	char			*value;
-	int				index;
 	t_token_type	type;
 	t_quote_type	quote_type;
 	t_token			*next;

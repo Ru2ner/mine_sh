@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/13 13:07:28 by tlutz            ###   ########.fr        #
+#    Updated: 2025/05/15 20:40:58 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		lexer/lexer_utils/path_access.c \
 		lexer/lexer_utils/list_utils.c \
 		lexer/extractors.c \
-		lexer/lexer.c \
+		lexer/lexer_rework/lexer.c \
 		parser/parse_utils.c\
 		builtins/builtin_pwd.c \
 		builtins/builtin_env.c \
@@ -58,6 +58,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		builtins/builtin_launcher.c \
 		expand_handler/expand_handler.c \
 		env_handling/env_converter.c \
+		env_handling/env_editor.c \
 		env_handling/list_utils.c \
 		env_handling/env_creator.c \
 		builtins_utils/free_utils.c \
@@ -73,6 +74,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		exec_part/exec_utils.c \
 		exec_part/cmd_finder.c \
 		signals/sigs_handlers.c \
+		prompt/create_prompt.c \
 		main_v1.c
 
 OBJSDIR = .build/

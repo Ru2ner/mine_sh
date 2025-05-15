@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:40:48 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/13 12:26:00 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/15 20:44:29 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_bool valid_redir(t_token *lexicon)
 	
 	while (lexicon->next)
 	{
-		if (lexicon->type == PIPE && lexicon->next->type != CMD)
+		if (lexicon->type == PIPE && lexicon->next->type != WORD)
 			return (FALSE);
 		lexicon = lexicon->next;
 	}

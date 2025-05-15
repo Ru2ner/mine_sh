@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 14:29:26 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/15 20:40:38 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,8 @@ void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell);
 
 void	catch_sig_heredoc(void);
 
+char	*fetch_value_from_env(t_env *env, char *key);
+
+char	*create_prompt(t_env *env);
 
 #endif
