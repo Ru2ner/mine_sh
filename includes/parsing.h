@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 17:59:45 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 15:20:41 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ t_bool	quote_counter(char *input);
 
 void	lexer(char *input, t_token **lexicon);
 
-t_token	*create_new_token(char *value, t_token_type type, t_quote_type quote_type);
+t_token	*create_new_token(char *value, t_token_type type, t_quote_type quote_type, t_bool link);
 
-void	build_lexicon(t_token **lexicon, char *value, t_token_type type, t_quote_type quote_type);
+void	build_lexicon(t_token **lexicon, char *value, t_token_type type, t_quote_type quote_type, t_bool link);
 
 t_bool	parsing_input(t_token *lexicon);
 

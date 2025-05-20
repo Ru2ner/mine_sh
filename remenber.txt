@@ -9,6 +9,7 @@ EOF
 3
 
 echo $USER'$USER'"$USER"
+echo "bonjour"'salut'"hola" 'aurevoir'"byebye"'adios' "alarevoyure"
 
 si ctr+c here doc sa doit continuer direct sqns reinterreter l'input
 

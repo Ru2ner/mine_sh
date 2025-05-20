@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:04:35 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 12:59:30 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 15:18:00 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ size_t	get_lexicon_size(t_token *lexicon)
 	return (i);
 }
 
-t_token	*create_new_token(char *value, t_token_type type, t_quote_type quote_type)
+t_token	*create_new_token(char *value, t_token_type type, t_quote_type quote_type, t_bool link)
 {
 	t_token	*token;
 	
@@ -56,18 +56,19 @@ t_token	*create_new_token(char *value, t_token_type type, t_quote_type quote_typ
 		return (malloc_error());
 	token->quote_type = quote_type;
 	token->type = type;
+	token->link = link;
 	token->next = NULL;
 	if (value)
 		free(value);
 	return (token);
 }
 
-void	build_lexicon(t_token **lexicon, char *value, t_token_type type, t_quote_type quote_type)
+void	build_lexicon(t_token **lexicon, char *value, t_token_type type, t_quote_type quote_type, t_bool link)
 {
 	t_token	*new_token;
 	t_token	*temp;
 
-	new_token = create_new_token(value, type, quote_type);
+	new_token = create_new_token(value, type, quote_type, link);
 	if (!new_token)
 		return ;
 	if (!*lexicon)

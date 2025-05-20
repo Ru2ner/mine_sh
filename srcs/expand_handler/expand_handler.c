@@ -6,12 +6,15 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/19 13:38:10 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/20 18:20:05 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
+
+
+
 
 char	*expand_handler(t_env *env, char *key)
 {
@@ -32,5 +35,8 @@ char	*expand_handler(t_env *env, char *key)
 		}
 		temp = temp->next;
 	}
-	return (NULL);
+	expanded = ft_strdup(key);
+	if (!expanded)
+		return (malloc_error());
+	return (key);
 }

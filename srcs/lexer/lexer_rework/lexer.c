@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 19:49:34 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/19 12:34:54 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:17:24 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,15 @@ void	lexer(char *input, t_token **lexicon)
 	t_token_type	type;
 	t_quote_type	quote_type;
 	char			*value;
-	
+	t_bool			link_word;
+
+	link_word = TRUE;
 	while (*input)
 	{
 		if (is_whitespaces(*input))
 		{
 			input++;
+			link_word = FALSE;
 			continue ;
 		}
 		else if (is_quote(*input))
@@ -73,7 +76,7 @@ void	lexer(char *input, t_token **lexicon)
 			value = extract_quoted_string(&input);
 		}
 		else if (is_special_char(*input))
-	{
+		{
 			quote_type = NONE;
 			value = extract_special_char(&input);
 			type = identify_special_char(value);
@@ -84,7 +87,8 @@ void	lexer(char *input, t_token **lexicon)
 			type = WORD;
 			value = extract_word(&input);
 		}
-		build_lexicon(lexicon, value, type, quote_type);
+		build_lexicon(lexicon, value, type, quote_type, link_word);
+		link_word = TRUE;
 	}
 	identify_redir_file(*lexicon);
 }

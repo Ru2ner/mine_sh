@@ -6,11 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/05/20 13:31:20 by tlutz            ###   ########.fr       */
-=======
-/*   Updated: 2025/05/19 13:40:29 by tmarion          ###   ########.fr       */
->>>>>>> 55b9a2e0eaeb0d562a1fc2567aa5ed37444838a2
+/*   Updated: 2025/05/20 18:54:40 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +36,21 @@ void	free_cmd_list(t_cmd *cmd_list)
 	}
 }
 
+// static void 
+
 static t_cmd *ft_create_node(t_token *lexicon, t_env *env)
 {
 	t_cmd 	*new_node;
+	char	*temp_string;
+	t_token	*temp;
 	int		i = 0;
+	(void)env;
 
 	new_node = malloc(sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
 	ft_memset(new_node, 0, sizeof(t_cmd));
+	//EXPAND HANDLER --> MODIF LEXICON
 	while (lexicon && (lexicon->type == REDIR_IN || lexicon->type == REDIR_OUT \
 		|| lexicon->type == REDIR_OUT_APPEND || lexicon->type == HERE_DOC))
 		lexicon = lexicon->next;
@@ -68,19 +70,27 @@ static t_cmd *ft_create_node(t_token *lexicon, t_env *env)
 			new_node->heredoc_delim = ft_strdup(lexicon->value);
 		lexicon = lexicon->next;
 	}
-	if (lexicon && (lexicon->type == WORD))
+	//
+	temp = lexicon;
+	new_node->args = malloc(sizeof(char *) * 100); //TODO Compter le nombre d'arguments pour malloc
+	while (temp && temp->type == WORD)
 	{
-		new_node->args = malloc(sizeof(char *) * 100); //TODO Compter le nombre d'arguments pour malloc
-		while (lexicon && lexicon->type == WORD)
+		if (temp->next && temp->next->link == TRUE)
 		{
-			if (ft_strchr(lexicon->value, '$') && lexicon->quote_type != SINGLE && expand_handler(env, lexicon->value))
-				new_node->args[i++] = expand_handler(env, lexicon->value);
-			else
-				new_node->args[i++] = ft_strdup(lexicon->value);
-			lexicon = lexicon->next;
+			temp_string = ft_strjoin(temp->value, temp->next->value);
+			temp = temp->next;
+			while (temp->next && temp->next->value && temp->next->link == TRUE)
+			{
+				temp_string = ft_strjoin(temp_string, temp->next->value);
+				temp = temp->next;
+			}
+			new_node->args[i++] = temp_string;
 		}
-		new_node->args[i] = NULL;
+		else
+			new_node->args[i++] = ft_strdup(temp->value);
+		//
 	}
+	new_node->args[i] = NULL;
 	while (lexicon)
 	{
 		if (lexicon->type == INFILE)
@@ -138,38 +148,26 @@ int exec(t_token *lexicon, char **envp, t_mshell *mshell)
 	int		i;
 	temp = cmd_list;
 	printf("------------------Exec List--------------------------------------\n");
-	i = 0;
+	// i = 0;
 	// while (mshell->args[i])
 	// {
 	// 	printf("mshell args: %s \n", mshell->args[i]);
 	// 	i++;
 	// }
-<<<<<<< HEAD
-	pipeline(cmd_list, envp, mshell, lexicon);
-=======
-	// printf("\n");
-	// while (lexicon)
-	// {
-	// 	printf("value: %s\ntype: %d\n\n", lexicon->value, lexicon->type);
-	// 	lexicon = lexicon->next;
-	// }
 	while (temp)
 	{
 		i = 0;
-		if (temp->args != NULL)
+		while (temp->args[i])
 		{
-			while (temp->args[i])
-			{
-				printf("args: %s \n", temp->args[i]);
-				i++;
-			}
+			printf("args: %s\n", temp->args[i]);
+			i++;
 		}
-		printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
+		printf("infile: %s\n", temp->infile);
+		printf("outfile: %s\n", temp->outfile);
 		temp = temp->next;
 	}
 //
-	pipeline(cmd_list, envp, mshell);
->>>>>>> 55b9a2e0eaeb0d562a1fc2567aa5ed37444838a2
+	pipeline(cmd_list, envp, mshell, lexicon);
 	free_cmd_list(cmd_list);
 	return (1);
 }

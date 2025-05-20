@@ -6,11 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/05/20 13:31:07 by tlutz            ###   ########.fr       */
-=======
-/*   Updated: 2025/05/19 13:08:11 by tmarion          ###   ########.fr       */
->>>>>>> 55b9a2e0eaeb0d562a1fc2567aa5ed37444838a2
+/*   Updated: 2025/05/20 16:57:43 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +32,19 @@ t_bool	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 		return (FALSE);
 	}
 	lexer(input, lexicon);
-	// t_token	*temp;
-	// temp = *lexicon;
-	// printf("------------------Lexer-----------------------------------------\n");
-	// while (temp)
-	// {
-	// 	printf("value: %s\n", temp->value);
-	// 	printf("type: %d\n", temp->type);
-	// 	printf("type: %d\n", temp->quote_type);
-	// 	temp = temp->next;
-	// }
+//
+	t_token	*temp;
+	temp = *lexicon;
+	printf("------------------Lexer-----------------------------------------\n");
+	while (temp)
+	{
+		printf("value: %s\n", temp->value);
+		printf("type: %d\n", temp->type);
+		printf("quote type: %d\n", temp->quote_type);
+		printf("link: %d\n\n", temp->link);
+		temp = temp->next;
+	}
+//
 	return (TRUE);
 }
 

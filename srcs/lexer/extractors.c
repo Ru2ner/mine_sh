@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extractors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:45:00 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 12:21:23 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 16:55:32 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*extract_word(char **input)
 	const char *start = *input;
 	char				*value;
 
-	while (**input && !is_whitespaces(**input) && !is_special_char(**input))
+	while (**input && !is_whitespaces(**input) && !is_special_char(**input) && **input != '\'' && **input != '\"')
 		(*input)++;
 	value = ft_strndup(start, *input - start);
 	if (!value)
