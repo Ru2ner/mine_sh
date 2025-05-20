@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 17:58:38 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/19 15:09:09 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	*key_value_creator(t_keyval *key_val, char **args)
 		key_val->key = args[0];
 		key_val->value = args[1];
 	}
-	if (args[0] && !args[1])
+	if ((args[0] && !args[1]) || (args[0] && args[1][0] == '\"' && args[1][1] == '\"'))
 	{
 		key_val->key = args[0];
 		key_val->value = ft_strdup("");
@@ -71,6 +71,8 @@ static void	*append_to_var(t_env *env, char *arg)
 
 static void	*edit_var(t_env *temp, char **args)
 {
+	// gestion de l'export --> export KEY="" donne KEY="""" plutot que KEY=""
+	printf("len: %zu \nvalue: %s\n\n", ft_strlen(args[1]), args[1]);
 	free(temp->value);
 	if (!args[1])
 		temp->value = ft_strdup("");

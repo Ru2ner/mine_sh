@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_creator.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/05/20 13:31:20 by tlutz            ###   ########.fr       */
+=======
+/*   Updated: 2025/05/19 13:40:29 by tmarion          ###   ########.fr       */
+>>>>>>> 55b9a2e0eaeb0d562a1fc2567aa5ed37444838a2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +73,7 @@ static t_cmd *ft_create_node(t_token *lexicon, t_env *env)
 		new_node->args = malloc(sizeof(char *) * 100); //TODO Compter le nombre d'arguments pour malloc
 		while (lexicon && lexicon->type == WORD)
 		{
-			if (ft_strchr(lexicon->value, '$') && lexicon->quote_type != SINGLE)
+			if (ft_strchr(lexicon->value, '$') && lexicon->quote_type != SINGLE && expand_handler(env, lexicon->value))
 				new_node->args[i++] = expand_handler(env, lexicon->value);
 			else
 				new_node->args[i++] = ft_strdup(lexicon->value);
@@ -129,25 +133,43 @@ int exec(t_token *lexicon, char **envp, t_mshell *mshell)
 	(void)mshell;
 	
 	create_exec_list(&cmd_list, lexicon, mshell->env);
-	// t_cmd	*temp;
-	// int		i;
-	// temp = cmd_list;
-	// printf("------------------Exec List--------------------------------------\n");
-	// while (temp)
+//
+	t_cmd	*temp;
+	int		i;
+	temp = cmd_list;
+	printf("------------------Exec List--------------------------------------\n");
+	i = 0;
+	// while (mshell->args[i])
 	// {
-	// 	i = 0;
-	// 	if (temp->args != NULL)
-	// 	{
-	// 		while (temp->args[i])
-	// 		{
-	// 			printf("args: %s \n", temp->args[i]);
-	// 			i++;
-	// 		}
-	// 	}
-	// 	printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
-	// 	temp = temp->next;
+	// 	printf("mshell args: %s \n", mshell->args[i]);
+	// 	i++;
 	// }
+<<<<<<< HEAD
 	pipeline(cmd_list, envp, mshell, lexicon);
+=======
+	// printf("\n");
+	// while (lexicon)
+	// {
+	// 	printf("value: %s\ntype: %d\n\n", lexicon->value, lexicon->type);
+	// 	lexicon = lexicon->next;
+	// }
+	while (temp)
+	{
+		i = 0;
+		if (temp->args != NULL)
+		{
+			while (temp->args[i])
+			{
+				printf("args: %s \n", temp->args[i]);
+				i++;
+			}
+		}
+		printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
+		temp = temp->next;
+	}
+//
+	pipeline(cmd_list, envp, mshell);
+>>>>>>> 55b9a2e0eaeb0d562a1fc2567aa5ed37444838a2
 	free_cmd_list(cmd_list);
 	return (1);
 }

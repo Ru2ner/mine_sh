@@ -1,0 +1,44 @@
+#    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
+NAME = minishell
+LIBFTINCDIR = $(LIBFTDIR)includes/
+HEADERSDIR = includes/
+HEADERS = $(HEADERSDIR)parsing.h \
+			$(HEADERSDIR)errors.h \
+			$(HEADERSDIR)structs.h
+SRCSDIR = srcs/
+SRCS = lexer/lexer_utils/quote_checker.c \
+		lexer/lexer_utils/token_checker_utils.c \
+		lexer/lexer_utils/is_type.c \
+		lexer/lexer_utils/path_access.c \
+		lexer/lexer_utils/list_utils.c \
+		lexer/extractors.c \
+		parser/parse_utils.c\
+		builtins/builtin_pwd.c \
+		builtins/builtin_env.c \
+		builtins/builtin_cd.c \
+		builtins/builtin_echo.c \
+		builtins/builtin_clear.c \
+		builtins/builtin_export.c \
+		builtins/builtin_unset.c \
+		builtins/builtin_launcher.c \
+		env_handling/list_utils.c \
+		builtins_utils/free_utils.c \
+		builtins_utils/tab_utils.c \
+		builtins_utils/export_utils.c \
+		errors_handling/errors_msgs.c \
+		pipex_exec/pipex_bonus.c \
+		pipex_exec/pipex_utils_bonus_1.c \
+		pipex_exec/pipex_utils_bonus_2.c \
+		pipex_exec/pipex_utils_bonus.c \
+		exec_part/exec_utils.c \
+		signals/sigs_handlers.c \
+OBJS = $(patsubst %.c, $(OBJSDIR)%.o,$(SRCS))
+TOTAL_SRCS := $(words $(SRCS))
+	@echo "\n$(COLOR_GREEN)Linking objects...$(COLOR_RESET)"
+	@$(eval COMPILED_SRCS=$(shell echo $$(($(COMPILED_SRCS)+1))))
+	@printf "\rCompiling $(NAME): [%-50s] %d/%d" \
+	"$(shell printf '#%.0s' $$(seq 1 $$(($(COMPILED_SRCS)*50/$(TOTAL_SRCS)))))" \
+	@make -j -sC $(LIBFTDIR)
+	@echo "$(COLOR_BLUE)Cleaning objects...$(COLOR_RESET)"
+	@make clean -sC $(LIBFTDIR)
+	@make fclean -sC $(LIBFTDIR)
