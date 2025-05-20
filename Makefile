@@ -6,7 +6,7 @@
 #    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/15 20:40:58 by tlutz            ###   ########.fr        #
+#    Updated: 2025/05/20 14:36:59 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		expand_handler/expand_handler.c \
 		env_handling/env_converter.c \
 		env_handling/env_editor.c \
-		env_handling/list_utils.c \
+		env_handling/env_list_utils.c \
 		env_handling/env_creator.c \
 		builtins_utils/free_utils.c \
 		builtins_utils/tab_utils.c \

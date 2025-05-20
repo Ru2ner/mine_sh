@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:45:00 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 15:44:26 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 12:21:23 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*extract_quoted_string(char **input)
 		i++;
 	result = ft_strndup(*input + start, i - start);
 	if (!result)
-		return (NULL);
+		return (malloc_error());
 	if ((*input)[i] == quote)
 		i++;
 	*input += i;
@@ -59,24 +59,41 @@ char	*extract_quoted_string(char **input)
 char	*extract_word(char **input)
 {
 	const char *start = *input;
+	char				*value;
 
 	while (**input && !is_whitespaces(**input) && !is_special_char(**input))
 		(*input)++;
-	return (ft_strndup(start, *input - start));
+	value = ft_strndup(start, *input - start);
+	if (!value)
+		return (malloc_error());
+	return (value);
 }
 
 char	*extract_special_char(char **input)
 {
+	char	*value;
+	
 	if (**input == REDIR_IN_CHAR && *(*input + 1) == REDIR_IN_CHAR)
 	{
 		(*input) += 2;
-		return (ft_strdup("<<"));
+		value = ft_strdup("<<");
+		if (!value)
+			return (malloc_error());
+		return (value);
 	}
 	else if (**input == REDIR_OUT_CHAR && *(*input + 1) == REDIR_OUT_CHAR)
 	{
 		(*input) += 2;
-		return (ft_strdup(">>"));
+		value = ft_strdup(">>");
+		if (!value)
+			return (malloc_error());
+		return (value);
 	}	
 	else
-		return (ft_strndup((*input)++, 1));
+	{
+		value = ft_strndup((*input)++, 1);
+		if (!value)
+			return (malloc_error());
+		return (value);
+	}
 }

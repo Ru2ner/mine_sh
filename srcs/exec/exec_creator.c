@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 20:42:32 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 13:31:20 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 void	free_cmd_list(t_cmd *cmd_list)
 {
 	t_cmd	*temp;
+	t_cmd	*next;
 
 	temp = cmd_list;
 	while (temp)
 	{
+		next = temp->next;
 		if (temp->args)
 			free_tab(temp->args);
 		if (temp->infile)
@@ -29,7 +31,8 @@ void	free_cmd_list(t_cmd *cmd_list)
 			free(temp->outfile);
 		if (temp->heredoc_delim)
 			free(temp->heredoc_delim);
-		temp = temp->next;
+		free(temp);
+		temp = next;
 	}
 }
 
@@ -144,7 +147,7 @@ int exec(t_token *lexicon, char **envp, t_mshell *mshell)
 	// 	printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
 	// 	temp = temp->next;
 	// }
-	pipeline(cmd_list, envp, mshell);
+	pipeline(cmd_list, envp, mshell, lexicon);
 	free_cmd_list(cmd_list);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:04:35 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 18:29:13 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 12:59:30 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,15 @@ t_token	*create_new_token(char *value, t_token_type type, t_quote_type quote_typ
 	
 	token = malloc(sizeof(t_token));
 	if (!token)
-		return (NULL);
+		return (malloc_error());
 	token->value = ft_strdup(value);
 	if (!token->value)
-		return (NULL);
+		return (malloc_error());
 	token->quote_type = quote_type;
 	token->type = type;
 	token->next = NULL;
+	if (value)
+		free(value);
 	return (token);
 }
 

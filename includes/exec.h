@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 20:40:38 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 12:49:23 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ int 	exec(t_token *lexicon, char **envp, t_mshell *mshell);
 
 char	*parse_path(char **envp, char *cmd);
 
-void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell);
+void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell, t_token *lexicon);
 
 void	catch_sig_heredoc(void);
 
 char	*fetch_value_from_env(t_env *env, char *key);
 
 char	*create_prompt(t_env *env);
+
+void	free_cmd_list(t_cmd *cmd_list);
 
 #endif

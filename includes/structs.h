@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:20:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 18:24:36 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 12:47:05 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,15 @@ typedef struct s_parse
 	char	**split_input;
 	char	**envp;
 }	t_parse;
+
+typedef struct s_exec
+{
+	int		prev_fd;
+	int		pipe_fd[2];
+	char	**envp;
+	int		status;
+	t_cmd	*cmd_list;
+	t_token	*lexicon;
+}	t_exec;
 
 #endif

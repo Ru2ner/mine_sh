@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 20:42:17 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 13:31:07 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ t_bool	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 
 void	readline_loop(t_mshell *mshell)
 {
-	char	**split_input;
 	t_token *lexicon;
 	t_parse	parsing;
 	char	**envp;
+	char	*prompt;
 
 	lexicon = NULL;
-	split_input = NULL;
 	while (1)
 	{
-		parsing.input = readline(create_prompt(mshell->env));
+		prompt = create_prompt(mshell->env);
+		parsing.input = readline(prompt);
 		parsing.split_input = ft_split_charset(parsing.input, " ");
 		if (!parsing.split_input)
 			break ;
@@ -81,6 +81,7 @@ void	readline_loop(t_mshell *mshell)
 		free_tab(mshell->args);
 		free_tab(envp);
 		free_lexicon(lexicon);
+		free(prompt);
 		lexicon = NULL;
 	}
 }

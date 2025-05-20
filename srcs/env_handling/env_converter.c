@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:59:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/07 13:34:50 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 13:01:19 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ void	*convert_env_to_list(char **envp, t_env **env)
 	{
 		converted_array = ft_split(envp[i], '=');
 		if (!converted_array)
-			return (NULL);
+			return (malloc_error());
 		if (converted_array && converted_array[0] && converted_array[1])
 		{
 			key_value.key = ft_strdup(converted_array[0]);
 			if (!key_value.key)
-				return (NULL);
+				return (malloc_error());
 			key_value.value = ft_strdup(converted_array[1]);
 			if (!key_value.value)
-				return (NULL);
+				return (malloc_error());
 			build_list(env, &key_value, TRUE, TRUE);
 		}
 		free_tab(converted_array);
@@ -52,7 +52,7 @@ char	**convert_env_to_tab(t_env *env)
 	list_size = get_list_size(env);
 	result = malloc(sizeof(char *) * (list_size + 1));
 	if (!result)
-		return (NULL);
+		return (malloc_error());
 	while (i < list_size)
 	{
 		result[i] = ft_strcjoin(env->key, env->value, '=');

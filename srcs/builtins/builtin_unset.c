@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:13 by tlutz             #+#    #+#             */
-/*   Updated: 2025/04/24 12:42:04 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 12:26:48 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,20 @@ static	void	destroy_node(t_env *temp)
 		free(temp);
 }
 
-t_env	*unset(t_env *env, const char *key)
+void	unset(t_env **env, const char *key)
 {
 	t_env	*temp;
 	t_env	*prev;
 
-	temp = env;
+	temp = *env;
 	prev = NULL;
 	if (!key)
-		return (env);
+		return ;
 	if (temp != NULL && ft_strcmp(temp->key, key) == 0)
 	{
-		env = temp->next;
+		*env = temp->next;
 		destroy_node(temp);
-		return (env);
+		return ;
 	}
 	while (temp != NULL && ft_strcmp(temp->key, key) != 0)
 	{
@@ -46,8 +46,7 @@ t_env	*unset(t_env *env, const char *key)
 		temp = temp->next;
 	}
 	if (temp == NULL)
-		return (env);
+		return ;
 	prev->next = temp->next;
 	destroy_node(temp);
-	return (env);
 }
