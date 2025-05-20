@@ -6,26 +6,32 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/20 19:20:20 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 20:01:44 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-void	expand_handler(t_env *env, char *input)
+char	*expand_variables(t_env *env, char *input)
 {
-		
+	size_t	len;
+	char	*result;
+	
+	len = ft_strlen(input);
+	result = malloc(len + 1);
+	if (!result)
+		return (malloc_error());
 }
 
 char	*expand_finder(t_env *env, char *key)
 {
 	t_env	*temp;
 	char	*expanded;
-
+	
 	temp = env;
 	if (key[0] == '$')
-		key++;
+	key++;
 	while (temp)
 	{
 		if (ft_strcmp(temp->key, key) == 0 && temp->value)
@@ -37,8 +43,28 @@ char	*expand_finder(t_env *env, char *key)
 		}
 		temp = temp->next;
 	}
-	expanded = ft_strdup(key);
+	expanded = ft_strdup("");
 	if (!expanded)
 		return (malloc_error());
-	return (key);
+	return (expanded);
+}
+
+void	expand_handler(t_env *env, t_token *lexicon)
+{
+	t_token	*temp;
+	char	*expanded;
+
+	temp = lexicon;
+	while (temp)
+	{
+		if (temp->type == WORD && temp->quote_type != SINGLE)
+		{
+			expanded = expand_finder(env, temp->value);
+			if (!expanded)
+				return (malloc_error());
+			free(temp->value);
+			temp->value = expanded;
+		}
+		temp = temp->next;
+	}
 }

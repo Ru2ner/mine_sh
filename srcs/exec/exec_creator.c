@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 19:20:06 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/20 19:41:17 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_cmd_list(t_cmd *cmd_list)
 	}
 }
 
-// static void 
+ 
 
 static t_cmd *ft_create_node(t_token *lexicon, t_env *env)
 {
@@ -88,7 +88,7 @@ static t_cmd *ft_create_node(t_token *lexicon, t_env *env)
 		}
 		else
 			new_node->args[i++] = ft_strdup(temp->value);
-		//
+		temp = temp->next;
 	}
 	new_node->args[i] = NULL;
 	while (lexicon)
