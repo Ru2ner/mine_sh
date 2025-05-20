@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main_v1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 16:57:43 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:20:32 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <readline/readline.h>
 #include <readline/history.h>

@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   expand_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/20 18:20:05 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:20:20 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
+void	expand_handler(t_env *env, char *input)
+{
+		
+}
 
-
-
-char	*expand_handler(t_env *env, char *key)
+char	*expand_finder(t_env *env, char *key)
 {
 	t_env	*temp;
 	char	*expanded;
