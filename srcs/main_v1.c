@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 13:55:21 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 19:58:29 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	readline_loop(t_mshell *mshell)
 		free(prompt);
 		lexicon = NULL;
 	}
+	free(prompt);
 }
 
 int	main(int argc, char **argv, char **envp)

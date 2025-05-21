@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/21 18:13:30 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 19:54:33 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ size_t	compute_expanded_length(t_env *env, char *token)
 	return (len);
 }
 
-void	*expand_data_init(t_expand *data, t_env *env, char *token)
+t_bool	expand_data_init(t_expand *data, t_env *env, char *token)
 {
 	data->i = 0;
 	data->out_i = 0;
@@ -84,14 +84,15 @@ void	*expand_data_init(t_expand *data, t_env *env, char *token)
 	data->expanded_len = compute_expanded_length(env, token);
 	data->expanded = malloc(data->expanded_len + 1);
 	if (!data->expanded)
-		return (malloc_error());
+		return (FALSE);
+	return (TRUE);
 }
 
-char	*expand_handler(t_env *env, char *token)
+char	*expander(t_env *env, char *token)
 {
 	t_expand	data;
 
-	if (expand_data_init(&data, env, token));
+	if (!expand_data_init(&data, env, token))
 		return (NULL);
 	while (token[data.i])
 	{	
@@ -116,4 +117,22 @@ char	*expand_handler(t_env *env, char *token)
 	}
 	data.expanded[data.out_i] = '\0';
 	return (data.expanded);
+}
+
+void	expand_handler(t_env *env, t_token *lexicon)
+{
+	t_token	*temp;
+	char	*expanded;
+
+	temp = lexicon;
+	while (temp)
+	{
+		if (temp->quote_type != SINGLE)
+		{
+			expanded = expander(env, temp->value);
+			free(temp->value);
+			temp->value = expanded;
+		}
+		temp = temp->next;
+	}
 }
