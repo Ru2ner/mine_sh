@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   expand_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/20 20:01:44 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 15:51:40 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-char	*expand_variables(t_env *env, char *input)
-{
-	size_t	len;
-	char	*result;
+// char	*expand_variables(t_env *env, char *input)
+// {
+// 	size_t	len;
+// 	char	*result;
 	
-	len = ft_strlen(input);
-	result = malloc(len + 1);
-	if (!result)
-		return (malloc_error());
-}
+// 	len = ft_strlen(input);
+// 	result = malloc(len + 1);
+// 	if (!result)
+// 		return (malloc_error());
+	
+// }
 
 char	*expand_finder(t_env *env, char *key)
 {
@@ -61,7 +62,7 @@ void	expand_handler(t_env *env, t_token *lexicon)
 		{
 			expanded = expand_finder(env, temp->value);
 			if (!expanded)
-				return (malloc_error());
+				return ;
 			free(temp->value);
 			temp->value = expanded;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 14:44:00 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 16:24:35 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	close_unused_fds(int prev_fd, int pipe_read_fd, int pipe_write_fd);
 
 int		here_doc_handler(t_cmd *cmd);
 
-char	*expand_handler(t_env *env, char *key);
+char	*expand_finder(t_env *env, char *key);
 
 int 	exec(t_token *lexicon, char **envp, t_mshell *mshell);
 
@@ -66,5 +66,8 @@ char	*fetch_value_from_env(t_env *env, char *key);
 char	*create_prompt(t_env *env);
 
 void	free_cmd_list(t_cmd *cmd_list);
+
+t_cmd	*ft_create_node(t_token *lexicon, t_env *env);
+
 
 #endif
