@@ -3,16 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 19:37:40 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 15:53:09 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 16:09:25 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 #include "get_next_line.h"
+
+void	free_cmd_list(t_cmd *cmd_list)
+{
+	t_cmd	*temp;
+	t_cmd	*next;
+
+	temp = cmd_list;
+	while (temp)
+	{
+		next = temp->next;
+		if (temp->args)
+			free_tab(temp->args);
+		if (temp->infile)
+			free(temp->infile);
+		if (temp->outfile)
+			free(temp->outfile);
+		if (temp->heredoc_delim)
+			free(temp->heredoc_delim);
+		free(temp);
+		temp = next;
+	}
+}
 
 void	perror_exit(const char *msg)
 {
