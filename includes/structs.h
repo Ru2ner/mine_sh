@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:20:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 15:15:29 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:57:59 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_mshell
 	t_env	*env;
 	char	**args;
 	t_token	*lexicon;
+	t_cmd	*exec_list;
+	int		exit_status;
 }	t_mshell;
 
 typedef struct s_cmd
@@ -116,5 +118,17 @@ typedef struct s_exec
 	t_cmd	*cmd_list;
 	t_token	*lexicon;
 }	t_exec;
+
+typedef struct s_expand
+{
+	char	*var_name;
+	char	*var_value;
+	char	*expanded;
+	size_t	expanded_len;
+	size_t	var_len;
+	size_t	val_len;
+	size_t	i;
+	size_t	out_i;
+}	t_expand;
 
 #endif

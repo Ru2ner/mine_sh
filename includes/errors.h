@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:58 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 16:47:19 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 13:45:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ void	*cd_error(int errnum);
 void	*malloc_error(void);
 
 void	*cmd_not_found_error(void);
+
+void	*invalid_env_var(void);
 
 #endif

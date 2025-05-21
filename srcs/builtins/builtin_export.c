@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:06 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/19 15:09:09 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:50:05 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	*append_to_var(t_env *env, char *arg)
 
 static void	*edit_var(t_env *temp, char **args)
 {
-	// gestion de l'export --> export KEY="" donne KEY="""" plutot que KEY=""
+	//TODO gestion de l'export --> export KEY="" donne KEY="""" plutot que KEY=""
 	printf("len: %zu \nvalue: %s\n\n", ft_strlen(args[1]), args[1]);
 	free(temp->value);
 	if (!args[1])
@@ -107,6 +107,11 @@ void	*export(t_env *env, char *arg)
 		if (ft_strcmp(temp->key, args[0]) == 0)
 			return (edit_var(temp, args));
 		temp = temp->next;
+	}
+	if (!is_valid_for_env_var(args[0]))
+	{
+		free_tab(args);
+		return (invalid_env_var());
 	}
 	key_value_creator(&key_val, args);
 	build_list(&env, &key_val, TRUE, TRUE);
