@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:00:57 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/07 17:34:19 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 16:46:31 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(void)
 	char **dstr = ft_split("CURSE YOU BAYLE", ' ');
 	garbage = NULL;
 	
-	add_to_garbage(&garbage, NULL, str, FALSE);
+	add_to_garbage(&garbage, NULL, &str, FALSE);
 	add_to_garbage(&garbage, NULL, str2, FALSE);
 	add_to_garbage(&garbage, (void **)dstr, NULL, TRUE);
 	cleanup_garbage(garbage);

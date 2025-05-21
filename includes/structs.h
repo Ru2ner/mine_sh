@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:20:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 15:15:29 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:54:07 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,57 @@ typedef struct s_exec
 	t_token	*lexicon;
 }	t_exec;
 
+
 #endif
+
+/*int	ft_create_node(t_stack *a, int value)
+{
+	t_node	*new_node;
+	t_node	*curent_node;
+
+	curent_node = NULL;
+	new_node = (t_node *)malloc(sizeof(t_node));
+	if (!new_node)
+		return (0);
+	new_node->value = value;
+	new_node->bin_value = ft_binary_convert(value);
+	new_node->next = NULL;
+	if (a->top == NULL)
+		a->top = new_node;
+	else
+	{
+		curent_node = a->top;
+		while (curent_node->next != NULL)
+			curent_node = curent_node->next;
+		curent_node->next = new_node;
+	}
+	return (1);
+}
+
+t_stack	*ft_init_stack(void)
+{
+	t_stack	*stack;
+
+	stack = (t_stack *)malloc(sizeof(t_stack));
+	if (!stack)
+		return (NULL);
+	stack->top = NULL;
+	return (stack);
+}
+
+int	creat_all(t_stack *a, char **value, int i)
+{
+	if (!value || !a)
+		return (0);
+	while (value[i])
+	{
+		if (ft_create_node(a, ft_atoi(value[i])) == 0)
+			return (0);
+		i++;
+	}
+	a->size = i;
+	a->moove = 0;
+	if (push_parser(a, value) == 0)
+		return (0);
+	return (1);
+}*/

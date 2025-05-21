@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:58 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 16:47:19 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 18:01:35 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,28 @@ typedef struct s_garbage
 	t_garbage	*next;
 }	t_garbage;
 
+typedef struct s_trash		t_trash;
+typedef struct s_trash
+{
+	char	**adr;
+	t_bool	tab;
+	t_trash	*next;
+}	t_trash;
+
+
 void	*cd_error(int errnum);
 
 void	*malloc_error(void);
 
 void	*cmd_not_found_error(void);
+
+/*****************************Garbage Collector****************************************/
+
+t_trash	*garbage_list_init(void);
+
+void 	append_trash(t_trash *trash, char **ptr, t_bool bat);
+
+void 	trash_cleaner(t_trash *trash);
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_v1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 19:20:32 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 18:24:02 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ t_bool	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 	}
 	lexer(input, lexicon);
 //
-	t_token	*temp;
-	temp = *lexicon;
-	printf("------------------Lexer-----------------------------------------\n");
-	while (temp)
-	{
-		printf("value: %s\n", temp->value);
-		printf("type: %d\n", temp->type);
-		printf("quote type: %d\n", temp->quote_type);
-		printf("link: %d\n\n", temp->link);
-		temp = temp->next;
-	}
+	// t_token	*temp;
+	// temp = *lexicon;
+	// printf("------------------Lexer-----------------------------------------\n");
+	// while (temp)
+	// {
+	// 	printf("value: %s\n", temp->value);
+	// 	printf("type: %d\n", temp->type);
+	// 	printf("quote type: %d\n", temp->quote_type);
+	// 	printf("link: %d\n\n", temp->link);
+	// 	temp = temp->next;
+	// }
 //
 	return (TRUE);
 }
@@ -53,12 +53,14 @@ void	readline_loop(t_mshell *mshell)
 {
 	t_token *lexicon;
 	t_parse	parsing;
+	t_trash	*trash;
 	char	**envp;
 	char	*prompt;
 
 	lexicon = NULL;
 	while (1)
 	{
+		trash = garbage_list_init();
 		prompt = create_prompt(mshell->env);
 		parsing.input = readline(prompt);
 		parsing.split_input = ft_split_charset(parsing.input, " ");
@@ -79,13 +81,19 @@ void	readline_loop(t_mshell *mshell)
 			continue ;
 		}
 		envp = convert_env_to_tab(mshell->env);
+		append_trash(trash, envp, TRUE);
+		append_trash(trash, mshell->args, TRUE);
+		append_trash(trash, parsing.split_input, TRUE);
+		append_trash(trash, &parsing.input, FALSE);
+		append_trash(trash, &prompt, FALSE);
+		trash_cleaner(trash);
 		exec(lexicon, envp, mshell);
-		free(parsing.input);
-		free_tab(parsing.split_input);
-		free_tab(mshell->args);
-		free_tab(envp);
+		// free(parsing.input);
+		// free_tab(parsing.split_input);
+		// free_tab(mshell->args);
+		// free_tab(envp);
+		// free(prompt);
 		free_lexicon(lexicon);
-		free(prompt);
 		lexicon = NULL;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:19:59 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/21 16:28:50 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:29:42 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_cmd	*ft_create_node(t_token *lexicon, t_env *env)
 	if (!new_node)
 	return (NULL);
 	ft_memset(new_node, 0, sizeof(t_cmd));
-	skip_redir(&lexicon);//
+	skip_redir(&lexicon);
 	findin_fd(new_node, &lexicon);
 	handle_args(new_node, lexicon);
 	findout_fd(new_node, lexicon);

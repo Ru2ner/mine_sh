@@ -1,29 +1,10 @@
-$ bash --posix
-bash-5.1$ cat << EOF
-1
-2
-3
-EOF
-1
-2
-3
 
 echo $USER'$USER'"$USER"
 echo "bonjour"'salut'"hola" 'aurevoir'"byebye"'adios' "alarevoyure"
 
 si ctr+c here doc sa doit continuer direct sqns reinterreter l'input
 
-args: cat 
-args: Makefile 
-infile: (null) 
- outfile: (null) 
- append: 0 
- pipe: 0 
- heredoc: (null) 
-args: grep 
-args: s 
-infile: (null) 
- outfile: (null) 
- append: 0 
- pipe: 0 
- heredoc: (null) 
+==73390==   total heap usage: 1,335 allocs, 1,019 frees, 283,028 bytes allocated 00
+
+==73638==   total heap usage: 1,335 allocs, 1,108 frees, 283,028 bytes allocated 00
+

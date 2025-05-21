@@ -6,7 +6,7 @@
 #    By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/21 16:21:29 by tmarion          ###   ########.fr        #
+#    Updated: 2025/05/21 18:03:47 by tmarion          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,6 +76,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		exec_part/cmd_finder.c \
 		signals/sigs_handlers.c \
 		prompt/create_prompt.c \
+		garbage_collector/garbage_collect_or.c \
 		main_v1.c
 
 OBJSDIR = .build/
