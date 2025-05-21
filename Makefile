@@ -6,7 +6,7 @@
 #    By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/21 18:03:47 by tmarion          ###   ########.fr        #
+#    Updated: 2025/05/21 18:29:20 by tmarion          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		builtins/builtin_unset.c \
 		builtins/builtin_launcher.c \
 		expand_handler/expand_handler.c \
+		expand_handler/expand_utils.c \
 		env_handling/env_converter.c \
 		env_handling/env_editor.c \
 		env_handling/env_list_utils.c \

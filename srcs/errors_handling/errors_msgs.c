@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:48 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 16:47:09 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 13:45:01 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,11 @@ void	*cd_error(int errnum)
 void	*cmd_not_found_error(void)
 {
 	ft_putendl_fd("Command not found", 2);
+	return (NULL);
+}
+
+void	*invalid_env_var(void)
+{
+	ft_putendl_fd("key is not a valid identifier", 2);
 	return (NULL);
 }
