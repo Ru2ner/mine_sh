@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 19:58:29 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/22 17:11:13 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ t_bool	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
 		return (FALSE);
 	}
 	lexer(input, lexicon);
-//
-	t_token	*temp;
-	temp = *lexicon;
-	printf("------------------Lexer-----------------------------------------\n");
-	while (temp)
-	{
-		printf("value: %s\n", temp->value);
-		printf("type: %d\n", temp->type);
-		printf("quote type: %d\n", temp->quote_type);
-		printf("link: %d\n\n", temp->link);
-		temp = temp->next;
-	}
-//
+// //
+// 	t_token	*temp;
+// 	temp = *lexicon;
+// 	printf("------------------Lexer-----------------------------------------\n");
+// 	while (temp)
+// 	{
+// 		printf("value: %s\n", temp->value);
+// 		printf("type: %d\n", temp->type);
+// 		printf("quote type: %d\n", temp->quote_type);
+// 		printf("link: %d\n\n", temp->link);
+// 		temp = temp->next;
+// 	}
+// //
 	return (TRUE);
 }
 
@@ -99,7 +99,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	init_minishell(&mshell);
 	env_creator(envp, &mshell);
-	catch_sig();
+	catch_sig();	
 	readline_loop(&mshell);
 	free_list(mshell.env);
 	rl_clear_history();

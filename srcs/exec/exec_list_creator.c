@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 19:41:40 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/22 19:46:11 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,25 @@ int exec(t_token *lexicon, char **envp, t_mshell *mshell)
 	t_cmd	*cmd_list = NULL;
 	
 	create_exec_list(&cmd_list, lexicon, mshell->env);
-	int		i;
-	printf("------------------Exec List--------------------------------------\n");
-	t_cmd	*temp;
-	temp = cmd_list;
-	i = 0;
-	while (temp)
-	{
-		i = 0;
-		if (temp->args != NULL)
-		{
-			while (temp->args[i])
-			{
-				printf("args: %s \n", temp->args[i]);
-				i++;
-			}
-		}
-		printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
-		temp = temp->next;
-	}
+	// int		i;
+	// printf("------------------Exec List--------------------------------------\n");
+	// t_cmd	*temp;
+	// temp = cmd_list;
+	// i = 0;
+	// while (temp)
+	// {
+	// 	i = 0;
+	// 	if (temp->args != NULL)
+	// 	{
+	// 		while (temp->args[i])
+	// 		{
+	// 			printf("args: %s \n", temp->args[i]);
+	// 			i++;
+	// 		}
+	// 	}
+	// 	printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
+	// 	temp = temp->next;
+	// }
 	pipeline(cmd_list, envp, mshell, lexicon);
 	free_cmd_list(cmd_list);
 	return (1);

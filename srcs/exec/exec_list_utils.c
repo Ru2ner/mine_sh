@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:19:59 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/21 19:07:02 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/22 19:46:35 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_cmd	*ft_create_node(t_token *lexicon, t_env *env)
 	(void)env;
 	new_node = malloc(sizeof(t_cmd));
 	if (!new_node)
-	return (NULL);
+		return (NULL);
 	ft_memset(new_node, 0, sizeof(t_cmd));
 	expand_handler(env, lexicon);
 	skip_redir(&lexicon);

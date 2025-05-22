@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:21:37 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 20:41:24 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/22 14:15:52 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*create_prompt(t_env *env)
 		{
 			if (temp->value)
 			{
-				prompt = ft_strjoin(temp->value, "\n$ ");
+				prompt = ft_strjoin(temp->value, " $ ");
 				if (!prompt)
 					return (malloc_error());
 				return (prompt);
