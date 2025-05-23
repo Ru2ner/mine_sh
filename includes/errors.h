@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:58 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 18:29:39 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:37:56 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_trash		t_trash;
 typedef struct s_trash
 {
 	char	**adr;
-	t_bool	tab;
 	t_trash	*next;
 }	t_trash;
 
@@ -51,9 +50,12 @@ void	*invalid_env_var(void);
 
 t_trash	*garbage_list_init(void);
 
-void 	append_trash(t_trash *trash, char **ptr, t_bool bat);
+void 	append_trash(t_trash *trash, char **ptr);
 
 void 	trash_cleaner(t_trash *trash);
 
+char 	**str_to_tab(char *s);
+
+void	print_tab(char **tab);
 
 #endif

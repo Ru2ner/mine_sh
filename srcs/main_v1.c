@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 20:01:30 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:47:19 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,17 @@ void	readline_loop(t_mshell *mshell)
 		parsing.input = readline(prompt);
 		parsing.split_input = ft_split_charset(parsing.input, " ");
 		if (!parsing.split_input)
+		{
+			trash_cleaner(trash);
 			break ;
+		}
 		parsing.envp = envp;
 		if (!parsing.input)
 			break ;
 		if (!parsing.input[0])
 			continue ;
 		add_history(parsing.input);
-		mshell->args = ft_split(parsing.input, ' ');
+		mshell->args = parsing.split_input;
 		if (create_lexicon(parsing.input, &parsing, &lexicon) == FALSE)
 			continue ;
 		if (parsing_input(lexicon) == FALSE)
@@ -82,18 +85,16 @@ void	readline_loop(t_mshell *mshell)
 		}
 		envp = convert_env_to_tab(mshell->env);
 		////
-		append_trash(trash, envp, TRUE);
-		append_trash(trash, mshell->args, TRUE);
-		append_trash(trash, parsing.split_input, TRUE);
-		append_trash(trash, &parsing.input, FALSE);
-		append_trash(trash, &prompt, FALSE);
-		
+		append_trash(trash, envp);
+		append_trash(trash, mshell->args);
+		append_trash(trash, parsing.split_input);
+		append_trash(trash, str_to_tab(parsing.input));//parsing.input
+		append_trash(trash, str_to_tab(prompt));//prompt
 		/////
 		exec(lexicon, envp, mshell);
-		trash_cleaner(trash);
-		free(prompt);
 		free_lexicon(lexicon);
 		lexicon = NULL;
+		trash_cleaner(trash);
 	}
 	free(prompt);
 }
@@ -106,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	init_minishell(&mshell);
 	env_creator(envp, &mshell);
-	catch_sig();
+	catch_sig();	
 	readline_loop(&mshell);
 	free_list(mshell.env);
 	rl_clear_history();

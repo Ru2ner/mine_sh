@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 14:30:59 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/03 10:19:36 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:24:40 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ void	free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	if (!tab || !*tab)
+	if (!tab)
 		return ;
+	if (tab && !*tab)
+	{
+		free(tab);
+		return ;
+	}
 	while (tab[i])
 	{
 		if (tab[i])

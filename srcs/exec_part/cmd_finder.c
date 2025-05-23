@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_finder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:54:16 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/14 20:58:14 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:10:55 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,44 @@ static char	**get_path_var(char **envp)
 	return (NULL);
 }
 
-char	*parse_path(char **envp, char *cmd)
+char	*find_in_path(char **paths, char *cmd)
 {
 	char	*complete_path;
-	char	**paths;
 	int		i;
 
 	i = 0;
-	if (ft_strchr(cmd, '/'))
-		if (access(cmd, X_OK) == 0)
-			return (cmd);
-	paths = get_path_var(envp);
 	while (paths && paths[i])
 	{
 		complete_path = ft_strcjoin(paths[i], cmd, '/');
 		if (!complete_path)
 			return (malloc_error());
 		if (access(complete_path, X_OK) == 0)
-		{
-			free_tab(paths);
 			return (complete_path);
-		}
 		free(complete_path);
 		i++;
 	}
-	free_tab(paths);
 	return (NULL);
+}
+
+char	*parse_path(char **envp, char *cmd)
+{
+	char	**paths;
+	char	*complete_path;
+
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
+		else
+			return (NULL);
+	}
+	paths = get_path_var(envp);
+	complete_path = find_in_path(paths, cmd);
+	if (!complete_path)
+	{
+		free_tab(paths);
+		return (NULL);
+	}
+	free_tab(paths);
+	return (complete_path);
 }

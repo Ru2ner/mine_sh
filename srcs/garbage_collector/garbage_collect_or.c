@@ -6,71 +6,79 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:26:46 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/21 20:02:34 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:38:30 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-static void	cleanup_garbage(t_trash *garbage)
+void	print_tab(char **tab)
 {
-	t_trash	*temp;
+	int	i;
 
-	if (!garbage)
+	i = 0;
+	if (!tab || !*tab)
 		return ;
-	while (garbage)
+	printf("trash{start}\n\n");
+	while (tab[i])
 	{
-		temp = garbage;
-		garbage = garbage->next;
-		free(temp);
+		printf("trash:%s\n", tab[i]);
+		i++;
 	}
+	printf("\n\ntrash{end}\n\n");
+	return ;
+}
+
+char **str_to_tab(char *s)
+{
+	char **tab;
+	int	i = 0;
+
+	tab = malloc(sizeof(char *) * 2);
+	if (!tab || !s)
+		return (NULL);
+	tab[0] = s;
+	tab[1] = NULL;
+	while (tab[i])
+		i++;
+	return (tab);
 }
 
 void trash_cleaner(t_trash *trash)
 {
 	t_trash	*temp;
 	int		i;
-	char	**ptr;
 
 	i = 0;
 	temp = trash;
-	while (temp)
+	if (!trash)
+		return ;
+	while (trash)
 	{
-		ptr = temp->adr;
-		if (temp->tab == FALSE && ptr)
-		{
-			free(*ptr);
-			*ptr = NULL;
-			printf("free de string\n\n");
-		}
-		else
-		{
-			if (!ptr)
-			{
-				printf("probleme\n\n");
-				temp = temp->next;
-				continue ;
-			}
-			free_tab(ptr);
-			printf("free de tab\n\n");
-		}
-		temp = temp->next;
+		if (!trash->adr && trash->next)
+			continue ;
+		print_tab(trash->adr);
+		free_tab(trash->adr);
+		trash = trash->next;
 	}
-	cleanup_garbage(trash);
+	trash = temp;
+	while (trash)
+	{
+		temp = trash->next;
+		free(trash);
+		trash = temp;
+	}
 }
 
-void append_trash(t_trash *trash, char **ptr, t_bool bat)
+void append_trash(t_trash *trash, char **ptr)
 {
 	t_trash	*new;
 
 	if (!ptr || !trash)
 		return ;
 	if (!trash->adr)
-	{
 		trash->adr = ptr;
-		trash->tab = bat;
-	}
 	else
 	{
 		new = malloc(sizeof(t_trash));
@@ -81,7 +89,6 @@ void append_trash(t_trash *trash, char **ptr, t_bool bat)
 			trash = trash->next;
 		trash->next = new;
 		new->adr = ptr;
-		new->tab = bat;
 	}
 }
 

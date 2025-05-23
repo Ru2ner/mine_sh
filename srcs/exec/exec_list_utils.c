@@ -6,12 +6,13 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:19:59 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/21 16:29:42 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/23 15:37:40 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
+#include "parsing.h"
 #include <signal.h>
 
 static void	skip_redir(t_token **lexicon)
@@ -22,7 +23,6 @@ static void	skip_redir(t_token **lexicon)
 			|| (*lexicon)->type == HERE_DOC))
 		*lexicon = (*lexicon)->next;
 }
-
 
 static void	handle_args(t_cmd *node, t_token *lexicon)
 {
@@ -99,8 +99,6 @@ static void	findout_fd(t_cmd *node, t_token *lexicon)
 	}
 }
 
-
-
 t_cmd	*ft_create_node(t_token *lexicon, t_env *env)
 {
 	t_cmd	*new_node;
@@ -108,7 +106,7 @@ t_cmd	*ft_create_node(t_token *lexicon, t_env *env)
 	(void)env;
 	new_node = malloc(sizeof(t_cmd));
 	if (!new_node)
-	return (NULL);
+		return (NULL);
 	ft_memset(new_node, 0, sizeof(t_cmd));
 	skip_redir(&lexicon);
 	findin_fd(new_node, &lexicon);

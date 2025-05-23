@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 17:21:37 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 20:41:24 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:35:22 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*create_prompt(t_env *env)
 		{
 			if (temp->value)
 			{
-				prompt = ft_strjoin(temp->value, "\n$ ");
+				prompt = ft_strjoin(temp->value, " $ ");
+				
 				if (!prompt)
 					return (malloc_error());
 				return (prompt);

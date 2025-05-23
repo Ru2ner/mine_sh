@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 15:20:41 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/21 18:38:19 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	build_lexicon(t_token **lexicon, char *value, t_token_type type, t_quote_ty
 
 t_bool	parsing_input(t_token *lexicon);
 
-char	*expand_handler(t_env *env, char *key);
+void	expand_handler(t_env *env, t_token *lexicon);
 
 /******************************Args Checks*************************************/
 

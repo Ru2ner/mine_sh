@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 18:18:51 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 18:38:01 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	perror_exit(const char *msg);
 void	close_unused_fds(int prev_fd, int pipe_read_fd, int pipe_write_fd);
 
 int		here_doc_handler(t_cmd *cmd);
-
-char	*expand_handler(t_env *env, char *token);
 
 t_bool	is_valid_for_env_var(char *key);
 

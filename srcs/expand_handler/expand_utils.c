@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:06:58 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 13:43:28 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 19:46:12 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_bool	is_valid_for_env_var(char *key)
 		return (FALSE);
 	while (key[i])
 	{
-		if (!ft_isalnum(key[i]) || key[i] != '_')
+		if (!ft_isalnum(key[i]) && key[i] != '_')
 			return (FALSE);
 		i++;
 	}

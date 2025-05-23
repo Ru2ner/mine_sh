@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/21 18:31:40 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/23 15:42:14 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ size_t	compute_expanded_length(t_env *env, char *token)
 	return (len);
 }
 
-void	*expand_data_init(t_expand *data, t_env *env, char *token)
+t_bool	*expand_data_init(t_expand *data, t_env *env, char *token)
 {
 	data->i = 0;
 	data->out_i = 0;
@@ -88,7 +88,7 @@ void	*expand_data_init(t_expand *data, t_env *env, char *token)
 	return (NULL);
 }
 
-char	*expand_handler(t_env *env, char *token)
+char	*expander(t_env *env, char *token)
 {
 	t_expand	data;
 
@@ -117,4 +117,97 @@ char	*expand_handler(t_env *env, char *token)
 	}
 	data.expanded[data.out_i] = '\0';
 	return (data.expanded);
+}
+
+t_token	*insert_node(char *value, t_quote_type quote_type)
+{
+	t_token	*new;
+
+	new = malloc(sizeof(t_token));
+	new->value = ft_strdup(value);
+	new->quote_type = quote_type;
+	new->next = NULL;
+	return (new);
+}
+
+t_token	*build_token_chain(char **split, t_quote_type quote_type)
+{
+	t_token	*head;
+	t_token	*last;
+	t_token	*new;
+	int		i;
+
+	head = NULL;
+	last = NULL;
+	i = 0;
+	while (split[i])
+	{
+		new = insert_node(split[i], quote_type);
+		if (!head)
+			head = new;
+		else
+			last->next = new;
+		last = new;
+		i++;
+	}
+	return (head);
+}
+
+void	replace_node_with_chain(t_token **lexicon, t_token *curr, t_token *chain)
+{
+	t_token	*prev;
+	t_token	*temp;
+	t_token	*last;
+
+	prev = NULL;
+	temp = *lexicon;
+	last = chain;
+	while (temp && temp != curr)
+	{
+		prev = temp;
+		temp = temp->next;
+	}
+	if (last)
+	{
+		while (last->next)
+			last = last->next;
+	}
+	if (prev)
+		prev->next = chain;
+	else
+		*lexicon = chain;
+	if (last)
+		last->next = curr->next;
+	free(curr->value);
+	free(curr);
+}
+
+void	expand_handler(t_env *env, t_token *lexicon)
+{
+	t_token	*temp;
+	// t_token	*next;
+	// t_token	*chain;
+	char	*expanded;
+	// char	**split;
+
+	temp = lexicon;
+	while (temp)
+	{
+		// next = temp->next;
+		if (temp->quote_type != SINGLE)
+		{
+			expanded = expander(env, temp->value);
+			free(temp->value);
+			// if (temp->quote_type == NONE)
+			// {
+			// 	split = ft_split(expanded, ' ');
+			// 	chain = build_token_chain(split, NONE);
+			// 	replace_node_with_chain(lexicon, temp, chain);
+			// 	free_tab(split);
+			// }
+			// else
+				temp->value = expanded;
+		}
+		temp = temp->next;
+	}
 }

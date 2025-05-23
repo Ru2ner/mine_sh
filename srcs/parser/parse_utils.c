@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:40:48 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/21 16:10:22 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/23 16:43:17 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void find_redir(t_token *lexicon)
 
 t_bool parsing_input(t_token *lexicon)
 {
+	if (!lexicon)
+		return (TRUE);
 	if (valid_redir(lexicon))
 	{
 		find_redir(lexicon);
