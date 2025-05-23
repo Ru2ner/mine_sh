@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/21 18:13:30 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/21 18:31:40 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,14 @@ void	*expand_data_init(t_expand *data, t_env *env, char *token)
 	data->expanded = malloc(data->expanded_len + 1);
 	if (!data->expanded)
 		return (malloc_error());
+	return (NULL);
 }
 
 char	*expand_handler(t_env *env, char *token)
 {
 	t_expand	data;
 
-	if (expand_data_init(&data, env, token));
+	if (expand_data_init(&data, env, token))
 		return (NULL);
 	while (token[data.i])
 	{	

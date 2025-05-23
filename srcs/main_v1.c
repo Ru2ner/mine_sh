@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 18:29:09 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/21 20:01:30 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	readline_loop(t_mshell *mshell)
 	t_trash	*trash;
 	char	**envp;
 	char	*prompt;
-
+	
 	lexicon = NULL;
 	while (1)
 	{
@@ -81,21 +81,21 @@ void	readline_loop(t_mshell *mshell)
 			continue ;
 		}
 		envp = convert_env_to_tab(mshell->env);
+		////
 		append_trash(trash, envp, TRUE);
 		append_trash(trash, mshell->args, TRUE);
 		append_trash(trash, parsing.split_input, TRUE);
 		append_trash(trash, &parsing.input, FALSE);
 		append_trash(trash, &prompt, FALSE);
-		trash_cleaner(trash);
+		
+		/////
 		exec(lexicon, envp, mshell);
-		// free(parsing.input);
-		// free_tab(parsing.split_input);
-		// free_tab(mshell->args);
-		// free_tab(envp);
-		// free(prompt);
+		trash_cleaner(trash);
+		free(prompt);
 		free_lexicon(lexicon);
 		lexicon = NULL;
 	}
+	free(prompt);
 }
 
 int	main(int argc, char **argv, char **envp)
