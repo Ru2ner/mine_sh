@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:58 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 13:45:09 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 18:28:03 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,7 @@ void	*cmd_not_found_error(void);
 
 void	*invalid_env_var(void);
 
+void	add_to_garbage(t_garbage **garbage, void **dptr, void *ptr,t_bool double_p);
+
+void	cleanup_garbage(t_garbage *garbage);
 #endif

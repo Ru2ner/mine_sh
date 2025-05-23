@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:00:57 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/07 17:34:19 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 18:37:32 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,17 @@ void	add_to_garbage(t_garbage **garbage, void **dptr, void *ptr,t_bool double_p)
 	temp->next = new_node;
 }
 
-int	main(void)
-{
-	t_garbage	*garbage;
-	char *str = malloc(256);
-	char *str2 = malloc(256);
-	char **dstr = ft_split("CURSE YOU BAYLE", ' ');
-	garbage = NULL;
+// int	main(void)
+// {
+// 	t_garbage	*garbage;
+// 	char *str = malloc(256);
+// 	char *str2 = malloc(256);
+// 	char **dstr = ft_split("CURSE YOU BAYLE", ' ');
+// 	garbage = NULL;
 	
-	add_to_garbage(&garbage, NULL, str, FALSE);
-	add_to_garbage(&garbage, NULL, str2, FALSE);
-	add_to_garbage(&garbage, (void **)dstr, NULL, TRUE);
-	cleanup_garbage(garbage);
-	return (0);
-}
+// 	add_to_garbage(&garbage, NULL, str, FALSE);
+// 	add_to_garbage(&garbage, NULL, str2, FALSE);
+// 	add_to_garbage(&garbage, (void **)dstr, NULL, TRUE);
+// 	cleanup_garbage(garbage);
+// 	return (0);
+// }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/23 14:33:34 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 19:02:25 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,19 @@ void	readline_loop(t_mshell *mshell)
 {
 	t_token *lexicon;
 	t_parse	parsing;
+	t_garbage	*g_collector;
 	char	**envp;
 	char	*prompt;
 
 	lexicon = NULL;
 	while (1)
 	{
+		g_collector = NULL;
 		prompt = create_prompt(mshell->env);
 		parsing.input = readline(prompt);
+		add_to_garbage(&g_collector, NULL, (void *)parsing.input, FALSE);
 		parsing.split_input = ft_split_charset(parsing.input, " ");
+		add_to_garbage(&g_collector, (void **)parsing.split_input, NULL, TRUE);
 		if (!parsing.split_input)
 			break ;
 		parsing.envp = envp;
@@ -71,6 +75,7 @@ void	readline_loop(t_mshell *mshell)
 			continue ;
 		add_history(parsing.input);
 		mshell->args = ft_split(parsing.input, ' ');
+		add_to_garbage(&g_collector, (void **)mshell->args, NULL, TRUE);
 		if (create_lexicon(parsing.input, mshell, &lexicon) == FALSE)
 			continue ;
 		if (parsing_input(lexicon) == FALSE)
@@ -79,15 +84,18 @@ void	readline_loop(t_mshell *mshell)
 			continue ;
 		}
 		envp = convert_env_to_tab(mshell->env);
+		add_to_garbage(&g_collector, (void **)envp, NULL, TRUE);
 		exec(&lexicon, envp, mshell);
-		free(parsing.input);
-		free_tab(parsing.split_input);
-		free_tab(mshell->args);
-		free_tab(envp);
-		free_lexicon(lexicon);
+		// free(parsing.input);
+		// free_tab(parsing.split_input);
+		// free_tab(mshell->args);
+		// free_tab(envp);
 		free(prompt);
+		free_lexicon(lexicon);
 		lexicon = NULL;
+		cleanup_garbage(g_collector);
 	}
+	cleanup_garbage(g_collector);
 	free(prompt);
 }
 

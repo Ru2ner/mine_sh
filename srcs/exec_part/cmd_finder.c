@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:54:16 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/22 17:11:06 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 19:07:42 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ char	*parse_path(char **envp, char *cmd)
 	paths = get_path_var(envp);
 	complete_path = find_in_path(paths, cmd);
 	if (!complete_path)
+	{
+		free_tab(paths);
 		return (NULL);
-	free_tab(paths);
+	}
 	return (complete_path);
 }
