@@ -6,20 +6,21 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/22 19:46:11 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 14:33:50 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "parsing.h"
 #include "libft.h"
 #include <signal.h>
 
-static void	create_exec_list(t_cmd **cmd_list, t_token *lexicon, t_env *env)
+static void	create_exec_list(t_cmd **cmd_list, t_token **lexicon, t_env *env)
 {
 	t_cmd	*new_node;
 	t_cmd	*tail;
 
-	while (lexicon)
+	while (*lexicon)
 	{
 		new_node = ft_create_node(lexicon, env);
 		if (!new_node)
@@ -29,14 +30,14 @@ static void	create_exec_list(t_cmd **cmd_list, t_token *lexicon, t_env *env)
 		else
 			tail->next = new_node;
 		tail = new_node;
-		while (lexicon && lexicon->type != PIPE)
-			lexicon = lexicon->next;
-		if (lexicon && lexicon->type == PIPE)
-			lexicon = lexicon->next;
+		while (*lexicon && (*lexicon)->type != PIPE)
+			*lexicon = (*lexicon)->next;
+		if (*lexicon && (*lexicon)->type == PIPE)
+			*lexicon = (*lexicon)->next;
 	}
 }
 
-int exec(t_token *lexicon, char **envp, t_mshell *mshell)
+int exec(t_token **lexicon, char **envp, t_mshell *mshell)
 {
 	t_cmd	*cmd_list = NULL;
 	
@@ -60,7 +61,7 @@ int exec(t_token *lexicon, char **envp, t_mshell *mshell)
 	// 	printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
 	// 	temp = temp->next;
 	// }
-	pipeline(cmd_list, envp, mshell, lexicon);
+	pipeline(cmd_list, envp, mshell, *lexicon);
 	free_cmd_list(cmd_list);
 	return (1);
 }

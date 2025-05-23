@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 18:38:19 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 16:39:56 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,15 @@ void	build_lexicon(t_token **lexicon, char *value, t_token_type type, t_quote_ty
 
 t_bool	parsing_input(t_token *lexicon);
 
-void	expand_handler(t_env *env, t_token *lexicon);
+void	expand_handler(t_env *env, t_token **lexicon);
+
+t_bool	is_valid_for_env_var(char *key);
+
+t_token	*build_token_chain(char **split, t_quote_type quote_type);
+
+void	replace_node_with_chain(t_token **lexicon, t_token *curr, t_token *chain);
+
+t_token	*insert_node(char *value, t_quote_type quote_type);
 
 /******************************Args Checks*************************************/
 

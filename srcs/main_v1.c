@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/22 17:11:13 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 14:33:34 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static	t_bool	init_minishell(t_mshell *mshell)
 	return (TRUE);
 }
 
-t_bool	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
+t_bool	create_lexicon(char *input, t_mshell *mshell, t_token **lexicon)
 {
-	(void)parsing;
 	if (quote_counter(input) == FALSE)
 	{
 		printf("There is an odd number of quotes\n");
 		return (FALSE);
 	}
 	lexer(input, lexicon);
+	expand_handler(mshell->env, lexicon);
 // //
 // 	t_token	*temp;
 // 	temp = *lexicon;
@@ -71,7 +71,7 @@ void	readline_loop(t_mshell *mshell)
 			continue ;
 		add_history(parsing.input);
 		mshell->args = ft_split(parsing.input, ' ');
-		if (create_lexicon(parsing.input, &parsing, &lexicon) == FALSE)
+		if (create_lexicon(parsing.input, mshell, &lexicon) == FALSE)
 			continue ;
 		if (parsing_input(lexicon) == FALSE)
 		{
@@ -79,7 +79,7 @@ void	readline_loop(t_mshell *mshell)
 			continue ;
 		}
 		envp = convert_env_to_tab(mshell->env);
-		exec(lexicon, envp, mshell);
+		exec(&lexicon, envp, mshell);
 		free(parsing.input);
 		free_tab(parsing.split_input);
 		free_tab(mshell->args);

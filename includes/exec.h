@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 18:38:01 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 13:16:10 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		here_doc_handler(t_cmd *cmd);
 
 t_bool	is_valid_for_env_var(char *key);
 
-int 	exec(t_token *lexicon, char **envp, t_mshell *mshell);
+int 	exec(t_token **lexicon, char **envp, t_mshell *mshell);
 
 char	*parse_path(char **envp, char *cmd);
 
@@ -66,7 +66,7 @@ char	*create_prompt(t_env *env);
 
 void	free_cmd_list(t_cmd *cmd_list);
 
-t_cmd	*ft_create_node(t_token *lexicon, t_env *env);
+t_cmd	*ft_create_node(t_token **lexicon, t_env *env);
 
 
 #endif

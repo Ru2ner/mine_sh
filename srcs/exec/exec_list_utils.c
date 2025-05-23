@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:19:59 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/22 19:46:35 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/23 13:40:01 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	findout_fd(t_cmd *node, t_token *lexicon)
 	}
 }
 
-t_cmd	*ft_create_node(t_token *lexicon, t_env *env)
+t_cmd	*ft_create_node(t_token **lexicon, t_env *env)
 {
 	t_cmd	*new_node;
 
@@ -108,10 +108,9 @@ t_cmd	*ft_create_node(t_token *lexicon, t_env *env)
 	if (!new_node)
 		return (NULL);
 	ft_memset(new_node, 0, sizeof(t_cmd));
-	expand_handler(env, lexicon);
-	skip_redir(&lexicon);
-	findin_fd(new_node, &lexicon);
-	handle_args(new_node, lexicon);
-	findout_fd(new_node, lexicon);
+	skip_redir(lexicon);
+	findin_fd(new_node, lexicon);
+	handle_args(new_node, *lexicon);
+	findout_fd(new_node, *lexicon);
 	return (new_node);
 }
