@@ -1,0 +1,125 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#                                                                              #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#                                                     +:+ +:+         +:+      #
+#                                                 +#+#+#+#+#+   +#+            #
+# **************************************************************************** #
+# **************************************************************************** #
+	@$(CC) $(OBJS) $(LIBFT) $(CFLAGS) $(LINKREADLINE) -o $(NAME)
+	@$(CC) -o $@ -c $< $(CFLAGS) $(INCFLAG)$(HEADERSDIR) $(INCFLAG)$(LIBFTINCDIR)
+	$(COMPILED_SRCS) $(TOTAL_SRCS)
+	@$(eval COMPILED_SRCS=$(shell echo $$(($(COMPILED_SRCS)+1))))
+			$(HEADERSDIR)env_handling.h \
+			$(HEADERSDIR)errors.h \
+			$(HEADERSDIR)exec.h \
+			$(HEADERSDIR)structs.h
+$(LIBFT) :
+				$(LIBFTINCDIR)get_next_line.h
+$(NAME) : $(OBJS) | $(LIBFT)
+$(OBJSDIR) :
+$(OBJSDIR)%.o : $(SRCSDIR)%.c $(HEADERS) | $(OBJSDIR) $(LIBFT)
+	"$(shell printf '#%.0s' $$(seq 1 $$(($(COMPILED_SRCS)*50/$(TOTAL_SRCS)))))" \
+all : $(NAME)
+		builtins/builtin_cd.c \
+		builtins/builtin_clear.c \
+		builtins/builtin_echo.c \
+		builtins/builtin_env.c \
+		builtins/builtin_export.c \
+		builtins/builtin_launcher.c \
+		builtins/builtin_pwd.c \
+		builtins/builtin_unset.c \
+		builtins_utils/export_utils.c \
+		builtins_utils/free_utils.c \
+		builtins_utils/tab_utils.c \
+#    By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+         #
+CC = cc
+CFLAGS = -Wall -Werror -Wextra -g3
+clean :
+COLOR_BLUE = \033[0;34m
+COLOR_CYAN = \033[0;36m
+COLOR_GREEN = \033[0;32m
+COLOR_PURPLE = \033[0;35m
+COLOR_RED = \033[0;31m
+COLOR_RESET = \033[0m
+COLOR_YELLOW = \033[0;33m
+COMPILED_SRCS := 0
+#    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
+	@echo "$(COLOR_BLUE)Cleaning objects...$(COLOR_RESET)"
+	@echo "$(COLOR_CYAN)Cleaning executable...$(COLOR_RESET)"
+	@echo "$(COLOR_RED)$(NAME) compiled !$(COLOR_RESET)"
+	@echo "\n$(COLOR_GREEN)Linking objects...$(COLOR_RESET)"
+		env_handling/env_converter.c \
+		env_handling/env_creator.c \
+		env_handling/env_editor.c \
+		env_handling/env_list_utils.c \
+		errors_handling/errors_msgs.c \
+		exec/exec_list_creator.c \
+		exec/exec_list_utils.c \
+		exec_part/cmd_finder.c \
+		exec_part/exec.c \
+		exec_part/exec_utils.c \
+		expand_handler/expand_handler.c \
+		expand_handler/expand_utils.c \
+fclean : clean
+		garbage_collector/garbage_collector.c \
+HEADERS = $(HEADERSDIR)parsing.h \
+HEADERSDIR = includes/
+INCFLAG = -I
+		lexer/extractors.c \
+		lexer/lexer_rework/lexer.c \
+		lexer/lexer_utils/is_type.c \
+		lexer/lexer_utils/list_utils.c \
+		lexer/lexer_utils/path_access.c \
+		lexer/lexer_utils/token_checker_utils.c \
+LIBFT = $(LIBFTDIR)libft.a
+LIBFTDIR = 42Libft/
+LIBFTHEADER = $(LIBFTINCDIR)libft.h \
+LIBFTINCDIR = $(LIBFTDIR)includes/
+LINKREADLINE = -lreadline
+		main_v1.c
+	@make clean -sC $(LIBFTDIR)
+	@make fclean -sC $(LIBFTDIR)
+#    Makefile                                           :+:      :+:    :+:    #
+	@make -j -sC $(LIBFTDIR)
+	@mkdir -p $(dir $@)
+	@mkdir -p $(OBJSDIR)
+NAME = minishell
+OBJS = $(patsubst %.c, $(OBJSDIR)%.o,$(SRCS))
+OBJSDIR = .build/
+		parser/parse_utils.c\
+.PHONY : all
+.PHONY : clean
+.PHONY : fclean
+.PHONY : re
+		pipex_exec/pipex_bonus.c \
+		pipex_exec/pipex_utils_bonus_1.c \
+		pipex_exec/pipex_utils_bonus_2.c \
+		pipex_exec/pipex_utils_bonus.c \
+	@printf "\rCompiling $(NAME): [%-50s] %d/%d" \
+		prompt/create_prompt.c \
+re : fclean all
+	@rm -f $(NAME)
+	@rm -rf $(OBJSDIR)
+		signals/sigs_handlers.c \
+SRCSDIR = srcs/
+SRCS = lexer/lexer_utils/quote_checker.c \
+TOTAL_SRCS := $(words $(SRCS))
+#    Updated: 2025/05/26 15:21:20 by tmarion          ###   ########.fr        #

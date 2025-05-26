@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:58 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/23 16:37:56 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/26 14:13:43 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@ typedef struct s_garbage
 	t_garbage	*next;
 }	t_garbage;
 
-typedef struct s_trash		t_trash;
-typedef struct s_trash
-{
-	char	**adr;
-	t_trash	*next;
-}	t_trash;
-
-
 void	*cd_error(int errnum);
 
 void	*malloc_error(void);
@@ -46,16 +38,7 @@ void	*cmd_not_found_error(void);
 
 void	*invalid_env_var(void);
 
-/*****************************Garbage Collector****************************************/
+void	add_to_garbage(t_garbage **garbage, void **dptr, void *ptr,t_bool double_p);
 
-t_trash	*garbage_list_init(void);
-
-void 	append_trash(t_trash *trash, char **ptr);
-
-void 	trash_cleaner(t_trash *trash);
-
-char 	**str_to_tab(char *s);
-
-void	print_tab(char **tab);
-
+void	cleanup_garbage(t_garbage *garbage);
 #endif

@@ -6,12 +6,29 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:00:57 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 16:46:31 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/26 15:22:33 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
+
+void	print_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab || !*tab)
+		return ;
+	printf("print{start}\n\n");
+	while (tab[i])
+	{
+		printf("current:%s\n", tab[i]);
+		i++;
+	}
+	printf("\n\nprint{end}\n\n");
+	return ;
+}
 
 void	cleanup_garbage(t_garbage *garbage)
 {
@@ -71,17 +88,17 @@ void	add_to_garbage(t_garbage **garbage, void **dptr, void *ptr,t_bool double_p)
 	temp->next = new_node;
 }
 
-int	main(void)
-{
-	t_garbage	*garbage;
-	char *str = malloc(256);
-	char *str2 = malloc(256);
-	char **dstr = ft_split("CURSE YOU BAYLE", ' ');
-	garbage = NULL;
+// int	main(void)
+// {
+// 	t_garbage	*garbage;
+// 	char *str = malloc(256);
+// 	char *str2 = malloc(256);
+// 	char **dstr = ft_split("CURSE YOU BAYLE", ' ');
+// 	garbage = NULL;
 	
-	add_to_garbage(&garbage, NULL, &str, FALSE);
-	add_to_garbage(&garbage, NULL, str2, FALSE);
-	add_to_garbage(&garbage, (void **)dstr, NULL, TRUE);
-	cleanup_garbage(garbage);
-	return (0);
-}
+// 	add_to_garbage(&garbage, NULL, str, FALSE);
+// 	add_to_garbage(&garbage, NULL, str2, FALSE);
+// 	add_to_garbage(&garbage, (void **)dstr, NULL, TRUE);
+// 	cleanup_garbage(garbage);
+// 	return (0);
+// }

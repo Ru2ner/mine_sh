@@ -6,12 +6,13 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:41:07 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/23 15:42:14 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/26 14:07:30 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
+#include "parsing.h"
 
 char	*extract_var_name(char *str, size_t *var_len)
 {
@@ -53,7 +54,7 @@ size_t	compute_expanded_length(t_env *env, char *token)
 	len = 0;
 	while (token[i])
 	{
-		if (token[i] == '$' && (ft_isalpha(token[i + 1]) || token[i + 1] == '_'))
+		if (token[i] == '$' && token[i + 1] && (ft_isalpha(token[i + 1]) || token[i + 1] == '_'))
 		{
 			var_name = extract_var_name(token + i + 1, &var_len);
 			if (var_len > 0 && var_name)
@@ -96,7 +97,7 @@ char	*expander(t_env *env, char *token)
 		return (NULL);
 	while (token[data.i])
 	{	
-		if (token[data.i] == '$' && (ft_isalpha(token [data.i + 1]) || token[data.i + 1] == '_'))
+		if (token[data.i] == '$' && token[data.i + 1] && (ft_isalpha(token[data.i + 1]) || token[data.i + 1] == '_'))
 		{
 			data.var_name = extract_var_name(token + data.i + 1, &data.var_len);
 			if (data.var_len > 0 && data.var_name)
@@ -119,95 +120,50 @@ char	*expander(t_env *env, char *token)
 	return (data.expanded);
 }
 
-t_token	*insert_node(char *value, t_quote_type quote_type)
+t_token	*expand_token_node(t_env *env, t_token *node)
 {
-	t_token	*new;
-
-	new = malloc(sizeof(t_token));
-	new->value = ft_strdup(value);
-	new->quote_type = quote_type;
-	new->next = NULL;
-	return (new);
-}
-
-t_token	*build_token_chain(char **split, t_quote_type quote_type)
-{
-	t_token	*head;
-	t_token	*last;
-	t_token	*new;
-	int		i;
-
-	head = NULL;
-	last = NULL;
-	i = 0;
-	while (split[i])
-	{
-		new = insert_node(split[i], quote_type);
-		if (!head)
-			head = new;
-		else
-			last->next = new;
-		last = new;
-		i++;
-	}
-	return (head);
-}
-
-void	replace_node_with_chain(t_token **lexicon, t_token *curr, t_token *chain)
-{
-	t_token	*prev;
-	t_token	*temp;
-	t_token	*last;
-
-	prev = NULL;
-	temp = *lexicon;
-	last = chain;
-	while (temp && temp != curr)
-	{
-		prev = temp;
-		temp = temp->next;
-	}
-	if (last)
-	{
-		while (last->next)
-			last = last->next;
-	}
-	if (prev)
-		prev->next = chain;
-	else
-		*lexicon = chain;
-	if (last)
-		last->next = curr->next;
-	free(curr->value);
-	free(curr);
-}
-
-void	expand_handler(t_env *env, t_token *lexicon)
-{
-	t_token	*temp;
-	// t_token	*next;
-	// t_token	*chain;
 	char	*expanded;
-	// char	**split;
+	char	**split_expand;
+	t_token	*chain;
+	t_token	*last;
 
-	temp = lexicon;
-	while (temp)
+	if (node->quote_type == SINGLE)
+		return (node);
+	expanded = expander(env, node->value);
+	free(node->value);
+	if (node->quote_type == NONE && ft_strchr(expanded, ' '))
 	{
-		// next = temp->next;
-		if (temp->quote_type != SINGLE)
+		split_expand = ft_split(expanded, ' ');
+		chain = build_token_chain(split_expand, NONE);
+		last = chain;
+		while (last && last->next)
+			last = last->next;
+		if (last)
+			last->next = node->next;
+		free_tab(split_expand);
+		free(expanded);
+		return (chain);
+	}
+	else
+		node->value = expanded;
+	return (node);
+}
+
+void	expand_handler(t_env *env, t_token **lexicon)
+{
+	t_token	**curr;
+	t_token	*expand_chain;
+
+	curr = lexicon;
+	while (*curr)
+	{
+		expand_chain = expand_token_node(env, *curr);
+		if (expand_chain != *curr)
 		{
-			expanded = expander(env, temp->value);
-			free(temp->value);
-			// if (temp->quote_type == NONE)
-			// {
-			// 	split = ft_split(expanded, ' ');
-			// 	chain = build_token_chain(split, NONE);
-			// 	replace_node_with_chain(lexicon, temp, chain);
-			// 	free_tab(split);
-			// }
-			// else
-				temp->value = expanded;
+			replace_node_with_chain(lexicon, *curr, expand_chain);
+			curr = lexicon;
+			continue ;
 		}
-		temp = temp->next;
+		curr = &((*curr)->next);
 	}
 }

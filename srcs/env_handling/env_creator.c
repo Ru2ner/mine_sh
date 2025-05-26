@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_creator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:41:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/13 13:59:14 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/26 14:38:48 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	change_shlvl(t_env *env)
 		{
 			shlvl = ft_atoi(temp->value);
 			shlvl++;
+			free(temp->value);
 			temp->value = ft_itoa(shlvl);
 			break;
 		}

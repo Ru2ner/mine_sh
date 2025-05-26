@@ -6,29 +6,12 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:26:46 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/23 16:38:30 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/26 15:21:50 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
-
-void	print_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (!tab || !*tab)
-		return ;
-	printf("trash{start}\n\n");
-	while (tab[i])
-	{
-		printf("trash:%s\n", tab[i]);
-		i++;
-	}
-	printf("\n\ntrash{end}\n\n");
-	return ;
-}
 
 char **str_to_tab(char *s)
 {

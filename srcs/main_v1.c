@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/23 16:47:19 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/26 14:51:17 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,51 +24,50 @@ static	t_bool	init_minishell(t_mshell *mshell)
 	return (TRUE);
 }
 
-t_bool	create_lexicon(char *input, t_parse *parsing, t_token **lexicon)
+t_bool	create_lexicon(char *input, t_mshell *mshell, t_token **lexicon)
 {
-	(void)parsing;
+	(void)mshell;
 	if (quote_counter(input) == FALSE)
 	{
 		printf("There is an odd number of quotes\n");
 		return (FALSE);
 	}
 	lexer(input, lexicon);
-//
-	// t_token	*temp;
-	// temp = *lexicon;
-	// printf("------------------Lexer-----------------------------------------\n");
-	// while (temp)
-	// {
-	// 	printf("value: %s\n", temp->value);
-	// 	printf("type: %d\n", temp->type);
-	// 	printf("quote type: %d\n", temp->quote_type);
-	// 	printf("link: %d\n\n", temp->link);
-	// 	temp = temp->next;
-	// }
-//
+
+	t_token	*temp;
+	temp = *lexicon;
+	printf("------------------Lexer-----------------------------------------\n");
+	while (temp)
+	{
+		printf("value: %s\n", temp->value);
+		printf("type: %d\n", temp->type);
+		printf("quote type: %d\n", temp->quote_type);
+		printf("link: %d\n\n", temp->link);
+		temp = temp->next;
+	}
+
 	return (TRUE);
 }
 
 void	readline_loop(t_mshell *mshell)
 {
-	t_token *lexicon;
-	t_parse	parsing;
-	t_trash	*trash;
-	char	**envp;
-	char	*prompt;
-	
-	lexicon = NULL;
+	t_token 	*lexicon;
+	t_parse		parsing;
+	t_garbage	*g_collector;
+	char		**envp;
+	char		*prompt;
+
 	while (1)
 	{
-		trash = garbage_list_init();
+		lexicon = NULL;
+		g_collector = NULL;
 		prompt = create_prompt(mshell->env);
 		parsing.input = readline(prompt);
+		add_to_garbage(&g_collector, NULL, (void *)parsing.input, FALSE);
 		parsing.split_input = ft_split_charset(parsing.input, " ");
+		add_to_garbage(&g_collector, (void **)parsing.split_input, NULL, TRUE);
 		if (!parsing.split_input)
-		{
-			trash_cleaner(trash);
 			break ;
-		}
 		parsing.envp = envp;
 		if (!parsing.input)
 			break ;
@@ -76,7 +75,7 @@ void	readline_loop(t_mshell *mshell)
 			continue ;
 		add_history(parsing.input);
 		mshell->args = parsing.split_input;
-		if (create_lexicon(parsing.input, &parsing, &lexicon) == FALSE)
+		if (create_lexicon(parsing.input, mshell, &lexicon) == FALSE)
 			continue ;
 		if (parsing_input(lexicon) == FALSE)
 		{
@@ -84,18 +83,12 @@ void	readline_loop(t_mshell *mshell)
 			continue ;
 		}
 		envp = convert_env_to_tab(mshell->env);
-		////
-		append_trash(trash, envp);
-		append_trash(trash, mshell->args);
-		append_trash(trash, parsing.split_input);
-		append_trash(trash, str_to_tab(parsing.input));//parsing.input
-		append_trash(trash, str_to_tab(prompt));//prompt
-		/////
-		exec(lexicon, envp, mshell);
+		exec(&lexicon, envp, mshell);
+		cleanup_garbage(g_collector);
 		free_lexicon(lexicon);
 		lexicon = NULL;
-		trash_cleaner(trash);
 	}
+	cleanup_garbage(g_collector);
 	free(prompt);
 }
 
