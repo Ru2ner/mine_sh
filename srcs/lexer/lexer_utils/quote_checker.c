@@ -3,33 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   quote_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:33:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:18:22 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/26 18:34:42 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-t_bool	quote_counter(char *input)
+static t_bool still_quote(char *input)
 {
-	size_t	i;
-	int		dquote_count;
-	int		squote_count;
+	int	i;
 
 	i = 0;
-	dquote_count = 0;
-	squote_count = 0;
 	while (input[i])
 	{
-		if (input[i] == '\"')
-			dquote_count++;
-		if (input[i] == '\'')
-			squote_count++;
+		i++;
+		if (input[i] == '\'' || input[i] == '\"')
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
+t_bool	quote_counter(char *input, size_t i)
+{
+	int			quote_count;
+	char		quote;
+
+	quote_count = 0;
+	while (input[i] != '\'' && input[i] != '\"')
+		i++;
+	if (input[i] == '\'' || input[i] == '\"')
+	{
+		quote = input[i];
+		quote_count++;
+	}
+	while (input[i])
+	{
+		if (input[i] == quote)
+		{
+			quote_count++;
+			i++;
+			if (still_quote(input + i) == FALSE)
+				break ;
+			while (input[i] != '\'' && input[i] != '\"' && input[i])
+				i++;
+			if (input[i] == '\'' || input[i] == '\"')
+			{
+				quote = input[i];
+				quote_count++;
+			}
+		}
 		i++;
 	}
-	if (dquote_count % 2 == 0 && squote_count % 2 == 0)
+	if ((quote_count % 2) != 0)
+		return (FALSE);
+	else
 		return (TRUE);
-	return (FALSE);
 }

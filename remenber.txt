@@ -2,7 +2,7 @@
 echo $USER'$USER'"$USER"
 echo "bonjour"'salut'"hola" 'aurevoir'"byebye"'adios' "alarevoyure"
 
-parser, signeaux, verifif Fd in
+parser, signeaux
 
 
-cat Makefile > test/temp0 > test/temp1 > test/temp2
+cat < Makefile > test/temp0 > test/temp1 > test/temp2

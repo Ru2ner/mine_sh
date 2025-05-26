@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 16:03:00 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/26 17:51:43 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,12 @@ static char **stock_fd(int in_out, t_token *lexicon)
 
 	i = 0;
 	fd_nb = count_fd(in_out, lexicon);
-	tab = malloc(sizeof(char *) * fd_nb);
-	if (!lexicon)
-		NULL;
+	tab = (char **)malloc(sizeof(char *) * (fd_nb + 1));
+	if (!tab)
+		return (NULL);
+	i = 0;
 	temp = lexicon;
-	while (temp)
+	while (temp && i <= fd_nb)
 	{
 		if (in_out == 0 && (temp->type == INFILE))
 		{
@@ -86,6 +87,7 @@ static char **stock_fd(int in_out, t_token *lexicon)
 		}
 		temp = temp->next;
 	}
+	tab[i] = NULL;
 	return (tab);
 }
 
@@ -106,7 +108,7 @@ static t_bool parse_fd(char ***g_tab)
 	{
 		if (open((const char *)g_tab[1][i], O_RDONLY) == -1)
 		{
-			open((const char *)g_tab[1][i], O_CREAT, 777);
+			open((const char *)g_tab[1][i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			i++;
 		}
 		else

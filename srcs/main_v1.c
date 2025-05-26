@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 14:51:17 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/26 18:13:48 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static	t_bool	init_minishell(t_mshell *mshell)
 t_bool	create_lexicon(char *input, t_mshell *mshell, t_token **lexicon)
 {
 	(void)mshell;
-	if (quote_counter(input) == FALSE)
+	if (quote_counter(input, 0) == FALSE)
 	{
 		printf("There is an odd number of quotes\n");
 		return (FALSE);

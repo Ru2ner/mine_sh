@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/23 17:47:50 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/26 18:14:08 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "structs.h"
 # include "exec.h"
+# include "libft.h"
 
 # define DOLLAR_CHAR '$'
 # define PIPE_CHAR '|'
@@ -61,8 +62,6 @@ char	*extract_word(char **input);
 
 char	*extract_special_char(char **input);
 
-t_bool	quote_counter(char *input);
-
 void	lexer(char *input, t_token **lexicon);
 
 t_token	*create_new_token(char *value, t_token_type type, t_quote_type quote_type, t_bool link);
@@ -95,6 +94,6 @@ void	free_lexicon(t_token *lexicon);
 
 void	env_creator(char **envp, t_mshell *mshell);
 
-t_bool	quote_counter(char *input);
+t_bool	quote_counter(char *input, size_t i);
 
 #endif
