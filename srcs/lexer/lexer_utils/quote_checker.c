@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:33:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/27 14:11:44 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/27 14:14:03 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_bool	quote_counter(char *input, size_t i)
 		if (input[i] == quote)
 		{
 			i++;
+			quote = input[i];
 			quote_count++;
 			if (still_quote(input + i) == FALSE)
 				return (FALSE);
