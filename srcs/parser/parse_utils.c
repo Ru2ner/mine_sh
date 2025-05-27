@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:40:48 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/23 16:43:17 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/27 11:31:12 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void find_redir(t_token *lexicon)
 		lexicon = lexicon->next;
 	}
 }
-
 
 t_bool parsing_input(t_token *lexicon)
 {

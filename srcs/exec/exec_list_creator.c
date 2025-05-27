@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_list_creator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 17:51:43 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/27 12:42:08 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,9 @@ int exec(t_token **lexicon, char **envp, t_mshell *mshell)
 	giga_tab = malloc(sizeof(char **) * 3);
 	if (!giga_tab)
 		return (0);
-	giga_tab[2] = NULL;
 	giga_tab[0] = stock_fd(0, *lexicon);//fd_in
 	giga_tab[1] = stock_fd(1, *lexicon);//fd_out
+	giga_tab[2] = NULL;
 	if (parse_fd(giga_tab) == FALSE)
 	{
 		printf("\n\nfailed to open:infile\n\n");
