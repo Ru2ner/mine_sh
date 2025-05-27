@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_list_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:19:59 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/26 15:20:22 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/27 12:56:57 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	handle_args(t_cmd *node, t_token *lexicon)
 {
 	int		i;
 	char	*tmp;
+	char	*temp;
 	t_token	*tmp_token;
 	
 	i = 0;
@@ -42,10 +43,11 @@ static void	handle_args(t_cmd *node, t_token *lexicon)
 			while (tmp_token->next && tmp_token->next->value
 				&& tmp_token->next->link == TRUE)
 			{
-				tmp = ft_strjoin(tmp, tmp_token->next->value);
+				temp = ft_strjoin(tmp, tmp_token->next->value);
+				free(tmp);
 				tmp_token = tmp_token->next;
 			}
-			node->args[i++] = tmp;
+			node->args[i++] = temp;
 		}
 		else
 			node->args[i++] = ft_strdup(tmp_token->value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 16:00:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 18:14:08 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/27 11:27:06 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,7 @@ void	free_lexicon(t_token *lexicon);
 void	env_creator(char **envp, t_mshell *mshell);
 
 t_bool	quote_counter(char *input, size_t i);
+
+t_bool	are_quotes_balanced(char *input);
 
 #endif
