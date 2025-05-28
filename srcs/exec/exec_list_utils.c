@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_list_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:19:59 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/27 12:56:57 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/28 13:17:27 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	skip_redir(t_token **lexicon)
 		*lexicon = (*lexicon)->next;
 }
 
-static void	handle_args(t_cmd *node, t_token *lexicon)
-{
+static void	handle_args(t_cmd *node, t_token *lexicon)// probleme oin a pas le/les permier argument quand on a des redir_in 
+{													//avant d'aller ailleurs, c'est UNIQUEMENT ici qu'on manipule "ARGS"	
 	int		i;
 	char	*tmp;
 	char	*temp;
