@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_v1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/27 13:01:26 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/27 14:39:32 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ t_bool	create_lexicon(char *input, t_mshell *mshell, t_token **lexicon)
 	}
 	lexer(input, lexicon);
 
-	// t_token	*temp;
-	// temp = *lexicon;
-	// printf("------------------Lexer-----------------------------------------\n");
-	// while (temp)
-	// {
-	// 	printf("value: %s\n", temp->value);
-	// 	printf("type: %d\n", temp->type);
-	// 	printf("quote type: %d\n", temp->quote_type);
-	// 	printf("link: %d\n\n", temp->link);
-	// 	temp = temp->next;
-	// }
+	t_token	*temp;
+	temp = *lexicon;
+	printf("------------------Lexer-----------------------------------------\n");
+	while (temp)
+	{
+		printf("value: %s\n", temp->value);
+		printf("type: %d\n", temp->type);
+		printf("quote type: %d\n", temp->quote_type);
+		printf("link: %d\n\n", temp->link);
+		temp = temp->next;
+	}
 
 	return (TRUE);
 }

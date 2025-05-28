@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/27 14:17:55 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/28 12:54:53 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,27 +88,35 @@ static char **stock_fd(int in_out, t_token *lexicon)
 		temp = temp->next;
 	}
 	tab[i] = NULL;
+	print_tab(tab);
 	return (tab);
 }
 
 static t_bool parse_fd(char ***g_tab)
 {
 	int	i;
+	int fd;
 
 	i = 0;
 	while (g_tab[0][i])
 	{
-		if (open((const char *)g_tab[0][i], O_RDONLY) == -1)
+		fd = open((const char *)g_tab[0][i], O_RDONLY);
+		if (fd == -1)
 			return (FALSE);
 		else
+		{
+			close(fd);
 			i++;
+		}
 	}
 	i = 0;
 	while (g_tab[1][i])
 	{
-		if (open((const char *)g_tab[1][i], O_RDONLY) == -1)
+		fd = open((const char *)g_tab[1][i], O_RDONLY);
+		if (fd == -1)
 		{
-			open((const char *)g_tab[1][i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			fd = open((const char *)g_tab[1][i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			close(fd);
 			i++;
 		}
 		else
