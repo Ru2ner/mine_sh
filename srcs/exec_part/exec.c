@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/23 18:36:19 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/06/05 20:24:04 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,39 +67,7 @@ void	setup_output_fd(t_cmd *cmd, int pipe_write_fd)
 	}
 }
 
-void	child_process(t_cmd *cmd, t_exec *data, t_env *env)
-{
-	char	*complete_path;
-	
-	signal(SIGINT, SIG_DFL);
-	setup_input_fd(cmd, data->prev_fd);
-	setup_output_fd(cmd, data->pipe_fd[1]);
-	if (data->pipe_fd[0] != -1)
-		close(data->pipe_fd[0]);
-	if (data->pipe_fd[1] != -1)
-		close(data->pipe_fd[1]);
-	if (data->prev_fd != -1)
-		close(data->prev_fd);
-	if (cmd->args && is_builtin(cmd->args[0]))
-	{
-		builtin_launcher(cmd->args, &env);
-		free_list(env);
-		free_lexicon(data->lexicon);
-		free_cmd_list(data->cmd_list);
-		exit(1);
-	}
-	complete_path = parse_path(data->envp, cmd->args[0]);
-	// printf("%s\n", complete_path);
-	if (!complete_path)
-	{
-		cmd_not_found_error();
-		exit(127);
-	}
-	execve(complete_path, cmd->args, data->envp);
-	perror_exit("execve");
-}
-
-void	execute_command(t_cmd *cmd, t_exec *data, t_env *env)
+void	execute_command(t_cmd *cmd, t_exec *data, t_mshell *mshell)
 {
 	pid_t	pid;
 
@@ -115,51 +83,56 @@ void	execute_command(t_cmd *cmd, t_exec *data, t_env *env)
 	}
 	pid = fork();
 	if (pid == 0)
-		child_process(cmd, data, env);
+		child_process(cmd, data, mshell);
 	else
 	{
 		if (data->prev_fd != -1)
 			close(data->prev_fd);
 		if (data->pipe_fd[1] != -1)
 			close(data->pipe_fd[1]);
+		data->tab_pids[data->pid_index++] = pid;
 	}
 }
 
-void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell, t_token *lexicon)
+void	pipeline_loop(t_cmd *cmd, t_mshell *sh, t_exec *data, t_bool *forked)
 {
-	t_cmd	*cmd;
-	t_bool	sigint_killed;
-	t_exec	data;
+	t_bool	piped;
 
-	data.prev_fd = -1;
-	cmd = cmd_list;
-	sigint_killed = FALSE;
-	data.envp = envp;
-	data.pipe_fd[0] = -1;
-	data.pipe_fd[1] = -1;
-	data.cmd_list = cmd_list;
-	data.lexicon = lexicon;
+	piped = is_there_pipe(cmd);
 	while (cmd)
 	{
-		if (cmd->args && is_builtin(cmd->args[0]) && !cmd->pipe)
-			builtin_launcher(cmd->args, &mshell->env);
+		if (cmd->args && is_builtin(cmd->args[0]) && !piped)
+			parent_builtins_handler(cmd, sh, data);
 		else
-			execute_command(cmd, &data, mshell->env);
-		if (data.prev_fd != -1)
-			close(data.prev_fd);
+		{
+			execute_command(cmd, data, sh);
+			*forked = TRUE;
+		}
+		if (data->prev_fd != -1)
+			close(data->prev_fd);
 		if (cmd->pipe)
-			data.prev_fd = data.pipe_fd[0];
+			data->prev_fd = data->pipe_fd[0];
 		else
-			data.prev_fd = -1;
+			data->prev_fd = -1;
 		cmd = cmd->next;
 	}
+}
+
+void	pipeline(t_cmd *cmd_list, t_mshell *mshell)
+{
+	t_cmd	*cmd;
+	t_exec	data;
+	t_bool	forked;
+
+	cmd = cmd_list;
+	forked = FALSE;
+	init_data_struct(mshell, &data, cmd_list);
+	pipeline_loop(cmd, mshell, &data, &forked);
 	signal(SIGINT, SIG_IGN);
-	while (wait(&data.status) > 0)
-	{
-		if (WIFSIGNALED(data.status) && WTERMSIG(data.status) == SIGINT)
-			sigint_killed = TRUE;
-	}
+	if (forked)
+		mshell->exit_status = child_waiter(&data);
+	free(data.tab_pids);
 	catch_sig();
-	if (sigint_killed)
+	if (data.sigint_killed)
 		write(1, "\n", 1);
 }

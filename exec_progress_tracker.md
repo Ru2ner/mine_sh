@@ -7,7 +7,7 @@
 * export  :white_check_mark:
 * unset  :white_check_mark:
 * env  :white_check_mark:
-* exit  :x:
+* exit  :white_check_mark:
 * clear :white_check_mark:
 
 # PIPES AND REDIRECTIONS
@@ -21,8 +21,8 @@
 # ENV AND EXPAND
 
 * env  :white_check_mark:
-* expand  :x:
-* $?  :x:
+* expand  :white_check_mark:
+* $?  :white_check_mark:
 
 # SHORTCUTS
 

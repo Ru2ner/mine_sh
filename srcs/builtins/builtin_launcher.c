@@ -6,54 +6,68 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 16:49:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 12:27:30 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/06/05 12:11:50 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-static void	exec_unset(t_env **env, char **args)
+static int	exec_unset(t_env **env, char **args)
 {
 	size_t	i;
-	
+	int		exit_code;
+	int		error;
+
 	i = 1;
+	error = 0;
 	while (args[i])
 	{
-		unset(env, args[i]);
+		exit_code = unset(env, args[i]);
+		if (exit_code == 1)
+			error = 1;
 		i++;
 	}
+	return (error);
 }
 
-static void	*exec_export(t_env *env, char **args)
+static int	exec_export(t_env *env, char **args)
 {
 	size_t	i;
-	
+	int		exit_code;
+	int		error;
+
 	i = 1;
+	error = 0;
 	if (args[1] == NULL)
-		export(env, NULL);
+		return (export(env, NULL));
 	while (args[i])
 	{
-		export(env, args[i]);
+		exit_code = export(env, args[i]);
+		if (exit_code == 1)
+			error = 1;
 		i++;
 	}
-	return (NULL);
+	return (error);
 }
 
-void	builtin_launcher(char **args, t_env **env)
+int	builtin_launcher(t_mshell *mshell, char **args, t_exec *data)
 {
 	if (args[0] && ft_strcmp(args[0], "env") == 0)
-		print_env(*env);
+		return (print_env(mshell->env));
 	else if (args[0] && ft_strcmp(args[0], "pwd") == 0)
-		fetch_cwd(*env);
+		return (fetch_cwd());
 	else if (args[0] && ft_strcmp(args[0], "cd") == 0)
-		execute_cd(args[1], *env);
+		return (execute_cd(args[1], mshell->env));
 	else if (args[0] && ft_strcmp(args[0], "echo") == 0)
-		exec_echo(args);
+		return (exec_echo(args));
 	else if (args[0] && ft_strcmp(args[0], "clear") == 0)
-		exec_clear();
+		return (exec_clear());
 	else if (args[0] && ft_strcmp(args[0], "unset") == 0)
-		exec_unset(env, args);
+		return (exec_unset(&mshell->env, args));
 	else if (args[0] && ft_strcmp(args[0], "export") == 0)
-		exec_export(*env, args);
+		return (exec_export(mshell->env, args));
+	else if (args[0] && ft_strcmp(args[0], "exit") == 0)
+		return (exec_exit(mshell, args, data));
+	return (0);
 }

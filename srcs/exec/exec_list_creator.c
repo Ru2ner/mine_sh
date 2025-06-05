@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 14:08:09 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/28 13:11:59 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/06/05 14:46:10 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	create_exec_list(t_cmd **cmd_list, t_token **lexicon, t_env *env)
 	}
 }
 
-static int count_fd(int in_out, t_token *lexicon)
+static int	count_fd(int in_out, t_token *lexicon)
 {
 	t_token	*temp;
 	size_t	count;
@@ -50,16 +50,16 @@ static int count_fd(int in_out, t_token *lexicon)
 		return (0);
 	while (temp)
 	{
-		if ( temp->type == INFILE && in_out == 0)
+		if (temp->type == INFILE && in_out == 0)
 			count++;
-		if ( temp->type == OUTFILE && in_out == 1)
+		if (temp->type == OUTFILE && in_out == 1)
 			count++;
 		temp = temp->next;
 	}
 	return (count);
 }
 
-static char **stock_fd(int in_out, t_token *lexicon)
+static char	**stock_fd(int in_out, t_token *lexicon)
 {
 	t_token	*temp;
 	char	**tab;
@@ -80,7 +80,8 @@ static char **stock_fd(int in_out, t_token *lexicon)
 			tab[i] = ft_strdup((char *)temp->value);
 			i++;
 		}
-		if (in_out == 1 && (temp->type == OUTFILE || temp->type == OUTFILE_APPEND))
+		if (in_out == 1 && (temp->type == OUTFILE \
+			|| temp->type == OUTFILE_APPEND))
 		{
 			tab[i] = ft_strdup((char *)temp->value);
 			i++;
@@ -91,11 +92,24 @@ static char **stock_fd(int in_out, t_token *lexicon)
 	return (tab);
 }
 
-static t_bool parse_fd(char ***g_tab)
+static t_bool	parse_fd(char ***g_tab)
 {
 	int	i;
-	int fd;
+	int	fd;
 
+	i = 0;
+	while (g_tab[1][i])
+	{
+		fd = open((const char *)g_tab[1][i], O_RDONLY);
+		if (fd == -1)
+		{
+			fd = open((const char *)g_tab[1][i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			i++;
+		}
+		else
+			i++;
+		close(fd);
+	}
 	i = 0;
 	while (g_tab[0][i])
 	{
@@ -108,35 +122,31 @@ static t_bool parse_fd(char ***g_tab)
 			i++;
 		}
 	}
-	i = 0;
-	while (g_tab[1][i])
-	{
-		fd = open((const char *)g_tab[1][i], O_RDONLY);
-		if (fd == -1)
-		{
-			fd = open((const char *)g_tab[1][i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			close(fd);
-			i++;
-		}
-		else
-			i++;
-	}
 	return (TRUE);
 }
 
-int exec(t_token **lexicon, char **envp, t_mshell *mshell)
+int	exec(t_token **lexicon, t_mshell *mshell)
 {
-	t_cmd	*cmd_list = NULL;
+	t_cmd	*cmd_list;
 	char	***giga_tab;
-	
+	t_token	*tmp;
+
+	cmd_list = NULL;
+	tmp = *lexicon;
 	giga_tab = malloc(sizeof(char **) * 3);
 	if (!giga_tab)
 		return (0);
-	giga_tab[0] = stock_fd(0, *lexicon);//fd_in
 	giga_tab[1] = stock_fd(1, *lexicon);//fd_out
+	giga_tab[0] = stock_fd(0, *lexicon);//fd_in
 	giga_tab[2] = NULL;
 	if (parse_fd(giga_tab) == FALSE)
 	{
+		free_tab(giga_tab[0]);
+		free_tab(giga_tab[1]);
+		free(giga_tab);
+		free_lexicon(tmp);
+		free_tab(mshell->env_tab);
+		free_cmd_list(cmd_list);
 		printf("\n\nfailed to open:infile\n\n");
 		return (0);
 	}
@@ -144,28 +154,11 @@ int exec(t_token **lexicon, char **envp, t_mshell *mshell)
 	free_tab(giga_tab[1]);
 	free(giga_tab);
 	create_exec_list(&cmd_list, lexicon, mshell->env);
-	
-		int		i;
-		printf("------------------Exec List--------------------------------------\n");
-		t_cmd	*temp;
-		temp = cmd_list;
-		i = 0;
-		while (temp)
-		{
-			i = 0;
-			if (temp->args != NULL)
-			{
-				while (temp->args[i])
-				{
-					printf("args: %s \n", temp->args[i]);
-					i++;
-				}
-			}
-			printf("infile: %s \n outfile: %s \n append: %d \n pipe: %d \n heredoc: %s \n", temp->infile, temp->outfile, temp->append, temp->pipe, temp->heredoc_delim);
-			temp = temp->next;
-		}
-	
-	pipeline(cmd_list, envp, mshell, *lexicon);
+	if (DEBUG == 1)
+		print_exec_list(cmd_list);
+	free_lexicon(tmp);
+	pipeline(cmd_list, mshell);
+	free_tab(mshell->env_tab);
 	free_cmd_list(cmd_list);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:48 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/21 13:45:01 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/06/05 15:56:36 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ void	*malloc_error(void)
 {
 	strerror(ENOMEM);
 	return (NULL);
+}
+
+int	malloc_error_int(void)
+{
+	strerror(ENOMEM);
+	return (1);
 }
 
 void	*cd_error(int errnum)
@@ -33,14 +39,18 @@ void	*cd_error(int errnum)
 	return (NULL);
 }
 
-void	*cmd_not_found_error(void)
+void	*cmd_not_found_error(char *str)
 {
-	ft_putendl_fd("Command not found", 2);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": command not found\n", 2);
 	return (NULL);
 }
 
-void	*invalid_env_var(void)
+int	invalid_env_var(char *arg)
 {
-	ft_putendl_fd("key is not a valid identifier", 2);
-	return (NULL);
+	ft_putstr_fd("minishell: export: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(": not a valid identifier\n", 2);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 18:02:54 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 12:27:41 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/06/05 12:16:45 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,38 @@
 
 /********************************Builtins**************************************/
 
-void	print_env(t_env *env);
+int		print_env(t_env *env);
 
-char	*get_pwd_from_env(t_env *env);
+char	*mygetenv(t_env *env, char *var);
 
-void	*fetch_cwd(t_env *env);
+void	*update_old_cwd(t_env **env, char *old_wd);
 
-void	*execute_cd(char *path, t_env *env);
+void	*update_cwd(t_env *env);
 
-void	exec_clear(void);
+int		fetch_cwd(void);
 
-void	exec_echo(char **args);
+int		execute_cd(char *path, t_env *env);
 
-void	unset(t_env **env, const char *key);
+int		exec_clear(void);
 
-void	*export(t_env *env, char *arg);
+int		exec_echo(char **args);
 
-void	*add_to_export_list(t_env **env, char *arg);
+int		unset(t_env **env, const char *key);
 
-void	*print_export(t_env *env);
+int		export(t_env *env, char *arg);
 
-void	builtin_launcher(char **args, t_env **env);
+int		add_to_export_list(t_env **env, char *arg);
+
+int		append_to_var(t_env *env, char *arg);
+
+int		edit_var(t_env *temp, char **args);
+
+void	*key_value_creator(t_keyval *key_val, char **args);
+
+int		print_export(t_env *env);
+
+int		builtin_launcher(t_mshell *mshell, char **args, t_exec *data);
+
+int		exec_exit(t_mshell *sh, char **args, t_exec *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:00:57 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 15:22:33 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/06/05 16:53:53 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	print_tab(char **tab)
 	i = 0;
 	if (!tab || !*tab)
 		return ;
-	printf("print{start}\n\n");
+	dprintf(2, "print{start}\n\n");
 	while (tab[i])
 	{
-		printf("current:%s\n", tab[i]);
+		dprintf(2, "current:%s\n", tab[i]);
 		i++;
 	}
-	printf("\n\nprint{end}\n\n");
+	dprintf(2, "\n\nprint{end}\n\n");
 	return ;
 }
 
@@ -48,7 +48,7 @@ void	cleanup_garbage(t_garbage *garbage)
 	}
 }
 
-t_garbage	*create_new_garbage_node(void **dptr, void *ptr,t_bool double_p)
+t_garbage	*create_new_garbage_node(void **dptr, void *ptr, t_bool double_p)
 {
 	t_garbage	*node;
 
@@ -69,7 +69,8 @@ t_garbage	*create_new_garbage_node(void **dptr, void *ptr,t_bool double_p)
 	return (node);
 }
 
-void	add_to_garbage(t_garbage **garbage, void **dptr, void *ptr,t_bool double_p)
+void	add_to_garbage(t_garbage **garbage, void **dptr, void *ptr, \
+	t_bool double_p)
 {
 	t_garbage	*temp;
 	t_garbage	*new_node;
@@ -87,18 +88,3 @@ void	add_to_garbage(t_garbage **garbage, void **dptr, void *ptr,t_bool double_p)
 		temp = temp->next;
 	temp->next = new_node;
 }
-
-// int	main(void)
-// {
-// 	t_garbage	*garbage;
-// 	char *str = malloc(256);
-// 	char *str2 = malloc(256);
-// 	char **dstr = ft_split("CURSE YOU BAYLE", ' ');
-// 	garbage = NULL;
-	
-// 	add_to_garbage(&garbage, NULL, str, FALSE);
-// 	add_to_garbage(&garbage, NULL, str2, FALSE);
-// 	add_to_garbage(&garbage, (void **)dstr, NULL, TRUE);
-// 	cleanup_garbage(garbage);
-// 	return (0);
-// }

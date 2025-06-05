@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:20:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/27 13:01:34 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/06/04 17:13:39 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 # include <stdlib.h>
 
-typedef enum e_bool	t_bool;
-typedef struct s_keyval	t_keyval;
-typedef struct s_env	t_env;
-typedef struct s_mshell	t_mshell;
-typedef struct s_cmd  t_cmd;
-typedef struct s_token	t_token;
+typedef enum e_bool			t_bool;
+typedef struct s_keyval		t_keyval;
+typedef struct s_env		t_env;
+typedef struct s_mshell		t_mshell;
+typedef struct s_cmd		t_cmd;
+typedef struct s_token		t_token;
+typedef struct s_garbage	t_garbage;
 
 typedef enum e_bool
 {
@@ -45,10 +46,14 @@ typedef struct s_env
 
 typedef struct s_mshell
 {
-	t_env	*env;
-	t_token	*lexicon;
-	t_cmd	*exec_list;
-	int		exit_status;
+	t_env		*env;
+	t_token		*lexicon;
+	t_cmd		*exec_list;
+	t_garbage	*g_collector;
+	int			exit_status;
+	char		*prompt;
+	char		*input;
+	char		**env_tab;
 }	t_mshell;
 
 typedef struct s_cmd
@@ -73,16 +78,16 @@ typedef enum e_special_types
 
 typedef enum e_token_type
 {
-	WORD,//0
-	PIPE,//1
-	REDIR_IN,//2
-	INFILE,//3
-	REDIR_OUT,//4
-	OUTFILE,//5
-	REDIR_OUT_APPEND,//6
-	OUTFILE_APPEND,//7
-	HERE_DOC,//8
-	HERE_DOC_DELIM//9
+	WORD,
+	PIPE,
+	REDIR_IN,
+	INFILE,
+	REDIR_OUT,
+	OUTFILE,
+	REDIR_OUT_APPEND,
+	OUTFILE_APPEND,
+	HERE_DOC,
+	HERE_DOC_DELIM
 }	t_token_type;
 
 typedef enum e_quote_type
@@ -92,30 +97,32 @@ typedef enum e_quote_type
 	DOUBLE
 }	t_quote_type;
 
+typedef struct s_lexer_helper
+{
+	t_token_type	type;
+	t_quote_type	quote_type;
+	t_bool			linked;
+}	t_lex_helper;
 typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;
 	t_quote_type	quote_type;
-	t_bool			link;
+	t_bool			linked;
 	t_token			*next;
 }	t_token;
-
-typedef struct s_parse
-{
-	char	*input;
-	char	**split_input;
-	char	**envp;
-}	t_parse;
 
 typedef struct s_exec
 {
 	int		prev_fd;
 	int		pipe_fd[2];
+	pid_t	*tab_pids;
 	char	**envp;
 	int		status;
+	int		pid_index;
+	int		cmd_count;
 	t_cmd	*cmd_list;
-	t_token	*lexicon;
+	t_bool	sigint_killed;
 }	t_exec;
 
 typedef struct s_expand
@@ -130,5 +137,12 @@ typedef struct s_expand
 	size_t	out_i;
 }	t_expand;
 
+typedef struct s_garbage
+{
+	void		**dptr;
+	void		*ptr;
+	t_bool		double_p;
+	t_garbage	*next;
+}	t_garbage;
 
 #endif

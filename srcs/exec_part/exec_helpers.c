@@ -1,38 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_type.c                                          :+:      :+:    :+:   */
+/*   exec_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 11:23:58 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/13 12:11:49 by tlutz            ###   ########.fr       */
+/*   Created: 2025/06/05 19:28:25 by tlutz             #+#    #+#             */
+/*   Updated: 2025/06/05 20:24:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include "parsing.h"
+#include "fcntl.h"
+#include "sys/wait.h"
 #include "libft.h"
 
-t_bool	is_pipe(t_token *lexicon)
+t_bool	is_there_pipe(t_cmd *cmd_list)
 {
-	while (lexicon->next)
+	t_cmd	*temp;
+
+	temp = cmd_list;
+	while (temp)
 	{
-		if (lexicon->type == PIPE)
+		if (temp->pipe)
 			return (TRUE);
-		lexicon = lexicon->next;
+		temp = temp->next;
 	}
 	return (FALSE);
 }
 
-t_bool	is_redir(t_token *lexicon)
+void	parent_builtins_handler(t_cmd *cmd, t_mshell *sh, t_exec *data)
 {
-	while (lexicon->next)
-	{
-		if (lexicon->type == REDIR_IN || lexicon->type == REDIR_OUT
-				|| lexicon->type == REDIR_OUT_APPEND 
-				|| lexicon->type == HERE_DOC)
-			return (TRUE);
-		lexicon = lexicon->next;
-	}
-	return (FALSE);
+	int	stdout_save;
+
+	stdout_save = dup(STDOUT_FILENO);
+	setup_output_fd(cmd, -1);
+	sh->exit_status = builtin_launcher(sh, cmd->args, data);
+	dup2(stdout_save, STDOUT_FILENO);
+	close(stdout_save);
 }

@@ -6,7 +6,7 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 14:24:27 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/15 15:11:02 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/06/05 16:12:05 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_bool	is_quote(char c)
 	return (FALSE);
 }
 
-t_bool is_builtin(char *str)
+t_bool	is_builtin(char *str)
 {
 	if (!str)
 		return (FALSE);

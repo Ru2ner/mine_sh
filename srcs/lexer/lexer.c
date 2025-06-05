@@ -3,133 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/26 16:07:12 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/19 12:34:29 by tmarion          ###   ########.fr       */
+/*   Created: 2025/05/14 19:49:34 by tlutz             #+#    #+#             */
+/*   Updated: 2025/06/04 20:14:05 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
-static t_token_type	identify_quotes(const char c)
+char	*parse_quoted_string(t_lex_helper *n_tok_content, char **input)
 {
-	if (c == SINGLE_QUOTE_CHAR)
-		return (SINGLE_QUOTE);
-	else if (c == DOUBLE_QUOTE_CHAR)
-		return (DOUBLE_QUOTE);
-	return (WORD);
+	n_tok_content->quote_type = identify_quotes(**input);
+	n_tok_content->type = WORD;
+	return (extract_quoted_string(input));
 }
 
-static t_token_type	identify_special_char(const char *token)
+char	*parse_word(t_lex_helper *n_tok_content, char **input)
 {
-	if (ft_strcmp(token, "|") == 0)
-		return (PIPE);
-	else if (ft_strcmp(token, "<") == 0)
-		return (REDIR_IN);
-	else if (ft_strcmp(token, ">") == 0)
-		return (REDIR_OUT);
-	else if (ft_strcmp(token, "<<") == 0)
-		return (HERE_DOC);		
-	else if (ft_strcmp(token, ">>") == 0)
-		return (REDIR_OUT_APPEND);
-	else if (ft_strcmp(token, "'") == 0)
-		return (SINGLE_QUOTE);
-	else if (ft_strcmp(token, "\"") == 0)
-		return (DOUBLE_QUOTE);
-	else if (ft_strcmp(token, ";") == 0)
-		return (SEMICOLON);
-	return (WORD);
+	n_tok_content->quote_type = NONE;
+	n_tok_content->type = WORD;
+	return (extract_word(input));
 }
 
-
-static t_token_type	specify_each_words(char *value, t_parse *parsing)
+char	*parse_special_chars(t_lex_helper *n_tok_content, char **input)
 {
-	struct	stat	type;
-	char			**paths;
-	char			*path;
+	char	*value;
 
-	if (!value || !parsing)
-		return (ERROR);
-	paths = get_paths(parsing->envp);
-	ft_memset(&type, 0, sizeof(struct stat));
-	lstat(value, &type);
-	path = cmd_path(value, paths);
-	if (path)
-	{
-		free(path);
-		free_tab(paths);
-		return (CMD);
-	}
-	else if (S_ISDIR(type.st_mode))
-	{
-		free_tab(paths);
-		return (FOLDER);
-	}
-	// else if (S_ISREG(type.st_mode))
-	// {
-	// 	free_tab(paths);
-	// 	return (FD);
-	// }
-	return (WORD);
+	n_tok_content->quote_type = NONE;
+	value = extract_special_char(input);
+	n_tok_content->type = identify_special_char(value);
+	return (value);
 }
 
-void	identify_redir_file(t_token *lexicon)
+void	lexer(char *input, t_token **lexicon)
 {
-	while (lexicon && lexicon->next)
-	{
-		if (lexicon->type == HERE_DOC)
-			lexicon->next->type = HERE_DOC_DELIM;
-		else if (lexicon->type == REDIR_IN)
-			lexicon->next->type = INFILE;
-		else if (lexicon->type == REDIR_OUT)
-			lexicon->next->type = OUTFILE;
-		else if (lexicon->type == REDIR_OUT_APPEND)
-			lexicon->next->type = OUTFILE_APPEND;
-		lexicon = lexicon->next;
-	}
-}
-
-t_token	*lexer(const char *input, t_parse *parsing, t_token **lexicon)
-{
-	t_token_type	type;
 	char			*value;
-	int				i;
+	t_lex_helper	new_tok_content;
 
-	i = 1;
+	new_tok_content.linked = TRUE;
 	while (*input)
 	{
 		if (is_whitespaces(*input))
 		{
 			input++;
+			new_tok_content.linked = FALSE;
 			continue ;
 		}
 		else if (is_quote(*input))
-		{
-			type = identify_quotes(*input);
-			value = extract_quoted_string((char *)input);
-			input += ft_strlen(value) + 2;
-		}
+			value = parse_quoted_string(&new_tok_content, &input);
 		else if (is_special_char(*input))
-		{
-			value = extract_special_char(&input);
-			type = identify_special_char(value);
-		}
+			value = parse_special_chars(&new_tok_content, &input);
 		else
-		{
-			value = extract_word(&input);
-			type = specify_each_words(value, parsing);
-			if (is_builtin(value))
-				type = CMD;
-		}
-		build_lexicon(lexicon, value, type, i);
-		i++;
+			value = parse_word(&new_tok_content, &input);
+		build_lexicon(lexicon, value, &new_tok_content);
+		new_tok_content.linked = TRUE;
 	}
-	if (is_pipe(*lexicon) || is_redir(*lexicon))
-		identify_redir_file(*lexicon);
-	return (*lexicon);
+	identify_redir_file(*lexicon);
 }

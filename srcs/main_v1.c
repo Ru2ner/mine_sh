@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   main_v1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:57:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/27 14:39:32 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/06/04 19:42:28 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -17,86 +16,80 @@
 #include "parsing.h"
 #include "libft.h"
 
-static	t_bool	init_minishell(t_mshell *mshell)
+static	t_bool	init_minishell(t_mshell *sh)
 {
-	mshell->env = NULL;
+	sh->env = NULL;
+	sh->lexicon = NULL;
+	sh->exec_list = NULL;
+	sh->exit_status = 0;
+	sh->g_collector = NULL;
+	sh->prompt = NULL;
+	sh->env_tab = NULL;
+	sh->input = NULL;
 	return (TRUE);
 }
 
-t_bool	create_lexicon(char *input, t_mshell *mshell, t_token **lexicon)
+t_bool	create_lexicon(char *input, t_mshell *sh)
 {
-	(void)mshell;
 	if (are_quotes_balanced(input) == FALSE)
 	{
 		printf("There is an odd number of quotes\n");
 		return (FALSE);
 	}
-	lexer(input, lexicon);
-
-	t_token	*temp;
-	temp = *lexicon;
-	printf("------------------Lexer-----------------------------------------\n");
-	while (temp)
+	if (parsing_input(sh->lexicon) == FALSE)
 	{
-		printf("value: %s\n", temp->value);
-		printf("type: %d\n", temp->type);
-		printf("quote type: %d\n", temp->quote_type);
-		printf("link: %d\n\n", temp->link);
-		temp = temp->next;
+		ft_putstr_fd("syntax error\n", 2);
+		return (FALSE);
 	}
-
+	lexer(input, &sh->lexicon);
+	expand_handler(sh, &sh->lexicon);
+	if (DEBUG == 1)
+		print_lexer(sh->lexicon);
 	return (TRUE);
 }
 
-void	readline_loop(t_mshell *mshell)
+void	readline_loop(t_mshell *sh)
 {
-	t_token 	*lexicon;
-	char		*input;
-	t_garbage	*g_collector;
-	char		**envp;
-	char		*prompt;
-
 	while (1)
 	{
-		lexicon = NULL;
-		g_collector = NULL;
-		prompt = create_prompt(mshell->env);
-		add_to_garbage(&g_collector, NULL, (void *)prompt, FALSE);
-		input = readline(prompt);
-		add_to_garbage(&g_collector, NULL, (void *)input, FALSE);
-		if (!input)
+		sh->lexicon = NULL;
+		sh->g_collector = NULL;
+		sh->prompt = create_prompt(sh->env);
+		add_to_garbage(&sh->g_collector, NULL, (void *)sh->prompt, FALSE);
+		sh->input = readline(sh->prompt);
+		add_to_garbage(&sh->g_collector, NULL, (void *)sh->input, FALSE);
+		if (!sh->input)
 			break ;
-		if (!input[0])
-			continue ;
-		add_history(input);
-		if (create_lexicon(input, mshell, &lexicon) == FALSE)
-			continue ;
-		if (parsing_input(lexicon) == FALSE)
+		if (!sh->input[0])
 		{
-			ft_putstr_fd("failed to parse\n", 2);
+			cleanup_garbage(sh->g_collector);
+			sh->g_collector = NULL;
 			continue ;
 		}
-		envp = convert_env_to_tab(mshell->env);
-		add_to_garbage(&g_collector, (void **)envp, NULL, TRUE);
-		exec(&lexicon, envp, mshell);
-		cleanup_garbage(g_collector);
-		free_lexicon(lexicon);
-		lexicon = NULL;
+		add_history(sh->input);
+		if (create_lexicon(sh->input, sh) == FALSE)
+			continue ;
+		sh->env_tab = convert_env_to_tab(sh->env);
+		cleanup_garbage(sh->g_collector);
+		exec(&sh->lexicon, sh);
 	}
-	cleanup_garbage(g_collector);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_mshell	mshell;
-	
+	t_mshell	sh;
+
+	if (argc != 1)
+	{
+		ft_putendl_fd("minishell does not handle launch arguments", 2);
+		return (1);
+	}
 	(void)argv;
-	(void)argc;
-	init_minishell(&mshell);
-	env_creator(envp, &mshell);
-	catch_sig();	
-	readline_loop(&mshell);
-	free_list(mshell.env);
+	init_minishell(&sh);
+	env_creator(envp, &sh);
+	catch_sig();
+	readline_loop(&sh);
+	cleanup_minishell(&sh);
 	rl_clear_history();
 	return (0);
 }

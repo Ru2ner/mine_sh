@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_converter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:59:07 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 14:38:53 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/05/28 20:08:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char	**convert_env_to_tab(t_env *env)
 		return (malloc_error());
 	while (i < list_size)
 	{
-		result[i] = ft_strcjoin(env->key, env->value, '=');
+		if (env->key && env->value)
+			result[i] = ft_strcjoin(env->key, env->value, '=');
 		if (!result[i])
 			return (free_dest(result, i - 1));
 		env = env->next;

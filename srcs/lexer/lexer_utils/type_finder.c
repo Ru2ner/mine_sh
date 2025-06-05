@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_editor.c                                       :+:      :+:    :+:   */
+/*   type_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 17:35:38 by tlutz             #+#    #+#             */
-/*   Updated: 2025/06/04 19:21:50 by tlutz            ###   ########.fr       */
+/*   Created: 2025/04/23 11:23:58 by tmarion           #+#    #+#             */
+/*   Updated: 2025/06/05 16:12:42 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "parsing.h"
 #include "libft.h"
 
-char	*fetch_value_from_env(t_mshell *mshell, t_env *env, char *key)
+t_bool	is_pipe(t_token *lexicon)
 {
-	t_env	*temp;
-
-	if (ft_strcmp(key, "?") == 0)
-		return (ft_itoa(mshell->exit_status));
-	temp = env;
-	while (temp)
+	while (lexicon->next)
 	{
-		if (ft_strcmp(temp->key, key) == 0 && temp->value)
-			return (temp->value);
-		temp = temp->next;
+		if (lexicon->type == PIPE)
+			return (TRUE);
+		lexicon = lexicon->next;
 	}
-	return (NULL);
+	return (FALSE);
+}
+
+t_bool	is_redir(t_token *lexicon)
+{
+	while (lexicon->next)
+	{
+		if (lexicon->type == REDIR_IN || lexicon->type == REDIR_OUT
+			|| lexicon->type == REDIR_OUT_APPEND
+			|| lexicon->type == HERE_DOC)
+			return (TRUE);
+		lexicon = lexicon->next;
+	}
+	return (FALSE);
 }

@@ -6,53 +6,31 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:42:10 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:44:04 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/06/04 19:53:56 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
+#include <limits.h>
 
-char	*get_pwd_from_env(t_env *env)
-{
-	char	*cwd_env;
-	t_env	*temp;
-
-	cwd_env = NULL;
-	temp = env;
-	while (temp)
-	{
-		if (ft_strncmp(temp->key, "PWD", 3) == 0)
-		{
-			cwd_env = ft_strdup(temp->value);
-			if (!cwd_env)
-				return (malloc_error());
-			break ;
-		}
-		temp = temp->next;
-	}
-	return (cwd_env);
-}
-
-void	*fetch_cwd(t_env *env)
+int	fetch_cwd(void)
 {
 	char	*cwd;
 
-	if (env)
-		cwd = get_pwd_from_env(env);
-	if (!env || !cwd)
+	cwd = malloc(sizeof(char) * PATH_MAX);
+	if (!cwd)
 	{
-		cwd = malloc(sizeof(char) * 1024);
-		if (!cwd)
-			return (malloc_error());
-		if (getcwd(cwd, 1024) == NULL)
-		{
-			perror("getcwd failed");
-			free(cwd);
-			return (NULL);
-		}
+		malloc_error();
+		return (1);
+	}
+	if (getcwd(cwd, PATH_MAX) == NULL)
+	{
+		perror("getcwd failed: ");
+		free(cwd);
+		return (1);
 	}
 	ft_putendl_fd(cwd, 1);
 	free(cwd);
-	return (NULL);
+	return (0);
 }

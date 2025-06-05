@@ -3,123 +3,117 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
+/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 15:13:28 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:43:57 by tlutz            ###   ########.fr       */
+/*   Created: 2025/05/29 18:13:51 by tlutz             #+#    #+#             */
+/*   Updated: 2025/06/05 19:12:16 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "libft.h"
 
-void	*add_to_export_list(t_env **env, char *arg)
+int	add_to_export_list(t_env **env, char *arg)
 {
 	t_keyval	key_value;
 	t_env		*temp;
 
 	temp = *env;
+	if (!is_valid_for_env_var(arg))
+		return (invalid_env_var(arg));
 	while (temp)
 	{
 		if (ft_strcmp(arg, temp->key) == 0)
-			return (NULL);
+			return (0);
 		temp = temp->next;
 	}
 	key_value.key = ft_strdup(arg);
+	if (!key_value.key)
+		return (malloc_error_int());
 	key_value.value = NULL;
 	build_list(env, &key_value, FALSE, TRUE);
-	return (NULL);
+	return (0);
 }
 
-static t_env	*copy_env_list(t_env *og)
+void	*key_value_creator(t_keyval *key_val, char **args)
 {
-	t_env		*copy;
-	t_env		*temp;
-	t_keyval	keyval;
-
-	copy = NULL;
-	temp = og;
-	while (temp)
+	if (args[0] && args[1])
 	{
-		keyval.key = ft_strdup(temp->key);
-		if (!keyval.key)
+		key_val->key = args[0];
+		key_val->value = args[1];
+	}
+	if ((args[0] && !args[1]) || (args[0] && args[1][0] == '\"' \
+		&& args[1][1] == '\"'))
+	{
+		key_val->key = args[0];
+		key_val->value = ft_strdup("");
+		if (key_val->value)
 			return (malloc_error());
-		if (temp->value)
-		{
-			keyval.value = ft_strdup(temp->value);
-			if (!keyval.key)
-				return (malloc_error());
-		}
-		else
-			keyval.value = NULL;
-		build_list(&copy, &keyval, temp->env, temp->export);
-		temp = temp->next;
 	}
-	return (copy);
+	return (NULL);
 }
 
-static void	swap_nodes(t_env *node1, t_env *node2)
+static int	append_handler(t_env *temp, char **args)
 {
-	char	*temp_key;
-	char	*temp_value;
-	t_bool	temp_env;
-	t_bool	temp_export;
+	char	*tmp;
 
-	temp_key = node1->key;
-	node1->key = node2->key;
-	node2->key = temp_key;
-	temp_value = node1->value;
-	node1->value = node2->value;
-	node2->value = temp_value;
-	temp_env = node1->env;
-	node1->env = node2->env;
-	node2->env = temp_env;
-	temp_export = node1->export;
-	node1->export = node2->export;
-	node2->export = temp_export;
-}
-
-static void	sort_env_list(t_env **head)
-{
-	t_env	*temp;
-	int		swapped;
-
-	swapped = 1;
-	while (swapped)
+	if (temp->value && args[1])
 	{
-		swapped = 0;
-		temp = *head;
-		while (temp && temp->next)
-		{
-			if (ft_strcmp(temp->key, temp->next->key) > 0)
-			{
-				swap_nodes(temp, temp->next);
-				swapped = 1;
-			}
-			temp = temp->next;
-		}
+		tmp = ft_strjoin(temp->value, args[1]);
+		if (!temp)
+			return (malloc_error_int());
 	}
+	else if (args[1])
+	{
+		tmp = ft_strdup(args[1]);
+		if (!tmp)
+			return (malloc_error_int());
+	}
+	tmp = ft_strdup("");
+	if (!tmp)
+		return (malloc_error_int());
+	free(temp->value);
+	temp->value = tmp;
+	free_tab(args);
+	temp->env = TRUE;
+	return (0);
 }
 
-void	*print_export(t_env *env)
+int	append_to_var(t_env *env, char *arg)
 {
-	t_env	*temp;
-	t_env	*copy;
+	char		**args;
+	t_env		*temp;
+	t_keyval	key_val;
 
-	copy = copy_env_list(env);
-	sort_env_list(&copy);
-	temp = copy;
+	temp = env;
+	args = ft_split_charset(arg, "+=");
+	if (!is_valid_for_env_var(args[0]))
+		return (invalid_env_var(args[0]));
+	if (!args)
+		return (malloc_error_int());
 	while (temp)
 	{
-		if (temp->export == TRUE)
-		{
-			if (temp->key && temp->value)
-				printf("export %s=\"%s\"\n", temp->key, temp->value);
-			else if (temp->key && !temp->value)
-				printf("export %s\n", temp->key);
-		}
+		if (ft_strcmp(temp->key, args[0]) == 0)
+			return (append_handler(temp, args));
 		temp = temp->next;
 	}
-	free_list(copy);
-	return (NULL);
+	key_value_creator(&key_val, args);
+	build_list(&env, &key_val, TRUE, TRUE);
+	free(args);
+	return (0);
+}
+
+int	edit_var(t_env *temp, char **args)
+{
+	free(temp->value);
+	if (!args[1])
+		temp->value = ft_strdup("");
+	else
+		temp->value = ft_strdup(args[1]);
+	if (!temp->value)
+		return (malloc_error_int());
+	if (temp->env == FALSE)
+		temp->env = TRUE;
+	free_tab(args);
+	return (0);
 }

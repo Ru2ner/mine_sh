@@ -1,16 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_test_exec.c                                   :+:      :+:    :+:   */
+/*   exec_error_msgs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 17:27:42 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/12 16:14:49 by tlutz            ###   ########.fr       */
+/*   Created: 2025/06/05 16:15:25 by tlutz             #+#    #+#             */
+/*   Updated: 2025/06/05 16:15:33 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft.h"
+#include "errors.h"
+
+void	perror_exit(const char *msg)
+{
+	perror(msg);
+	exit(EXIT_FAILURE);
+}

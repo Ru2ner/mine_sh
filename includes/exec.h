@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 17:04:29 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 15:56:05 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/06/05 20:23:16 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,34 @@ int		here_doc_handler(t_cmd *cmd);
 
 t_bool	is_valid_for_env_var(char *key);
 
-int 	exec(t_token **lexicon, char **envp, t_mshell *mshell);
+int		exec(t_token **lexicon, t_mshell *mshell);
 
 char	*parse_path(char **envp, char *cmd);
 
-void	pipeline(t_cmd *cmd_list, char **envp, t_mshell *mshell, t_token *lexicon);
+void	parent_builtins_handler(t_cmd *cmd, t_mshell *sh, t_exec *data);
+
+void	pipeline(t_cmd *cmd_list, t_mshell *mshell);
+
+void	setup_input_fd(t_cmd *cmd, int prev_fd);
+
+void	setup_output_fd(t_cmd *cmd, int pipe_write_fd);
 
 void	catch_sig_heredoc(void);
 
-char	*fetch_value_from_env(t_env *env, char *key);
+char	*fetch_value_from_env(t_mshell *mshell, t_env *env, char *key);
 
 char	*create_prompt(t_env *env);
 
 void	free_cmd_list(t_cmd *cmd_list);
 
 t_cmd	*ft_create_node(t_token **lexicon, t_env *env);
+
+void	init_data_struct(t_mshell *mshell, t_exec *data, t_cmd *cmd_list);
+
+t_bool	is_there_pipe(t_cmd *cmd_list);
+
+int		child_waiter(t_exec *data);
+
+void	child_process(t_cmd *cmd, t_exec *data, t_mshell *mshell);
 
 #endif

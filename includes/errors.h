@@ -3,17 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 19:57:58 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 14:13:43 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/06/05 15:54:44 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
+
 # include "exec.h"
+# include "structs.h"
 
 # define NOSUCHFILEORDIR 0
 # define NOPERMS 1
@@ -21,24 +26,28 @@
 # define HOMENOTSET 3
 # define HOME_ERR_STR "minishell : cd: HOME not set"
 
-typedef struct s_garbage	t_garbage;
-typedef struct s_garbage
-{
-	void		**dptr;
-	void		*ptr;
-	t_bool		double_p;
-	t_garbage	*next;
-}	t_garbage;
-
 void	*cd_error(int errnum);
 
 void	*malloc_error(void);
 
-void	*cmd_not_found_error(void);
+void	*cmd_not_found_error(char *str);
 
-void	*invalid_env_var(void);
+int		invalid_env_var(char *arg);
 
-void	add_to_garbage(t_garbage **garbage, void **dptr, void *ptr,t_bool double_p);
+void	add_to_garbage(t_garbage **garbage, void **dptr, \
+	void *ptr, t_bool double_p);
 
 void	cleanup_garbage(t_garbage *garbage);
+
+int		malloc_error_int(void);
+
+void	cleanup_minishell(t_mshell *mshell);
+
+void	cleanup_for_child(t_mshell *mshell, t_exec *data, int err, char *arg);
+
+/***************************DEBUG******************************************** */
+
+void	print_lexer(t_token *lexicon);
+
+void	print_exec_list(t_cmd *cmd_list);
 #endif

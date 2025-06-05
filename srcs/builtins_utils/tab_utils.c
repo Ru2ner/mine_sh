@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tab_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:02:25 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/27 14:35:53 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/04/09 19:33:30 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ size_t	get_tab_size(char **tab)
 	size_t	i;
 
 	i = 0;
-	if (!tab)
-		return (i);
 	while (tab[i])
 		i++;
 	return (i);

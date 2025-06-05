@@ -6,7 +6,7 @@
 /*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:54:16 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/26 14:10:19 by tmarion          ###   ########.fr       */
+/*   Updated: 2025/06/05 18:23:11 by tmarion          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,12 @@ char	*parse_path(char **envp, char *cmd)
 	char	**paths;
 	char	*complete_path;
 
+	if (!cmd)
+		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, X_OK) == 0)
-			return (cmd);
+			return (ft_strdup(cmd));//TODO
 		else
 			return (NULL);
 	}

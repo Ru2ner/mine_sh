@@ -1,8 +1,20 @@
 # 42minishell
 
-A simple shell written in C, with some builtins and redirections, pipes, and commands handling
+1. Create_prompt
+2. Récup l'input avec readline
+3. Ajouter à l'historique
+4. Lexer
+5. Expander
+6. Parser qui check le lexicon
+7. Convertir l'env en tableau
+8. Créer l'exec_list
+9. Checker les fichiers d'IO
+10. Lancer l'exec à partir de l'exec_list
+11. Cleanup_garbage, lexicon, et exec_list
+12. Nouvelle boucle readline
 
-*** stack smashing detected ***: terminated
+
+TODO REWORK BUILTINS FOR EXIT CODE
 
 
 ### Functions to use

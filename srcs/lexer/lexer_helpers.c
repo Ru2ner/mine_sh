@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_helpers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 19:49:34 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/20 16:17:24 by tmarion          ###   ########.fr       */
+/*   Created: 2025/06/04 20:02:42 by tlutz             #+#    #+#             */
+/*   Updated: 2025/06/05 16:11:35 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "libft.h"
 
-static t_quote_type	identify_quotes(const char c)
+t_quote_type	identify_quotes(const char c)
 {
 	if (c == SINGLE_QUOTE_CHAR)
 		return (SINGLE);
@@ -22,7 +22,7 @@ static t_quote_type	identify_quotes(const char c)
 	return (NONE);
 }
 
-static t_token_type	identify_special_char(const char *input)
+t_token_type	identify_special_char(const char *input)
 {
 	if (ft_strcmp(input, "|") == 0)
 		return (PIPE);
@@ -31,7 +31,7 @@ static t_token_type	identify_special_char(const char *input)
 	else if (ft_strcmp(input, ">") == 0)
 		return (REDIR_OUT);
 	else if (ft_strcmp(input, "<<") == 0)
-		return (HERE_DOC);		
+		return (HERE_DOC);
 	else if (ft_strcmp(input, ">>") == 0)
 		return (REDIR_OUT_APPEND);
 	return (WORD);
@@ -51,44 +51,4 @@ void	identify_redir_file(t_token *lexicon)
 			lexicon->next->type = OUTFILE_APPEND;
 		lexicon = lexicon->next;
 	}
-}
-
-void	lexer(char *input, t_token **lexicon)
-{
-	t_token_type	type;
-	t_quote_type	quote_type;
-	char			*value;
-	t_bool			link_word;
-
-	link_word = TRUE;
-	while (*input)
-	{
-		if (is_whitespaces(*input))
-		{
-			input++;
-			link_word = FALSE;
-			continue ;
-		}
-		else if (is_quote(*input))
-		{
-			quote_type = identify_quotes(*input);
-			type = WORD;
-			value = extract_quoted_string(&input);
-		}
-		else if (is_special_char(*input))
-		{
-			quote_type = NONE;
-			value = extract_special_char(&input);
-			type = identify_special_char(value);
-		}
-		else
-		{
-			quote_type = NONE;
-			type = WORD;
-			value = extract_word(&input);
-		}
-		build_lexicon(lexicon, value, type, quote_type, link_word);
-		link_word = TRUE;
-	}
-	identify_redir_file(*lexicon);
 }

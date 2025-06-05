@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/02 18:30:28 by tlutz             #+#    #+#              #
-#    Updated: 2025/05/26 15:21:20 by tmarion          ###   ########.fr        #
+#    Updated: 2025/06/05 19:36:12 by tlutz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ INCFLAG = -I
 LINKREADLINE = -lreadline
 CFLAGS = -Wall -Werror -Wextra -g3
 CC = cc
+DEBUG_CFLAGS = -Wall -Werror -Wextra -g3 -DDEBUG=1
 
 LIBFTDIR = 42Libft/
 LIBFTINCDIR = $(LIBFTDIR)includes/
@@ -42,13 +43,15 @@ HEADERS = $(HEADERSDIR)parsing.h \
 SRCSDIR = srcs/
 SRCS = lexer/lexer_utils/quote_checker.c \
 		lexer/lexer_utils/token_checker_utils.c \
-		lexer/lexer_utils/is_type.c \
+		lexer/lexer_utils/type_finder.c \
 		lexer/lexer_utils/path_access.c \
 		lexer/lexer_utils/list_utils.c \
 		lexer/extractors.c \
-		lexer/lexer_rework/lexer.c \
+		lexer/lexer.c \
+		lexer/lexer_helpers.c \
 		parser/parse_utils.c\
 		builtins/builtin_pwd.c \
+		builtins/builtin_exit.c \
 		builtins/builtin_env.c \
 		builtins/builtin_cd.c \
 		builtins/builtin_echo.c \
@@ -64,12 +67,11 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		env_handling/env_creator.c \
 		builtins_utils/free_utils.c \
 		builtins_utils/tab_utils.c \
+		builtins_utils/cd_utils.c \
+		builtins_utils/print_export_utils.c \
 		builtins_utils/export_utils.c \
 		errors_handling/errors_msgs.c \
-		pipex_exec/pipex_bonus.c \
-		pipex_exec/pipex_utils_bonus_1.c \
-		pipex_exec/pipex_utils_bonus_2.c \
-		pipex_exec/pipex_utils_bonus.c \
+		cleanup/cleanup_utils.c \
 		exec/exec_list_creator.c \
 		exec/exec_list_utils.c \
 		exec_part/exec.c \
@@ -78,6 +80,10 @@ SRCS = lexer/lexer_utils/quote_checker.c \
 		signals/sigs_handlers.c \
 		prompt/create_prompt.c \
 		garbage_collector/garbage_collector.c \
+		debug/debug_print_helpers.c \
+		exec_part/child_waiting.c \
+		errors_handling/exec_error_msgs.c \
+		exec_part/exec_helpers.c \
 		main_v1.c
 
 OBJSDIR = .build/
@@ -108,6 +114,16 @@ $(OBJSDIR) :
 
 $(LIBFT) :
 	@make -j -sC $(LIBFTDIR)
+
+.PHONY : debug
+debug : CFLAGS = $(DEBUG_CFLAGS)
+debug : fclean $(NAME)
+	@echo "$(COLOR_PURPLE)$(NAME) successfully compiled in debug mode !$(COLOR_RESET)"
+
+.PHONY : val
+val : $(NAME)
+	valgrind --log-socket=127.0.0.1 --leak-check=full --trace-children=yes --suppressions=readline.supp --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
+
 
 .PHONY : clean
 clean :

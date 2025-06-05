@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_list_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmarion <tmarion@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 16:19:59 by tmarion           #+#    #+#             */
-/*   Updated: 2025/05/28 13:17:27 by tmarion          ###   ########.fr       */
+/*   Created: 2025/06/05 15:12:12 by tmarion           #+#    #+#             */
+/*   Updated: 2025/06/05 20:25:09 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,90 +15,85 @@
 #include "parsing.h"
 #include <signal.h>
 
-static void	skip_redir(t_token **lexicon)
+static int	malloc_size(t_token *lex)
 {
-	while (*lexicon && ((*lexicon)->type == REDIR_IN
-			|| (*lexicon)->type == REDIR_OUT
-			|| (*lexicon)->type == REDIR_OUT_APPEND
-			|| (*lexicon)->type == HERE_DOC))
-		*lexicon = (*lexicon)->next;
+	t_token	*tmp;
+	int		count;
+
+	count = 0;
+	if (!lex)
+		return (count);
+	tmp = lex;
+	while (tmp)
+	{
+		if (tmp->type == WORD)
+			count++;
+		if (tmp->type == PIPE)
+			break ;
+		tmp = tmp->next;
+	}
+	return (count);
 }
 
-static void	handle_args(t_cmd *node, t_token *lexicon)// probleme oin a pas le/les permier argument quand on a des redir_in 
-{													//avant d'aller ailleurs, c'est UNIQUEMENT ici qu'on manipule "ARGS"	
-	int		i;
+static char	*join_link_args(t_token **lex)
+{
 	char	*tmp;
-	char	*temp;
-	t_token	*tmp_token;
-	
-	i = 0;
-	tmp_token = lexicon;
-	node->args = malloc(sizeof(char *) * 100);
-	while (tmp_token && tmp_token->type == WORD)
+	char	*joined;
+	t_token	*current;
+
+	if (!lex || !*lex || !(*lex)->next)
+		return (NULL);
+	tmp = ft_strjoin((*lex)->value, (*lex)->next->value);
+	if (!tmp)
+		return (NULL);
+	*lex = (*lex)->next;
+	current = *lex;
+	while (current && current->next && current->next->linked == TRUE)
 	{
-		if (tmp_token->next && tmp_token->next->link == TRUE)
-		{
-			tmp = ft_strjoin(tmp_token->value, tmp_token->next->value);
-			tmp_token = tmp_token->next;
-			while (tmp_token->next && tmp_token->next->value
-				&& tmp_token->next->link == TRUE)
-			{
-				temp = ft_strjoin(tmp, tmp_token->next->value);
-				free(tmp);
-				tmp_token = tmp_token->next;
-			}
-			node->args[i++] = temp;
-		}
-		else
-			node->args[i++] = ft_strdup(tmp_token->value);
-		tmp_token = tmp_token->next;
+		joined = ft_strjoin(tmp, current->next->value);
+		free(tmp);
+		if (!joined)
+			return (NULL);
+		tmp = joined;
+		current = current->next;
+		*lex = current;
 	}
-	node->args[i] = NULL;
+	return (tmp);
 }
 
-static void	findin_fd(t_cmd *node, t_token **lexicon)
+static void	handle_args(t_cmd *node, t_token *lex)
 {
-	while (*lexicon && ((*lexicon)->type == INFILE
-			|| (*lexicon)->type == OUTFILE
-			|| (*lexicon)->type == OUTFILE_APPEND
-			|| (*lexicon)->type == HERE_DOC_DELIM))
+	int		i;
+
+	i = 0;
+	node->args = malloc(sizeof(char *) * (malloc_size(lex) + 1));
+	while (lex)
 	{
-		if ((*lexicon)->type == INFILE)
-			node->infile = ft_strdup((*lexicon)->value);
-		else if ((*lexicon)->type == OUTFILE)
-			node->outfile = ft_strdup((*lexicon)->value);
-		else if ((*lexicon)->type == OUTFILE_APPEND)
-		{
-			node->outfile = ft_strdup((*lexicon)->value);
+		if (lex->type == INFILE)
+			node->infile = ft_strdup(lex->value);
+		else if (lex->type == OUTFILE)
+			node->outfile = ft_strdup(lex->value);
+		else if (lex->type == REDIR_OUT_APPEND)
 			node->append = TRUE;
-		}
-		else if ((*lexicon)->type == HERE_DOC_DELIM)
-			node->heredoc_delim = ft_strdup((*lexicon)->value);
-		*lexicon = (*lexicon)->next;
-	}
-}
-static void	findout_fd(t_cmd *node, t_token *lexicon)
-{
-	while (lexicon)
-	{
-		if (lexicon->type == INFILE)
-			node->infile = ft_strdup(lexicon->value);
-		else if (lexicon->type == OUTFILE)
-			node->outfile = ft_strdup(lexicon->value);
-		else if (lexicon->type == OUTFILE_APPEND)
-		{
-			node->outfile = ft_strdup(lexicon->value);
-			node->append = TRUE;
-		}
-		else if (lexicon->type == HERE_DOC_DELIM)
-			node->heredoc_delim = ft_strdup(lexicon->value);
-		else if (lexicon->type == PIPE)
+		else if (lex->type == PIPE)
 		{
 			node->pipe = TRUE;
+			lex = lex->next;
 			break ;
 		}
-		lexicon = lexicon->next;
+		else if (lex->type == HERE_DOC_DELIM)
+			node->heredoc_delim = ft_strdup(lex->value);
+		else if (lex->type == WORD)
+		{
+			if (lex->next && lex->next->linked == TRUE)
+				node->args[i] = join_link_args(&lex);
+			else
+				node->args[i] = ft_strdup(lex->value);
+			i++;
+		}
+		lex = lex->next;
 	}
+	node->args[i++] = NULL;
 }
 
 t_cmd	*ft_create_node(t_token **lexicon, t_env *env)
@@ -110,10 +105,6 @@ t_cmd	*ft_create_node(t_token **lexicon, t_env *env)
 	if (!new_node)
 		return (NULL);
 	ft_memset(new_node, 0, sizeof(t_cmd));
-	expand_handler(env, lexicon);
-	skip_redir(lexicon);
-	findin_fd(new_node, lexicon);
 	handle_args(new_node, *lexicon);
-	findout_fd(new_node, *lexicon);
 	return (new_node);
 }

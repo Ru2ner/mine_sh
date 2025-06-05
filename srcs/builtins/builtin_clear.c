@@ -6,13 +6,14 @@
 /*   By: tlutz <tlutz@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:31:34 by tlutz             #+#    #+#             */
-/*   Updated: 2025/05/07 20:59:45 by tlutz            ###   ########.fr       */
+/*   Updated: 2025/05/29 16:08:40 by tlutz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	exec_clear(void)
+int	exec_clear(void)
 {
 	printf("\033[H\033[2J\033[3J");
+	return (0);
 }
